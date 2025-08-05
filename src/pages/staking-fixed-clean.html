@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, shrink-to-fit=no">
+    <meta name="theme-color" content="#FF9933">
+    <title>PRANA Staking | Pranavam Platform</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Web3 Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/layout-fix.css">
+    <link rel="stylesheet" href="../styles/theme.css">
+    <link rel="stylesheet" href="../styles/wallet-system.css">
+    <link rel="stylesheet" href="../styles/wallet-buttons.css">
+    <link rel="stylesheet" href="../styles/staking.css">
+    <link rel="stylesheet" href="../styles/mobile-responsive.css">
+    
+    <style>
+        /* Ensure menu toggle is visible */
+        .menu-toggle {
+            display: flex !important;
+        }
+        
+        /* Add any page-specific styles here */
+        main {
+            padding-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+        
+        /* Wallet button states */
+        .wallet-toggle-btn.connected {
+            background: #10b981 !important;
+            position: relative;
+        }
+        
+        .wallet-toggle-btn.connected::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border: 2px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.3);
+        }
+        
+        .wallet-toggle-btn.connected:hover {
+            background: #059669 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar glass-nav" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="../assets/images/logo.jpeg" alt="Pranavam Logo" class="logo-image">
+                <span class="om-symbol">ॐ</span>
+                <span class="logo-text">
+                    <span class="sanskrit-text">प्राणवम्</span>
+                    <span class="english-text">Pranavam.ai</span>
+                </span>
+            </a>
+            
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/#overview" class="nav-link">Platform Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/exchange" class="nav-link">Exchange</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/staking" class="nav-link active">Staking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/whitepaper" class="nav-link">Whitepaper</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#architecture" class="nav-link">Architecture</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#economics" class="nav-link">Economics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#staking-tiers" class="nav-link">Staking Tiers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#governance" class="nav-link">Governance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#roadmap" class="nav-link">Roadmap</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin" class="nav-link" style="color: #dc2626; font-weight: 600;">Admin</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="btn btn-primary wallet-toggle-btn" id="wallet-btn" onclick="toggleWallet()" title="Connect Wallet">
+                    <i class="fas fa-wallet"></i>
+                </button>
+                <div class="menu-toggle" id="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main style="padding-top: 80px; min-height: calc(100vh - 80px);">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+            
+            <!-- Header -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1>PRANA Multi-Tier Staking</h1>
+                <p>Stake PRANA • Earn 12-35% APY • 8-Level Referral System</p>
+            </div>
+
+            <!-- Status Messages -->
+            <div id="error-message" style="display: none; background: #fee; color: #c00; padding: 1rem; margin: 1rem 0; border-radius: 8px;"></div>
+            <div id="success-message" style="display: none; background: #efe; color: #060; padding: 1rem; margin: 1rem 0; border-radius: 8px;"></div>
+
+            <!-- Staking Tiers -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                <div data-tier="AI Seeker" style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #10b981; border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.3s ease;">
+                    <h3 style="color: #10b981;">AI Seeker</h3>
+                    <div style="font-size: 2rem; font-weight: 700; color: #059669;">12% APY</div>
+                    <div style="color: #047857;">1,000+ PRANA</div>
+                </div>
+                <div data-tier="AI Practitioner" style="background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 1px solid #3b82f6; border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.3s ease;">
+                    <h3 style="color: #3b82f6;">AI Practitioner</h3>
+                    <div style="font-size: 2rem; font-weight: 700; color: #1d4ed8;">18% APY</div>
+                    <div style="color: #1e40af;">10,000+ PRANA</div>
+                </div>
+                <div data-tier="AI Innovator" style="background: linear-gradient(135deg, #fff7ed, #fed7aa); border: 2px solid #ff6b35; border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.3s ease;">
+                    <h3 style="color: #ff6b35;">AI Innovator</h3>
+                    <div style="font-size: 2rem; font-weight: 700; color: #f59e0b;">25% APY</div>
+                    <div style="color: #d97706;">50,000+ PRANA</div>
+                </div>
+                <div data-tier="AI Visionary" style="background: linear-gradient(135deg, #faf5ff, #e9d5ff); border: 1px solid #8b5cf6; border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.3s ease;">
+                    <h3 style="color: #8b5cf6;">AI Visionary</h3>
+                    <div style="font-size: 2rem; font-weight: 700; color: #7c3aed;">35% APY</div>
+                    <div style="color: #6d28d9;">100,000+ PRANA</div>
+                </div>
+            </div>
+
+            <!-- Staking Interface -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                
+                <!-- Stake Form -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <h2 style="margin-bottom: 1.5rem;">Stake PRANA</h2>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Amount to Stake</label>
+                        <input type="number" id="stake-amount" placeholder="Enter PRANA amount" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px;" oninput="updateTierAndAPY()">
+                        <div style="margin-top: 0.5rem; font-size: 0.875rem; color: #666;">
+                            Balance: <span id="prana-balance">0.00 PRANA</span>
+                            <button onclick="setMaxStake()" style="margin-left: 0.5rem; background: none; border: 1px solid #ff9933; color: #ff9933; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;">MAX</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Referrer (Optional)</label>
+                        <input type="text" id="referrer" placeholder="0x..." style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Your Tier:</span>
+                            <span id="user-tier">AI Seeker (min 1,000)</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>APY:</span>
+                            <span id="user-apy">12%</span>
+                        </div>
+                    </div>
+
+                    <button id="stake-btn" onclick="stake()" style="width: 100%; padding: 1rem; background: #ff9933; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                        Connect Wallet to Stake
+                    </button>
+                </div>
+
+                <!-- User Stats -->
+                <div>
+                    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 1rem;">
+                        <h3>Your Staking</h3>
+                        <div style="margin-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                <span>Total Staked:</span>
+                                <span id="user-staked">0.00 PRANA</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                <span>Pending Rewards:</span>
+                                <span id="pending-rewards">0.00 PRANA</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Total Earned:</span>
+                                <span id="total-earned">0.00 PRANA</span>
+                            </div>
+                        </div>
+                        <button onclick="claimRewards()" style="width: 100%; margin-top: 1rem; padding: 0.75rem; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                            <i class="fas fa-gift"></i> Claim Rewards
+                        </button>
+                    </div>
+
+                    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h3>Referral Link</h3>
+                        <div style="margin-top: 1rem;">
+                            <input type="text" id="referral-link" readonly value="Connect wallet to get link" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; background: #f5f5f5;">
+                            <button onclick="copyReferralLink()" style="width: 100%; margin-top: 0.5rem; padding: 0.75rem; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                <i class="fas fa-copy"></i> Copy Link
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platform Stats -->
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 2rem;">
+                <h3>Platform Statistics</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #ff9933;">
+                            <span id="total-staked">0.00 PRANA</span>
+                        </div>
+                        <div style="color: #666;">Total Staked</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #ff9933;">
+                            <span id="total-stakers">0</span>
+                        </div>
+                        <div style="color: #666;">Total Stakers</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #ff9933;">
+                            <span id="rewards-distributed">0.00 PRANA</span>
+                        </div>
+                        <div style="color: #666;">Rewards Distributed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        console.log('🔄 STAKING-FIXED PAGE LOADED');
+        
+        // Handle menu toggle immediately
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📱 DOM loaded, setting up menu toggle');
+            const navToggle = document.getElementById('nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            console.log('📱 Menu elements found:', {navToggle: !!navToggle, navMenu: !!navMenu});
+            
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', function() {
+                    console.log('📱 Menu toggle clicked');
+                    navMenu.classList.toggle('active');
+                    navToggle.classList.toggle('active');
+                });
+                console.log('📱 Menu toggle event listener added');
+            } else {
+                console.error('❌ Menu elements not found!');
+            }
+        });
+    </script>
+    <script type="module">
+        console.log('💰 Loading staking module script...');
+        
+        import { uiServices } from '../services/UIServiceIntegration.js';
+        
+        let isConnected = false;
+        let currentAccount = null;
+
+        // Initialize
+        async function init() {
+            console.log('💰 Initializing staking...');
+
+            // Initialize services
+            await uiServices.init();
+            
+            // Diagnose contract deployments
+            try {
+                console.log('🔍 Diagnosing contract deployments...');
+                const diagnosis = await uiServices.serviceManager.diagnoseContracts();
+                console.log('📋 Contract Diagnosis Results:', diagnosis);
+                
+                // Show contract status in console
+                Object.entries(diagnosis).forEach(([contractName, result]) => {
+                    if (result.deployed && result.responsive) {
+                        console.log(`✅ ${contractName}: Deployed and responsive at ${result.address}`);
+                        if (result.testResult) {
+                            console.log(`   Test result: ${result.testResult}`);
+                        }
+                    } else if (result.deployed && !result.responsive) {
+                        console.warn(`⚠️ ${contractName}: Deployed at ${result.address} but not responsive - ${result.error}`);
+                        console.warn(`   Code size: ${result.codeSize} bytes`);
+                    } else {
+                        console.error(`❌ ${contractName}: Not deployed - ${result.error}`);
+                    }
+                });
+
+                // Comprehensive staking contract analysis
+                if (diagnosis.pranaStaking && diagnosis.pranaStaking.deployed) {
+                    console.log('🔬 Performing comprehensive staking contract analysis...');
+                    
+                    try {
+                        const analysis = await uiServices.serviceManager.analyzeDeployedContract('pranaStaking');
+                        console.log('📊 Comprehensive Staking Contract Analysis:', analysis);
+                        
+                        if (analysis.deployed) {
+                            console.log(`📍 Contract Address: ${analysis.address}`);
+                            console.log(`💾 Code Size: ${analysis.codeSize} bytes`);
+                            console.log(`💰 Balance: ${analysis.balance} BNB`);
+                            console.log(`🔢 Transaction Count: ${analysis.transactionCount}`);
+                            console.log(`📋 Available Methods in ABI: ${analysis.availableMethods.length}`);
+                            console.log(`✅ Working Methods (${analysis.workingMethods.length}):`, analysis.workingMethods);
+                            console.log(`❌ Failing Methods (${analysis.failingMethods.length}):`, analysis.failingMethods);
+                            
+                            // Show detailed results for working methods
+                            if (analysis.workingMethods.length > 0) {
+                                console.log('📝 Working Method Results:');
+                                analysis.workingMethods.forEach(method => {
+                                    const result = analysis.methodTestResults[method];
+                                    console.log(`   ${method}: ${result.result}`);
+                                });
+                            }
+                            
+                            // Show detailed errors for failing methods
+                            if (analysis.failingMethods.length > 0) {
+                                console.log('🚫 Failing Method Errors:');
+                                analysis.failingMethods.forEach(method => {
+                                    const result = analysis.methodTestResults[method];
+                                    console.log(`   ${method}: ${result.error}`);
+                                });
+                            }
+                            
+                            // Check if this is the right contract type
+                            if (analysis.workingMethods.length === 0) {
+                                console.error('🚨 CRITICAL: No staking methods are working!');
+                                console.error('🚨 This suggests the deployed contract is not the expected staking contract');
+                                console.error('🚨 Contract may be:');
+                                console.error('   - A different type of contract');
+                                console.error('   - An incomplete deployment');
+                                console.error('   - Using a different ABI version');
+                                console.error('   - In an uninitialized state');
+                            } else if (analysis.workingMethods.includes('totalStaked')) {
+                                console.log('✅ Basic staking functionality appears to be available');
+                            }
+                        }
+                    } catch (analysisError) {
+                        console.error('❌ Comprehensive analysis failed:', analysisError);
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Contract diagnosis failed:', error);
+            }
+            
+            // Check if already connected
+            if (uiServices.isWalletConnected()) {
+                await handleWalletConnected();
+            }
+            
+            // Load platform stats
+            await loadPlatformStats();
+        }
+
+        // Wallet functions
+        window.toggleWallet = async function() {
+            console.log('💰 Wallet toggle clicked, isConnected:', isConnected);
+            if (isConnected) {
+                await uiServices.disconnectWallet();
+                handleWalletDisconnected();
+            } else {
+                try {
+                    console.log('💰 Attempting to connect wallet...');
+                    const result = await uiServices.connectWallet('metamask');
+                    console.log('💰 Connect result:', result);
+                    if (result.success) {
+                        await handleWalletConnected();
+                    }
+                } catch (error) {
+                    console.error('💰 Wallet connect error:', error);
+                    showError('Failed to connect wallet: ' + error.message);
+                }
+            }
+        };
+
+        async function handleWalletConnected() {
+            isConnected = true;
+            currentAccount = uiServices.getCurrentAccount();
+            
+            // Update UI - change button title and add connected class
+            const walletBtn = document.getElementById('wallet-btn');
+            if (walletBtn) {
+                walletBtn.title = `Connected: ${currentAccount.slice(0,6)}...${currentAccount.slice(-4)}`;
+                walletBtn.classList.add('connected');
+            }
+            document.getElementById('stake-btn').textContent = 'Stake PRANA';
+            
+            // Update referral link
+            const baseUrl = window.location.origin;
+            document.getElementById('referral-link').value = `${baseUrl}/staking?ref=${currentAccount}`;
+            
+            // Load user data
+            await loadUserData();
+            
+            hideError();
+        }
+
+        function handleWalletDisconnected() {
+            isConnected = false;
+            currentAccount = null;
+            
+            // Update UI - reset button title
+            document.getElementById('wallet-btn').title = 'Connect Wallet';
+            document.getElementById('stake-btn').textContent = 'Connect Wallet to Stake';
+            document.getElementById('referral-link').value = 'Connect wallet to get link';
+            
+            // Clear user data - show zeros instead of dashes
+            document.getElementById('prana-balance').textContent = '0.00 PRANA';
+            document.getElementById('user-staked').textContent = '0.00 PRANA';
+            document.getElementById('pending-rewards').textContent = '0.00 PRANA';
+            document.getElementById('total-earned').textContent = '0.00 PRANA';
+            document.getElementById('user-tier').textContent = 'AI Seeker (min 1,000)';
+            document.getElementById('user-apy').textContent = '12%';
+        }
+
+        // Load functions
+        async function loadUserData() {
+            if (!isConnected) return;
+            
+            try {
+                // Show loading state
+                document.getElementById('prana-balance').textContent = 'Loading...';
+                document.getElementById('user-staked').textContent = 'Loading...';
+                document.getElementById('pending-rewards').textContent = 'Loading...';
+                document.getElementById('total-earned').textContent = 'Loading...';
+                
+                // Get PRANA balance with retry logic
+                let pranaBalance = '0';
+                try {
+                    pranaBalance = await uiServices.getTokenBalance('pranaToken');
+                    document.getElementById('prana-balance').textContent = formatNumber(pranaBalance) + ' PRANA';
+                } catch (balanceError) {
+                    console.warn('Failed to load PRANA balance:', balanceError.message);
+                    document.getElementById('prana-balance').textContent = 'Error loading balance';
+                    if (balanceError.message.includes('RPC') || balanceError.message.includes('Internal JSON-RPC')) {
+                        showError('Network connection issues. Please check your wallet connection and try again.');
+                        scheduleRetry();
+                    }
+                }
+                
+                // Get staking info with retry logic
+                let stakingInfo = { totalStaked: '0', pendingRewards: '0', totalRewards: '0' };
+                try {
+                    stakingInfo = await uiServices.getUserStakingInfo();
+                    document.getElementById('user-staked').textContent = formatNumber(stakingInfo.totalStaked) + ' PRANA';
+                    document.getElementById('pending-rewards').textContent = formatNumber(stakingInfo.pendingRewards) + ' PRANA';
+                    document.getElementById('total-earned').textContent = formatNumber(stakingInfo.totalRewards) + ' PRANA';
+                } catch (stakingError) {
+                    console.warn('Failed to load staking info:', stakingError.message);
+                    document.getElementById('user-staked').textContent = 'Error loading';
+                    document.getElementById('pending-rewards').textContent = 'Error loading';
+                    document.getElementById('total-earned').textContent = 'Error loading';
+                    if (stakingError.message.includes('RPC') || stakingError.message.includes('Internal JSON-RPC')) {
+                        showError('Unable to load staking data due to network issues. Data will retry automatically.');
+                        scheduleRetry();
+                    }
+                }
+                
+                // Determine tier based on current staked amount
+                const tierInfo = getTierInfo(stakingInfo.totalStaked);
+                
+                const tierElement = document.getElementById('user-tier');
+                const apyElement = document.getElementById('user-apy');
+                
+                if (tierElement && apyElement) {
+                    tierElement.textContent = tierInfo.tier;
+                    tierElement.style.color = tierInfo.color;
+                    tierElement.style.fontWeight = tierInfo.tier !== 'None' ? '600' : 'normal';
+                    
+                    apyElement.textContent = tierInfo.apy + '%';
+                    apyElement.style.color = tierInfo.color;
+                    apyElement.style.fontWeight = tierInfo.tier !== 'None' ? '600' : 'normal';
+                }
+                
+            } catch (error) {
+                console.error('Failed to load user data:', error);
+                if (error.message.includes('RPC') || error.message.includes('network')) {
+                    showError('Network connectivity issues detected. Please check your internet connection and try refreshing the page.');
+                }
+            }
+        }
+
+        async function loadPlatformStats() {
+            try {
+                // Show loading state
+                document.getElementById('total-staked').textContent = 'Loading...';
+                document.getElementById('total-stakers').textContent = 'Loading...';
+                document.getElementById('rewards-distributed').textContent = 'Loading...';
+                
+                const stats = await uiServices.getStakingInfo();
+                document.getElementById('total-staked').textContent = formatNumber(stats.totalStaked || '0') + ' PRANA';
+                document.getElementById('total-stakers').textContent = stats.totalStakers || '0';
+                document.getElementById('rewards-distributed').textContent = formatNumber(stats.totalRewardsPaid || stats.totalRewards || '0') + ' PRANA';
+            } catch (error) {
+                console.warn('Platform stats unavailable due to network issues:', error.message);
+                // Show zeros instead of loading state when there are network issues
+                document.getElementById('total-staked').textContent = formatNumber('0') + ' PRANA';
+                document.getElementById('total-stakers').textContent = '0';
+                document.getElementById('rewards-distributed').textContent = formatNumber('0') + ' PRANA';
+                
+                if (error.message.includes('RPC') || error.message.includes('Internal JSON-RPC')) {
+                    showError('Unable to load platform statistics due to network connectivity issues.');
+                }
+            }
+        }
+
+        // Staking functions
+
+        window.stake = async function() {
+            if (!isConnected) {
+                await toggleWallet();
+                return;
+            }
+            
+            const amount = document.getElementById('stake-amount').value;
+            const referrer = document.getElementById('referrer').value || '0x0000000000000000000000000000000000000000';
+            
+            if (!amount || parseFloat(amount) <= 0) {
+                showError('Please enter a valid amount');
+                return;
+            }
+            
+            try {
+                showLoading('Processing stake...');
+                
+                const result = await uiServices.stake(amount, referrer);
+                
+                if (result.success) {
+                    hideLoading();
+                    showSuccess('Staking successful!');
+                    
+                    // Clear form
+                    document.getElementById('stake-amount').value = '';
+                    document.getElementById('referrer').value = '';
+                    
+                    // Reload data
+                    await loadUserData();
+                    await loadPlatformStats();
+                } else {
+                    hideLoading();
+                    showError('Staking failed: ' + result.error);
+                }
+                
+            } catch (error) {
+                hideLoading();
+                showError('Staking failed: ' + error.message);
+            }
+        };
+
+        window.claimRewards = async function() {
+            if (!isConnected) {
+                showError('Please connect wallet first');
+                return;
+            }
+            
+            try {
+                showLoading('Claiming rewards...');
+                
+                const result = await uiServices.claimRewards();
+                
+                if (result.success) {
+                    hideLoading();
+                    showSuccess('Rewards claimed successfully!');
+                    
+                    // Reload data
+                    await loadUserData();
+                } else {
+                    hideLoading();
+                    showError('Claim failed: ' + result.error);
+                }
+                
+            } catch (error) {
+                hideLoading();
+                showError('Claim failed: ' + error.message);
+            }
+        };
+
+        window.copyReferralLink = function() {
+            const link = document.getElementById('referral-link');
+            link.select();
+            document.execCommand('copy');
+            showSuccess('Referral link copied!');
+        };
+
+        // Tier and APY calculation functions
+        window.getTierInfo = function(amount) {
+            const stakingAmount = parseFloat(amount) || 0;
+            
+            if (stakingAmount >= 100000) {
+                return { tier: 'AI Visionary', apy: 35, color: '#8b5cf6' };
+            } else if (stakingAmount >= 50000) {
+                return { tier: 'AI Innovator', apy: 25, color: '#ff6b35' };
+            } else if (stakingAmount >= 10000) {
+                return { tier: 'AI Practitioner', apy: 18, color: '#3b82f6' };
+            } else if (stakingAmount >= 1000) {
+                return { tier: 'AI Seeker', apy: 12, color: '#10b981' };
+            } else if (stakingAmount > 0) {
+                // Show what tier they would get if they stake at least 1000
+                return { tier: 'AI Seeker (min 1,000)', apy: 12, color: '#10b981', isPreview: true };
+            } else {
+                return { tier: 'AI Seeker (min 1,000)', apy: 12, color: '#666666', isPreview: true };
+            }
+        }
+
+        window.updateTierAndAPY = function() {
+            try {
+                const stakeAmountInput = document.getElementById('stake-amount');
+                if (!stakeAmountInput) return;
+                
+                const amount = stakeAmountInput.value;
+                const tierInfo = getTierInfo(amount);
+                
+                // Update tier display
+                const tierElement = document.getElementById('user-tier');
+                const apyElement = document.getElementById('user-apy');
+                
+                if (!tierElement || !apyElement) return;
+                
+                tierElement.textContent = tierInfo.tier;
+                tierElement.style.color = tierInfo.color;
+                tierElement.style.fontWeight = '600';
+                
+                apyElement.textContent = tierInfo.apy + '%';
+                apyElement.style.color = tierInfo.color;
+                apyElement.style.fontWeight = '600';
+                
+                // Add visual feedback for valid tiers (actual tiers, not preview)
+                if (!tierInfo.isPreview) {
+                    stakeAmountInput.style.borderColor = tierInfo.color;
+                    stakeAmountInput.style.borderWidth = '2px';
+                    stakeAmountInput.style.boxShadow = `0 0 0 3px ${tierInfo.color}20`;
+                    
+                    // Highlight the active tier card only for actual tiers
+                    highlightActiveTier(tierInfo.tier);
+                } else {
+                    stakeAmountInput.style.borderColor = '#ddd';
+                    stakeAmountInput.style.borderWidth = '1px';
+                    stakeAmountInput.style.boxShadow = 'none';
+                    
+                    // Show preview highlighting for AI Seeker
+                    if (parseFloat(amount) > 0 && parseFloat(amount) < 1000) {
+                        highlightActiveTier('AI Seeker');
+                    } else {
+                        highlightActiveTier('None');
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating tier and APY:', error);
+            }
+        }
+        
+        window.highlightActiveTier = function(activeTier) {
+            // Reset all tier cards
+            const tierCards = document.querySelectorAll('[data-tier]');
+            tierCards.forEach(card => {
+                card.style.transform = 'scale(1)';
+                card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+                card.style.transition = 'all 0.3s ease';
+            });
+            
+            // Highlight active tier card
+            if (activeTier !== 'None') {
+                const activeCard = document.querySelector(`[data-tier="${activeTier}"]`);
+                if (activeCard) {
+                    activeCard.style.transform = 'scale(1.05)';
+                    activeCard.style.boxShadow = '0 8px 25px rgba(255, 153, 51, 0.3)';
+                    activeCard.style.zIndex = '10';
+                }
+            }
+        }
+
+        // Update setMaxStake to trigger tier calculation
+        window.setMaxStake = async function() {
+            if (!isConnected) return;
+            
+            try {
+                const pranaBalance = await uiServices.getTokenBalance('pranaToken');
+                const maxAmount = Math.floor(parseFloat(pranaBalance));
+                document.getElementById('stake-amount').value = maxAmount;
+                updateTierAndAPY(); // Update tier when max is set
+            } catch (error) {
+                showError('Failed to get balance: ' + error.message);
+            }
+        };
+
+        // Utility functions
+        function formatNumber(num) {
+            // Handle edge cases gracefully
+            if (num === null || num === undefined || num === '') {
+                return '0.00';
+            }
+            
+            const parsed = parseFloat(num);
+            if (isNaN(parsed)) {
+                return '0.00';
+            }
+            
+            return parsed.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 6
+            });
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => errorDiv.style.display = 'none', 5000);
+        }
+
+        function hideError() {
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            setTimeout(() => successDiv.style.display = 'none', 5000);
+        }
+
+        function showLoading(message) {
+            document.getElementById('stake-btn').disabled = true;
+            document.getElementById('stake-btn').textContent = message;
+        }
+
+        function hideLoading() {
+            document.getElementById('stake-btn').disabled = false;
+            document.getElementById('stake-btn').textContent = 'Stake PRANA';
+        }
+
+        // Check for referrer in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const ref = urlParams.get('ref');
+        if (ref) {
+            document.getElementById('referrer').value = ref;
+        }
+
+        // Auto-retry mechanism for failed loads
+        let retryCount = 0;
+        const maxRetries = 3;
+        const retryDelay = 5000; // 5 seconds
+        
+        function scheduleRetry() {
+            if (retryCount < maxRetries && isConnected) {
+                retryCount++;
+                console.log(`Scheduling retry ${retryCount}/${maxRetries} in ${retryDelay/1000}s...`);
+                setTimeout(() => {
+                    console.log(`Retrying data load (attempt ${retryCount})...`);
+                    loadUserData();
+                    loadPlatformStats();
+                }, retryDelay);
+            }
+        }
+        
+        // Network status monitoring
+        function checkNetworkStatus() {
+            if (navigator.onLine) {
+                hideError();
+                retryCount = 0; // Reset retry count when back online
+                if (isConnected) {
+                    loadUserData();
+                    loadPlatformStats();
+                }
+            } else {
+                showError('You appear to be offline. Please check your internet connection.');
+            }
+        }
+        
+        // Listen for network status changes
+        window.addEventListener('online', checkNetworkStatus);
+        window.addEventListener('offline', checkNetworkStatus);
+
+        // Initialize tier display on page load
+        window.initializeTierDisplay = function() {
+            try {
+                const tierElement = document.getElementById('user-tier');
+                const apyElement = document.getElementById('user-apy');
+                
+                if (tierElement) {
+                    tierElement.style.color = '#666666';
+                    tierElement.style.fontWeight = '600';
+                }
+                
+                if (apyElement) {
+                    apyElement.style.color = '#666666';
+                    apyElement.style.fontWeight = '600';
+                }
+            } catch (error) {
+                console.error('Error initializing tier display:', error);
+            }
+        }
+
+        // Start
+        init();
+        initializeTierDisplay();
+
+        // Debug functions available in browser console
+        window.debugStakingContract = async function() {
+            console.log('🔍 Starting manual staking contract debug...');
+            
+            try {
+                await uiServices.init();
+                
+                // Get the contract instance
+                const contract = uiServices.serviceManager.getContract('pranaStaking');
+                if (!contract) {
+                    console.error('❌ Staking contract not loaded');
+                    return;
+                }
+                
+                console.log('📍 Contract Address:', contract.options.address);
+                
+                // Check if contract has code
+                const code = await uiServices.serviceManager.walletService.web3.eth.getCode(contract.options.address);
+                console.log('💾 Contract has code:', code !== '0x');
+                console.log('💾 Code length:', code.length, 'characters');
+                
+                // Try to call the simplest possible method
+                console.log('🧪 Testing basic contract call...');
+                try {
+                    // Try calling a method that should always exist on any contract
+                    const balance = await uiServices.serviceManager.walletService.web3.eth.getBalance(contract.options.address);
+                    console.log('💰 Contract Balance:', uiServices.serviceManager.walletService.web3.utils.fromWei(balance, 'ether'), 'BNB');
+                    
+                    // Get contract ABI methods
+                    const viewMethods = contract._jsonInterface
+                        .filter(item => item.type === 'function' && (item.stateMutability === 'view' || item.constant === true))
+                        .map(item => item.name);
+                    
+                    console.log('📋 View methods in ABI:', viewMethods);
+                    
+                    // Try the most basic method first
+                    if (viewMethods.includes('owner')) {
+                        try {
+                            const owner = await contract.methods.owner().call();
+                            console.log('✅ owner() works:', owner);
+                        } catch (e) {
+                            console.log('❌ owner() failed:', e.message);
+                        }
+                    }
+                    
+                    // Try totalStaked
+                    if (viewMethods.includes('totalStaked')) {
+                        try {
+                            const totalStaked = await contract.methods.totalStaked().call();
+                            console.log('✅ totalStaked() works:', totalStaked);
+                        } catch (e) {
+                            console.log('❌ totalStaked() failed:', e.message);
+                        }
+                    }
+                    
+                    // Try paused
+                    if (viewMethods.includes('paused')) {
+                        try {
+                            const paused = await contract.methods.paused().call();
+                            console.log('✅ paused() works:', paused);
+                        } catch (e) {
+                            console.log('❌ paused() failed:', e.message);
+                        }
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ Basic contract interaction failed:', error);
+                }
+                
+            } catch (error) {
+                console.error('❌ Debug function failed:', error);
+            }
+        };
+
+        // Function to check what's actually deployed at the address
+        window.inspectContractBytecode = async function() {
+            console.log('🔬 Inspecting contract bytecode...');
+            
+            try {
+                await uiServices.init();
+                const address = '0x5dad2def2d09b03e53b54aa246894e6671261fae';
+                
+                const web3 = uiServices.serviceManager.walletService.web3;
+                const code = await web3.eth.getCode(address);
+                
+                console.log('📍 Address:', address);
+                console.log('💾 Has bytecode:', code !== '0x');
+                console.log('💾 Bytecode length:', code.length);
+                console.log('💾 First 100 chars of bytecode:', code.substring(0, 100));
+                
+                // Get recent transactions to this address
+                try {
+                    const latestBlock = await web3.eth.getBlockNumber();
+                    console.log('🔢 Latest block:', latestBlock);
+                    
+                    // Check recent blocks for transactions to this address
+                    console.log('🔍 Checking recent transactions to this address...');
+                    
+                    const txCount = await web3.eth.getTransactionCount(address);
+                    console.log('📊 Transaction count from this address:', txCount);
+                    
+                    const balance = await web3.eth.getBalance(address);
+                    console.log('💰 Address balance:', web3.utils.fromWei(balance, 'ether'), 'BNB');
+                    
+                } catch (blockError) {
+                    console.error('❌ Block inspection failed:', blockError);
+                }
+                
+            } catch (error) {
+                console.error('❌ Bytecode inspection failed:', error);
+            }
+        };
+
+        console.log('🛠️ Debug functions loaded:');
+        console.log('   debugStakingContract() - Test staking contract methods');
+        console.log('   inspectContractBytecode() - Inspect deployed bytecode');
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "note": "DEPRECATED: This file is deprecated. Use src/config/network-config.js for centralized configuration.",
+  "migration": {
+    "from": "contracts/deployments/bscTestnet.json",
+    "to": "src/config/network-config.js",
+    "reason": "Centralized configuration with network-based address management"
+  },
+  "network": "bscMainnet",
+  "chainId": 56,
+  "timestamp": "2025-01-04T12:00:00.000Z",
+  "deployer": "0x5dfC41480463f2aD7E129cD5F2ac8457A0e0aeAA",
+  "contracts": {
+    "pranaToken": {
+      "address": "0x1d603926ef339545537bacb1ee5c051ea05d70cb",
+      "name": "PRANAToken",
+      "totalSupply": "21000000000000000000000000000",
+      "deploymentHash": "..."
+    },
+    "usdtToken": {
+      "address": "0x55d398326f99059fF775485246999027B3197955",
+      "name": "Tether USD",
+      "symbol": "USDT",
+      "decimals": 18,
+      "note": "Official BEP-20 USDT on BSC Mainnet"
+    },
+    "pranaExchange": {
+      "address": "0x8a0388ce345f5cd82c49ae646ac40d3180a28616",
+      "name": "PRANAExchange",
+      "pranaPrice": "100000",
+      "minBuyAmount": "50000000",
+      "minSellAmount": "1000000000000000000000"
+    },
+    "pranaStaking": {
+      "address": "0x5dad2def2d09b03e53b54aa246894e6671261fae",
+      "name": "PRANAStaking",
+      "dailyRoiRate": "1200",
+      "roiCapMultiplier": "200",
+      "minStakeAmount": "10000000000000000000"
+    }
+  },
+  "status": "complete",
+  "notes": "Mainnet contracts deployed with updated addresses for production."
+}

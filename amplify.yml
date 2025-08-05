@@ -1,0 +1,73 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Installing dependencies..."
+        - npm ci
+        - echo "Node.js version: $(node --version)"
+        - echo "NPM version: $(npm --version)"
+    build:
+      commands:
+        - echo "Building application with Vite..."
+        - npm run build
+        - echo "Build completed successfully"
+        - ls -la dist/
+    postBuild:
+      commands:
+        - echo "Verifying build artifacts..."
+        - find dist -name "*.html" | head -5
+        - find dist -name "*.js" | head -5
+        - echo "Build verification complete"
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+
+customHeaders:
+  - pattern: '*.js'
+    headers:
+      - key: 'Content-Type'
+        value: 'application/javascript; charset=UTF-8'
+  - pattern: '*.css'
+    headers:
+      - key: 'Content-Type'
+        value: 'text/css; charset=UTF-8'
+  - pattern: '*.woff2'
+    headers:
+      - key: 'Content-Type'
+        value: 'font/woff2'
+  - pattern: '*.html'
+    headers:
+      - key: 'Cache-Control'
+        value: 'public, max-age=0, s-maxage=31536000'
+
+# Amplify URL Rewrites for SPA routing
+redirects:
+  - source: '/staking'
+    target: '/staking-fixed-clean.html'
+    status: '200'
+  - source: '/staking/'
+    target: '/staking-fixed-clean.html'
+    status: '200'
+  - source: '/exchange'
+    target: '/exchange-fixed.html'
+    status: '200'
+  - source: '/exchange/'
+    target: '/exchange-fixed.html'
+    status: '200'
+  - source: '/whitepaper'
+    target: '/whitepaper.html'
+    status: '200'
+  - source: '/whitepaper/'
+    target: '/whitepaper.html'
+    status: '200'
+  - source: '/admin'
+    target: '/admin.html'
+    status: '200'
+  - source: '/admin/'
+    target: '/admin.html'
+    status: '200'

@@ -1,0 +1,25 @@
+# Amplify _redirects file - handle S3 forced trailing slashes
+# Since S3 automatically redirects /path to /path/, we handle the trailing slash versions
+
+# Primary routes with trailing slashes (what S3 actually serves)
+/staking/ /staking-fixed-clean.html 200
+/exchange/ /exchange-fixed.html 200  
+/whitepaper/ /whitepaper.html 200
+/admin/ /admin.html 200
+
+# Handle exact path matches (before S3 redirects)
+/staking /staking-fixed-clean.html 200
+/exchange /exchange-fixed.html 200
+/whitepaper /whitepaper.html 200
+/admin /admin.html 200
+
+# Hash routes for homepage sections
+/#overview /index.html 200
+/#architecture /index.html 200
+/#economics /index.html 200
+/#staking-tiers /index.html 200
+/#governance /index.html 200
+/#roadmap /index.html 200
+
+# Root homepage
+/ /index.html 200

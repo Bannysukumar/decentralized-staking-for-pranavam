@@ -1,0 +1,566 @@
+/**
+ * Unified Theme System for Pranavam Platform
+ * This file ensures consistent theming across all pages
+ * All pages should include this file after main.css
+ */
+
+/* Re-export and extend main theme variables for consistency */
+:root {
+    /* Ensure all theme variables are available */
+    
+    /* Primary Brand Colors - Indian Heritage */
+    --saffron-primary: #FF9933;
+    --saffron-deep: #E67300;
+    --saffron-light: #FFB366;
+    --white-pure: #FFFFFF;
+    --green-indian: #138808;
+    --green-deep: #0D5A06;
+    --green-light: #4CAF50;
+    
+    /* Professional Accent Colors */
+    --gold-royal: #D4AF37;
+    --gold-antique: #B8860B;
+    --gold-light: #F7E98E;
+    --copper-indian: #B87333;
+    --copper-light: #D2994A;
+    
+    /* Natural Earth Tones */
+    --earth-dark: #3E2723;
+    --earth-medium: #5D4037;
+    --earth-light: #8D6E63;
+    --sand-warm: #F5F5DC;
+    --clay-warm: #DEB887;
+    
+    /* Professional Text Colors */
+    --text-primary: #2E2E2E;
+    --text-secondary: #4A4A4A;
+    --text-light: #6B6B6B;
+    --text-muted: #8B8B8B;
+    --text-white: #FFFFFF;
+    
+    /* Professional Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--saffron-primary) 0%, var(--gold-royal) 100%);
+    --gradient-secondary: linear-gradient(135deg, var(--green-indian) 0%, var(--green-light) 100%);
+    --gradient-accent: linear-gradient(135deg, var(--gold-antique) 0%, var(--copper-indian) 100%);
+    --gradient-warm: linear-gradient(135deg, var(--sand-warm) 0%, var(--clay-warm) 100%);
+    --gradient-hero: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    
+    /* Professional Backgrounds */
+    --bg-primary: #FAFAFA;
+    --bg-secondary: #F5F5F5;
+    --bg-card: rgba(255, 255, 255, 0.95);
+    --bg-glass: rgba(255, 255, 255, 0.8);
+    --bg-overlay: rgba(62, 39, 35, 0.9);
+    --bg-hero: linear-gradient(135deg, 
+        rgba(255, 153, 51, 0.1) 0%,
+        rgba(255, 215, 0, 0.08) 25%,
+        rgba(19, 136, 8, 0.06) 50%,
+        rgba(212, 175, 55, 0.08) 75%,
+        rgba(255, 153, 51, 0.1) 100%
+    );
+    
+    /* Compatible Variables for Legacy Code */
+    --primary-color: var(--saffron-primary);
+    --primary-gradient: var(--gradient-primary);
+    --secondary-color: var(--green-indian);
+    --secondary-gradient: var(--gradient-secondary);
+    --accent-color: var(--gold-royal);
+    --accent-gradient: var(--gradient-accent);
+    --dark-bg: var(--earth-dark);
+    --light-bg: var(--bg-primary);
+    --card-bg: var(--bg-card);
+    --glass-bg: var(--bg-glass);
+    --hero-gradient: linear-gradient(135deg, 
+        rgba(255, 153, 51, 0.1) 0%,
+        rgba(255, 215, 0, 0.08) 25%,
+        rgba(19, 136, 8, 0.06) 50%,
+        rgba(212, 175, 55, 0.08) 75%,
+        rgba(255, 153, 51, 0.1) 100%
+    );
+    --border-color: rgba(255, 153, 51, 0.2);
+    --success-color: var(--green-indian);
+    --error-color: #D32F2F;
+    --warning-color: var(--saffron-deep);
+    --info-color: var(--gold-royal);
+    
+    /* Professional Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+    --shadow-warm: 0 8px 32px rgba(255, 153, 51, 0.15);
+    --shadow-gold: 0 4px 20px rgba(212, 175, 55, 0.2);
+    
+    /* Professional Borders */
+    --border-primary: 1px solid rgba(255, 153, 51, 0.2);
+    --border-secondary: 1px solid rgba(19, 136, 8, 0.2);
+    --border-light: 1px solid rgba(0, 0, 0, 0.1);
+    --border-warm: 2px solid rgba(212, 175, 55, 0.3);
+    
+    /* Professional Typography */
+    --font-primary: 'Inter', 'Noto Sans Devanagari', system-ui, sans-serif;
+    --font-secondary: 'Noto Sans', 'Noto Sans Devanagari', system-ui, sans-serif;
+    --font-display: 'Inter', 'Noto Serif Devanagari', serif;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    --spacing-2xl: 4rem;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+}
+
+/* Override hardcoded colors in existing styles */
+
+/* Consistent page backgrounds */
+.whitepaper-main,
+.staking-main,
+.exchange-main,
+.main-content {
+    background: var(--hero-gradient), var(--bg-primary) !important;
+}
+
+/* Consistent card backgrounds */
+.whitepaper-content,
+.exchange-card,
+.staking-card,
+.dashboard-card,
+.content-card {
+    background: var(--bg-card) !important;
+    border: var(--border-primary) !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+/* Consistent text colors */
+.whitepaper-hero h1,
+.exchange-header h1,
+.staking-header h1,
+.page-title {
+    background: var(--gradient-primary) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+}
+
+.whitepaper-hero .description,
+.exchange-header p,
+.page-subtitle {
+    color: var(--text-secondary) !important;
+}
+
+.whitepaper-hero .sanskrit-subtitle {
+    color: var(--text-light) !important;
+    font-family: var(--font-primary) !important;
+}
+
+/* Consistent button styling */
+.download-btn,
+.btn-primary,
+.swap-btn,
+.stake-btn {
+    background: var(--gradient-primary) !important;
+    color: var(--text-white) !important;
+    border: none !important;
+    box-shadow: var(--shadow-warm) !important;
+}
+
+.download-btn:hover,
+.btn-primary:hover,
+.swap-btn:hover,
+.stake-btn:hover {
+    box-shadow: var(--shadow-gold) !important;
+    color: var(--text-white) !important;
+}
+
+.btn-secondary {
+    background: var(--gradient-secondary) !important;
+    color: var(--text-white) !important;
+}
+
+/* Consistent accent colors */
+.paper-summary h3,
+.wisdom-text,
+.accent-text {
+    color: var(--saffron-primary) !important;
+}
+
+.wisdom-source,
+.gold-text {
+    color: var(--gold-royal) !important;
+}
+
+/* Consistent borders and highlights */
+.paper-summary,
+.wisdom-card,
+.exchange-card,
+.staking-card {
+    border-left: 4px solid var(--saffron-primary) !important;
+}
+
+/* Consistent shadows for cards */
+.section-card,
+.stat-card,
+.overview-card,
+.content-card {
+    box-shadow: var(--shadow-md) !important;
+    border: var(--border-light) !important;
+}
+
+.section-card:hover,
+.stat-card:hover,
+.overview-card:hover,
+.content-card:hover {
+    box-shadow: var(--shadow-lg) !important;
+}
+
+/* Consistent background for summary sections */
+.paper-summary,
+.whitepaper-content {
+    background: var(--bg-secondary) !important;
+}
+
+/* Consistent icon colors */
+.card-icon,
+.section-card h4 i,
+.stat-icon i {
+    color: var(--text-white) !important;
+}
+
+.card-icon {
+    background: var(--gradient-primary) !important;
+}
+
+/* Consistent form styling */
+.citation-text,
+.code-block,
+.monospace {
+    background: var(--bg-secondary) !important;
+    border: var(--border-light) !important;
+    color: var(--text-secondary) !important;
+}
+
+/* Consistent gradient overlays */
+.hero::before,
+.page-header::before {
+    background: var(--bg-hero) !important;
+}
+
+/* Responsive typography consistency */
+@media (max-width: 768px) {
+    .whitepaper-hero h1,
+    .exchange-header h1,
+    .page-title {
+        font-size: clamp(2rem, 4vw, 3rem) !important;
+    }
+    
+    .whitepaper-hero .description,
+    .exchange-header p,
+    .page-subtitle {
+        font-size: clamp(1rem, 2vw, 1.25rem) !important;
+    }
+}
+
+/* Print styles consistency */
+@media print {
+    .whitepaper-main,
+    .staking-main,
+    .exchange-main,
+    .main-content {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .whitepaper-hero h1,
+    .exchange-header h1,
+    .page-title {
+        color: black !important;
+        -webkit-text-fill-color: black !important;
+    }
+}
+
+/* Force consistency for any remaining hardcoded styles */
+* {
+    --orange-primary: var(--saffron-primary);
+    --orange-light: var(--saffron-light);
+    --orange-dark: var(--saffron-deep);
+}
+
+/* Legacy color mapping for backwards compatibility */
+.text-orange-500,
+.bg-orange-500,
+.border-orange-500 {
+    color: var(--saffron-primary) !important;
+    background-color: var(--saffron-primary) !important;
+    border-color: var(--saffron-primary) !important;
+}
+
+.text-gray-600,
+.text-gray-500 {
+    color: var(--text-secondary) !important;
+}
+
+.bg-gray-50,
+.bg-gray-100 {
+    background-color: var(--bg-secondary) !important;
+}
+
+.bg-white {
+    background-color: var(--bg-card) !important;
+}
+
+/* Application UI Components - Consistent across all pages */
+.app-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.app-loading.hidden {
+    display: none;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #333;
+    border-top: 3px solid var(--saffron-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--error-color);
+    color: var(--text-white);
+    padding: 12px;
+    text-align: center;
+    z-index: 9999;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.error-banner.show {
+    transform: translateY(0);
+}
+
+.transaction-status {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xl);
+    padding: var(--spacing-md);
+    min-width: 300px;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+}
+
+.transaction-status.show {
+    transform: translateX(0);
+}
+
+.transaction-status.success {
+    border-left: 4px solid var(--success-color);
+}
+
+.transaction-status.pending {
+    border-left: 4px solid var(--warning-color);
+}
+
+.transaction-status.error {
+    border-left: 4px solid var(--error-color);
+}
+
+/* Staking and Exchange specific components */
+.wallet-status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+}
+
+.balance-display {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
+}
+
+.discrepancy-warning {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+    color: #856404;
+    font-size: 0.9rem;
+}
+
+/* Form styling consistency */
+.staking-form,
+.exchange-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.input-group label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    background: var(--bg-secondary);
+    border: var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    transition: var(--transition);
+}
+
+.input-container:focus-within {
+    border-color: var(--saffron-primary);
+    box-shadow: 0 0 0 3px rgba(255, 153, 51, 0.1);
+}
+
+.input-container input {
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    color: var(--text-primary);
+    outline: none;
+    flex: 1;
+}
+
+.input-container input::placeholder {
+    color: var(--text-muted);
+}
+
+.input-suffix {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-left: var(--spacing-sm);
+}
+
+.balance-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
+}
+
+.max-btn {
+    background: var(--saffron-primary);
+    color: var(--text-white);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.max-btn:hover {
+    background: var(--saffron-deep);
+}
+
+/* Summary stats styling */
+.summary-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    border: var(--border-light);
+}
+
+.summary-item .label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.summary-item .value {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+/* Info sections */
+.staking-info,
+.info-section {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    border: var(--border-light);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-xs) 0;
+    font-size: 0.9rem;
+}
+
+.info-row:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.info-row span:first-child {
+    color: var(--text-secondary);
+}
+
+.info-row span:last-child {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.info-row .highlight {
+    color: var(--saffron-primary);
+    font-weight: 700;
+}

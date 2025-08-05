@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Wallet Connection Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: #fff;
+        }
+        
+        .browser-detection {
+            background: rgba(33, 150, 243, 0.2);
+            border: 1px solid rgba(33, 150, 243, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .detection-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .detection-label {
+            font-weight: 600;
+            opacity: 0.8;
+        }
+        
+        .detection-value {
+            font-family: monospace;
+            color: #FFD700;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .test-title {
+            color: #FF9933;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, #FF9933, #FFB366);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .test-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .test-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .test-result {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            border-left: 4px solid #FF9933;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .result-success {
+            border-left-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        
+        .result-error {
+            border-left-color: #f44336;
+            background: rgba(244, 67, 54, 0.1);
+        }
+        
+        .result-warning {
+            border-left-color: #FF9800;
+            background: rgba(255, 152, 0, 0.1);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 153, 51, 0.3);
+            border-radius: 50%;
+            border-top-color: #FF9933;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .wallet-info {
+            display: none;
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .wallet-info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .wallet-info-label {
+            opacity: 0.8;
+        }
+        
+        .wallet-info-value {
+            font-family: monospace;
+            color: #4CAF50;
+        }
+        
+        .deep-links {
+            display: none;
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .deep-link-item {
+            margin-bottom: 10px;
+        }
+        
+        .deep-link-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(45deg, #2196F3, #21CBF3);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            .detection-item {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Comprehensive Wallet Test</h1>
+        
+        <div class="browser-detection" id="browserDetection">
+            <h3>🔍 Environment Detection</h3>
+            <div class="detection-item">
+                <span class="detection-label">Browser Type:</span>
+                <span class="detection-value" id="browserType">-</span>
+            </div>
+            <div class="detection-item">
+                <span class="detection-label">Device:</span>
+                <span class="detection-value" id="deviceType">-</span>
+            </div>
+            <div class="detection-item">
+                <span class="detection-label">Wallet Environment:</span>
+                <span class="detection-value" id="walletEnvironment">-</span>
+            </div>
+            <div class="detection-item">
+                <span class="detection-label">Ethereum Provider:</span>
+                <span class="detection-value" id="ethereumProvider">-</span>
+            </div>
+            <div class="detection-item">
+                <span class="detection-label">Connection Status:</span>
+                <span class="detection-value" id="connectionStatus">-</span>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">🚀 WalletConnect Service Test</div>
+            <button class="test-btn" onclick="testWalletConnectService()">Initialize & Test Service</button>
+            <div class="test-result" id="serviceResult">Click button to test WalletConnect service initialization</div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">🔗 Wallet Connection Test</div>
+            <button class="test-btn" onclick="testWalletConnection()" id="connectBtn">Connect Wallet</button>
+            <div class="test-result" id="connectionResult">Click button to test wallet connection</div>
+            
+            <div class="wallet-info" id="walletInfo">
+                <div class="wallet-info-item">
+                    <span class="wallet-info-label">Account:</span>
+                    <span class="wallet-info-value" id="accountValue">-</span>
+                </div>
+                <div class="wallet-info-item">
+                    <span class="wallet-info-label">Network:</span>
+                    <span class="wallet-info-value" id="networkValue">-</span>
+                </div>
+                <div class="wallet-info-item">
+                    <span class="wallet-info-label">Balance:</span>
+                    <span class="wallet-info-value" id="balanceValue">-</span>
+                </div>
+            </div>
+            
+            <div class="deep-links" id="deepLinks">
+                <h4>📱 Open in Wallet App:</h4>
+                <div class="deep-link-item">
+                    <a href="#" id="metamaskLink" class="deep-link-btn">🦊 MetaMask</a>
+                    <a href="#" id="trustwalletLink" class="deep-link-btn">🛡️ Trust Wallet</a>
+                    <a href="#" id="coinbaseLink" class="deep-link-btn">💙 Coinbase</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">📄 Contract Interaction Test</div>
+            <button class="test-btn secondary" onclick="testContractLoading()">Load Contracts</button>
+            <button class="test-btn secondary" onclick="testContractFunction()">Test Contract Function</button>
+            <div class="test-result" id="contractResult">Contracts will be loaded after wallet connection</div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">🔄 Network & Session Test</div>
+            <button class="test-btn secondary" onclick="testNetworkSwitch()">Test Network Switch</button>
+            <button class="test-btn secondary" onclick="testSessionPersistence()">Test Session Persistence</button>
+            <div class="test-result" id="networkResult">Network and session tests</div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">🧪 Browser-Specific Tests</div>
+            <button class="test-btn secondary" onclick="runBrowserSpecificTests()">Run Browser-Specific Tests</button>
+            <div class="test-result" id="browserTestResult">Tests will be customized based on your browser type</div>
+        </div>
+    </div>
+
+    <!-- Web3.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    
+    <script type="module">
+        import { walletConnectService } from '../services/wallet-connect-service.js';
+        
+        let walletService = null;
+        let testResults = {
+            service: false,
+            connection: false,
+            contracts: false,
+            browserSpecific: false
+        };
+        
+        // Initialize on page load
+        window.addEventListener('load', async () => {
+            try {
+                await initializeTests();
+            } catch (error) {
+                console.error('Test initialization failed:', error);
+            }
+        });
+        
+        async function initializeTests() {
+            console.log('🧪 Initializing comprehensive wallet tests...');
+            
+            // Set up global functions for onclick handlers
+            window.testWalletConnectService = testWalletConnectService;
+            window.testWalletConnection = testWalletConnection;
+            window.testContractLoading = testContractLoading;
+            window.testContractFunction = testContractFunction;  
+            window.testNetworkSwitch = testNetworkSwitch;
+            window.testSessionPersistence = testSessionPersistence;
+            window.runBrowserSpecificTests = runBrowserSpecificTests;
+            
+            // Initial environment detection
+            updateEnvironmentDetection();
+            
+            // Set up wallet service event listeners
+            setupWalletEventListeners();
+            
+            console.log('✅ Test initialization complete');
+        }
+        
+        function updateEnvironmentDetection() {
+            const userAgent = navigator.userAgent;
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+            const isTablet = /iPad|Android.*tablet/i.test(userAgent);
+            
+            // Detect wallet environment
+            const walletPatterns = {
+                'MetaMask Mobile': /MetaMaskMobile/i,
+                'Trust Wallet': /TrustWallet/i,
+                'SafePal': /SafePal/i,
+                'Coinbase Wallet': /CoinbaseWallet/i,
+                'Rainbow': /Rainbow/i,
+            };
+            
+            let walletEnv = 'Standard Browser';
+            for (const [wallet, pattern] of Object.entries(walletPatterns)) {
+                if (pattern.test(userAgent)) {
+                    walletEnv = wallet + ' Browser';
+                    break;
+                }
+            }
+            
+            // Update UI
+            document.getElementById('browserType').textContent = isTablet ? 'Tablet' : isMobile ? 'Mobile' : 'Desktop';
+            document.getElementById('deviceType').textContent = userAgent.substring(0, 50) + '...';
+            document.getElementById('walletEnvironment').textContent = walletEnv;
+            document.getElementById('ethereumProvider').textContent = typeof window.ethereum !== 'undefined' ? 'Available' : 'Not Available';
+            document.getElementById('connectionStatus').textContent = 'Not Connected';
+        }
+        
+        function setupWalletEventListeners() {
+            window.addEventListener('wallet:connected', (event) => {
+                console.log('Wallet connected:', event.detail);
+                updateConnectionStatus(true, event.detail);
+            });
+            
+            window.addEventListener('wallet:disconnected', () => {
+                console.log('Wallet disconnected');
+                updateConnectionStatus(false);
+            });
+            
+            window.addEventListener('wallet:accountChanged', (event) => {
+                console.log('Account changed:', event.detail);
+                updateAccountInfo(event.detail);
+            });
+            
+            window.addEventListener('wallet:chainChanged', (event) => {
+                console.log('Chain changed:', event.detail);
+                updateNetworkInfo(event.detail);
+            });
+        }
+        
+        async function testWalletConnectService() {
+            const result = document.getElementById('serviceResult');
+            result.innerHTML = '<div class="loading"></div>Testing WalletConnect service...';
+            
+            try {
+                // Initialize the wallet service
+                walletService = walletConnectService;
+                
+                // Wait for initialization
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                const info = walletService.getConnectionInfo();
+                
+                result.className = 'test-result result-success';
+                result.innerHTML = `✅ WalletConnect Service Initialized
+Browser Type: ${info.browserType}
+Wallet Type: ${info.walletType || 'None detected'}
+Connection: ${info.isConnected ? 'Connected' : 'Not connected'}
+Contracts: ${info.contracts.length} loaded`;
+                
+                testResults.service = true;
+                
+                // Update environment detection with service info
+                document.getElementById('browserType').textContent = info.browserType;
+                document.getElementById('walletEnvironment').textContent = info.walletType || 'None';
+                document.getElementById('connectionStatus').textContent = info.isConnected ? 'Connected' : 'Not Connected';
+                
+            } catch (error) {
+                result.className = 'test-result result-error';
+                result.innerHTML = `❌ Service initialization failed: ${error.message}`;
+                testResults.service = false;
+            }
+        }
+        
+        async function testWalletConnection() {
+            const result = document.getElementById('connectionResult');
+            const connectBtn = document.getElementById('connectBtn');
+            
+            if (!walletService) {
+                result.className = 'test-result result-error';
+                result.innerHTML = '❌ Please initialize WalletConnect service first';
+                return;
+            }
+            
+            if (walletService.isConnected) {
+                // Disconnect
+                try {
+                    result.innerHTML = '<div class="loading"></div>Disconnecting wallet...';
+                    connectBtn.disabled = true;
+                    
+                    await walletService.disconnect();
+                    
+                    result.className = 'test-result result-success';
+                    result.innerHTML = '✅ Wallet disconnected successfully';
+                    connectBtn.textContent = 'Connect Wallet';
+                    connectBtn.disabled = false;
+                    
+                    document.getElementById('walletInfo').style.display = 'none';
+                    document.getElementById('deepLinks').style.display = 'none';
+                    
+                    testResults.connection = false;
+                    
+                } catch (error) {
+                    result.className = 'test-result result-error';
+                    result.innerHTML = `❌ Disconnect failed: ${error.message}`;
+                    connectBtn.disabled = false;
+                }
+                return;
+            }
+            
+            // Connect
+            try {
+                result.innerHTML = '<div class="loading"></div>Connecting wallet...';
+                connectBtn.disabled = true;
+                
+                const connectionResult = await walletService.connect();
+                
+                if (connectionResult.success) {
+                    result.className = 'test-result result-success';
+                    result.innerHTML = `✅ Wallet connected successfully!
+Account: ${connectionResult.account.slice(0, 6)}...${connectionResult.account.slice(-4)}
+Browser: ${connectionResult.browserType}
+Wallet: ${connectionResult.walletType}`;
+                    
+                    connectBtn.textContent = 'Disconnect Wallet';
+                    connectBtn.disabled = false;
+                    
+                    // Show wallet info
+                    await updateWalletInfo();
+                    document.getElementById('walletInfo').style.display = 'block';
+                    
+                    testResults.connection = true;
+                    
+                } else if (connectionResult.requiresWalletApp) {
+                    result.className = 'test-result result-warning';
+                    result.innerHTML = `⚠️ Mobile browser detected - wallet app required
+Instructions: ${connectionResult.instructions.title}
+• ${connectionResult.instructions.steps.join('\n• ')}`;
+                    
+                    // Show deep links
+                    setupDeepLinks(connectionResult.deepLinks);
+                    document.getElementById('deepLinks').style.display = 'block';
+                    
+                    connectBtn.disabled = false;
+                    testResults.connection = false;
+                }
+                
+            } catch (error) {
+                result.className = 'test-result result-error';
+                result.innerHTML = `❌ Connection failed: ${error.message}`;
+                connectBtn.disabled = false;
+                testResults.connection = false;
+            }
+        }
+        
+        async function updateWalletInfo() {
+            try {
+                const account = walletService.currentAccount;
+                const networkNames = {
+                    1: 'Ethereum Mainnet',
+                    56: 'BSC Mainnet',
+                    97: 'BSC Testnet',
+                    137: 'Polygon'
+                };
+                
+                const networkName = networkNames[walletService.networkId] || `Chain ${walletService.networkId}`;
+                const balance = await walletService.getBalance();
+                
+                document.getElementById('accountValue').textContent = `${account.slice(0, 10)}...${account.slice(-8)}`;
+                document.getElementById('networkValue').textContent = networkName;
+                document.getElementById('balanceValue').textContent = `${parseFloat(balance).toFixed(4)} ETH/BNB`;
+                
+            } catch (error) {
+                console.error('Error updating wallet info:', error);
+            }
+        }
+        
+        function setupDeepLinks(deepLinks) {
+            document.getElementById('metamaskLink').href = deepLinks.metamask;
+            document.getElementById('trustwalletLink').href = deepLinks.trustwallet;
+            document.getElementById('coinbaseLink').href = deepLinks.coinbase;
+        }
+        
+        async function testContractLoading() {
+            const result = document.getElementById('contractResult');
+            
+            if (!walletService || !walletService.isConnected) {
+                result.className = 'test-result result-error';
+                result.innerHTML = '❌ Please connect wallet first';
+                return;
+            }
+            
+            try {
+                result.innerHTML = '<div class="loading"></div>Loading contracts...';
+                
+                await walletService.loadContracts();
+                const info = walletService.getConnectionInfo();
+                
+                result.className = 'test-result result-success';
+                result.innerHTML = `✅ Contracts loaded successfully
+Loaded contracts: ${info.contracts.join(', ')}
+Network: Chain ${walletService.networkId}`;
+                
+                testResults.contracts = true;
+                
+            } catch (error) {
+                result.className = 'test-result result-error';
+                result.innerHTML = `❌ Contract loading failed: ${error.message}`;
+                testResults.contracts = false;
+            }
+        }
+        
+        async function testContractFunction() {
+            const result = document.getElementById('contractResult');
+            
+            if (!walletService || !walletService.isConnected) {
+                result.className = 'test-result result-error';
+                result.innerHTML = '❌ Please connect wallet and load contracts first';
+                return;
+            }
+            
+            try {
+                result.innerHTML = '<div class="loading"></div>Testing contract function...';
+                
+                // Test a simple contract call (totalSupply on PRANA token)
+                const totalSupply = await walletService.executeContractFunction('PRANA_TOKEN', 'totalSupply');
+                
+                result.className = 'test-result result-success';
+                result.innerHTML = `✅ Contract function executed successfully
+PRANA Token Total Supply: ${totalSupply}
+Function: totalSupply()`;
+                
+            } catch (error) {
+                result.className = 'test-result result-error';  
+                result.innerHTML = `❌ Contract function failed: ${error.message}`;
+            }
+        }
+        
+        async function testNetworkSwitch() {
+            const result = document.getElementById('networkResult');
+            
+            if (!walletService || !walletService.isConnected) {
+                result.className = 'test-result result-error';
+                result.innerHTML = '❌ Please connect wallet first';
+                return;
+            }
+            
+            try {
+                result.innerHTML = '<div class="loading"></div>Testing network operations...';
+                
+                const currentChain = walletService.networkId;
+                const session = walletService.getStoredSession();
+                
+                result.className = 'test-result result-success';
+                result.innerHTML = `✅ Network & Session Test Complete
+Current Chain: ${currentChain}
+Session Valid: ${session ? 'Yes' : 'No'}
+Session Account: ${session?.account?.slice(0, 6)}...${session?.account?.slice(-4) || 'N/A'}
+Session Age: ${session ? Math.floor((Date.now() - session.timestamp) / 1000) + 's' : 'N/A'}`;
+                
+            } catch (error) {
+                result.className = 'test-result result-error';
+                result.innerHTML = `❌ Network test failed: ${error.message}`;
+            }
+        }
+        
+        async function testSessionPersistence() {
+            const result = document.getElementById('networkResult');
+            
+            try {
+                result.innerHTML = '<div class="loading"></div>Testing session persistence...';
+                
+                const session = walletService?.getStoredSession();
+                const hasProvider = typeof window.ethereum !== 'undefined';
+                const currentAccounts = hasProvider ? await window.ethereum.request({ method: 'eth_accounts' }) : [];
+                
+                result.className = 'test-result result-success';
+                result.innerHTML = `✅ Session Persistence Test Complete
+Stored Session: ${session ? 'Found' : 'None'}
+Browser Session: ${currentAccounts.length > 0 ? 'Active' : 'None'}
+Auto-Connect: ${session && currentAccounts.length > 0 ? 'Will work' : 'Not available'}`;
+                
+            } catch (error) {
+                result.className = 'test-result result-error';
+                result.innerHTML = `❌ Session test failed: ${error.message}`;
+            }
+        }
+        
+        async function runBrowserSpecificTests() {
+            const result = document.getElementById('browserTestResult');
+            
+            try {
+                result.innerHTML = '<div class="loading"></div>Running browser-specific tests...';
+                
+                const info = walletService?.getConnectionInfo() || { browserType: 'unknown' };
+                let testResults = [];
+                
+                switch (info.browserType) {
+                    case 'desktop':
+                        testResults = await runDesktopTests();
+                        break;
+                    case 'mobile-browser':
+                        testResults = await runMobileBrowserTests();
+                        break;
+                    case 'mobile-wallet-browser':
+                        testResults = await runMobileWalletTests();
+                        break;
+                    default:
+                        testResults = ['Browser type detection failed'];
+                }
+                
+                result.className = 'test-result result-success';
+                result.innerHTML = `✅ Browser-Specific Tests Complete
+Browser Type: ${info.browserType}
+Results:
+• ${testResults.join('\n• ')}`;
+                
+                testResults.browserSpecific = true;
+                
+            } catch (error) {
+                result.className = 'test-result result-error';
+                result.innerHTML = `❌ Browser-specific tests failed: ${error.message}`;
+                testResults.browserSpecific = false;
+            }
+        }
+        
+        async function runDesktopTests() {
+            const tests = [];
+            
+            // Test extension detection
+            if (typeof window.ethereum !== 'undefined') {
+                tests.push('✓ Wallet extension detected');
+                
+                if (window.ethereum.isMetaMask) {
+                    tests.push('✓ MetaMask extension confirmed');
+                }
+            } else {
+                tests.push('❌ No wallet extension found');
+            }
+            
+            // Test connection capabilities
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                tests.push(`✓ Account access: ${accounts.length > 0 ? 'Connected' : 'Available'}`);
+            } catch (error) {
+                tests.push('❌ Account access failed');
+            }
+            
+            return tests;
+        }
+        
+        async function runMobileBrowserTests() {
+            const tests = [];
+            
+            // Test mobile environment
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            tests.push(`✓ Mobile environment: ${isMobile ? 'Confirmed' : 'Not detected'}`);
+            
+            // Test touch support
+            const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            tests.push(`✓ Touch support: ${hasTouch ? 'Available' : 'Not available'}`);
+            
+            // Test deep link generation
+            const deepLinks = walletService?.generateDeepLinks() || {};
+            tests.push(`✓ Deep links: ${Object.keys(deepLinks).length} wallets supported`);
+            
+            // Test ethereum provider
+            if (typeof window.ethereum !== 'undefined') {
+                tests.push('⚠️ Ethereum provider found (unusual for mobile browser)');
+            } else {
+                tests.push('✓ No ethereum provider (expected for mobile browser)');
+            }
+            
+            return tests;
+        }
+        
+        async function runMobileWalletTests() {
+            const tests = [];
+            
+            // Test wallet browser detection
+            const userAgent = navigator.userAgent;
+            const walletPatterns = {
+                'MetaMask': /MetaMaskMobile/i,
+                'Trust Wallet': /TrustWallet/i,
+                'SafePal': /SafePal/i,
+                'Coinbase': /CoinbaseWallet/i
+            };
+            
+            let detectedWallet = null;
+            for (const [wallet, pattern] of Object.entries(walletPatterns)) {
+                if (pattern.test(userAgent)) {
+                    detectedWallet = wallet;
+                    tests.push(`✓ ${wallet} mobile browser detected`);
+                    break;
+                }
+            }
+            
+            if (!detectedWallet) {
+                tests.push('❌ No wallet browser pattern detected');
+            }
+            
+            // Test ethereum provider
+            if (typeof window.ethereum !== 'undefined') {
+                tests.push('✓ Ethereum provider available');
+                
+                if (window.ethereum.isMetaMask) {
+                    tests.push('✓ MetaMask provider confirmed');
+                }
+                if (window.ethereum.isTrust) {
+                    tests.push('✓ Trust Wallet provider confirmed');
+                }
+            } else {
+                tests.push('❌ No ethereum provider (wallet browser should have one)');
+            }
+            
+            // Test connection state
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                tests.push(`✓ Account state: ${accounts.length > 0 ? 'Connected' : 'Not connected'}`);
+            } catch (error) {
+                tests.push('❌ Cannot check account state');
+            }
+            
+            return tests;
+        }
+        
+        function updateConnectionStatus(connected, details = null) {
+            document.getElementById('connectionStatus').textContent = connected ? 'Connected' : 'Not Connected';
+            
+            if (connected && details) {
+                updateWalletInfo();
+            }
+        }
+        
+        function updateAccountInfo(account) {
+            if (account) {
+                document.getElementById('accountValue').textContent = `${account.slice(0, 10)}...${account.slice(-8)}`;
+            }
+        }
+        
+        function updateNetworkInfo(chainId) {
+            const networkNames = {
+                '0x1': 'Ethereum Mainnet',
+                '0x38': 'BSC Mainnet',
+                '0x61': 'BSC Testnet',
+                '0x89': 'Polygon'
+            };
+            
+            const networkName = networkNames[chainId] || `Chain ${parseInt(chainId, 16)}`;
+            document.getElementById('networkValue').textContent = networkName;
+        }
+    </script>
+</body>
+</html>

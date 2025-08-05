@@ -1,0 +1,18 @@
+{
+  "note": "DEPRECATED: This file is deprecated. Use src/config/network-config.js for centralized configuration.",
+  "migration": {
+    "from": "deployment-addresses.json",
+    "to": "src/config/network-config.js",
+    "reason": "Centralized configuration with network-based address management"
+  },
+  "network": "bscMainnet",
+  "chainId": 56,
+  "contracts": {
+    "PRANA_TOKEN_ADDRESS": "0x1d603926ef339545537bacb1ee5c051ea05d70cb",
+    "STAKING_CONTRACT_ADDRESS": "0x5dad2def2d09b03e53b54aa246894e6671261fae",
+    "USDT_TOKEN_ADDRESS": "0x55d398326f99059fF775485246999027B3197955",
+    "EXCHANGE_CONTRACT_ADDRESS": "0x8a0388ce345f5cd82c49ae646ac40d3180a28616"
+  },
+  "deployer": "0x5dfC41480463f2aD7E129cD5F2ac8457A0e0aeAA",
+  "timestamp": "2025-01-04T12:00:00.000Z"
+}

@@ -1,0 +1,1109 @@
+/* Admin Panel Styles */
+
+/* Admin Navigation */
+.admin-navbar {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-bottom: 1px solid rgba(255, 153, 51, 0.2);
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.admin-nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 70px;
+}
+
+.admin-nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+}
+
+.admin-nav-logo .logo-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.admin-nav-logo .om-symbol {
+    font-size: 24px;
+    color: #ff9933;
+    margin-right: 12px;
+}
+
+.admin-nav-logo .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.admin-nav-logo .sanskrit-text {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 16px;
+    color: #ff9933;
+}
+
+.admin-nav-logo .english-text {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.admin-nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.admin-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #ccc;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.admin-nav-link:hover {
+    color: #ff9933;
+    background: rgba(255, 153, 51, 0.1);
+}
+
+.admin-nav-link.active {
+    color: #ff9933;
+    background: rgba(255, 153, 51, 0.15);
+}
+
+.admin-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #ff9933;
+}
+
+/* Using shared nav-actions from main.css */
+
+/* Admin Main Content */
+.admin-main {
+    margin-top: 70px;
+    min-height: calc(100vh - 70px);
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+    color: #fff;
+}
+
+.admin-section {
+    display: none;
+    padding: 2rem 0;
+}
+
+.admin-section.active {
+    display: block;
+}
+
+.admin-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.admin-header {
+    margin-bottom: 3rem;
+}
+
+.admin-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.admin-header-text {
+    text-align: left;
+}
+
+.admin-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff9933, #ffaa44);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.admin-header p {
+    font-size: 1.1rem;
+    color: #ccc;
+    margin: 0;
+}
+
+.admin-header-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.admin-status-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.admin-status-message.success {
+    background: rgba(76, 175, 80, 0.2);
+    border: 1px solid rgba(76, 175, 80, 0.4);
+    color: #4caf50;
+}
+
+.admin-status-message.error {
+    background: rgba(244, 67, 54, 0.2);
+    border: 1px solid rgba(244, 67, 54, 0.4);
+    color: #f44336;
+}
+
+.admin-status-message.warning {
+    background: rgba(255, 193, 7, 0.2);
+    border: 1px solid rgba(255, 193, 7, 0.4);
+    color: #ffc107;
+}
+
+/* Admin Stats Grid */
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.admin-stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 153, 51, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.admin-stat-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 153, 51, 0.4);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #fff;
+}
+
+.stat-icon.prana {
+    background: linear-gradient(135deg, #ff9933, #ffaa44);
+}
+
+.stat-icon.usdt {
+    background: linear-gradient(135deg, #26a69a, #4db6ac);
+}
+
+.stat-icon.exchange {
+    background: linear-gradient(135deg, #5c6bc0, #7986cb);
+}
+
+.stat-icon.staking {
+    background: linear-gradient(135deg, #ab47bc, #ba68c8);
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #ccc;
+    font-weight: 500;
+}
+
+.stat-subtext {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 0.25rem;
+}
+
+/* Contract Balance Overview */
+.contract-balances-section {
+    margin-bottom: 3rem;
+}
+
+.contract-balances-section h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #ff9933;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contract-balances-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.contract-balance-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 153, 51, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.contract-balance-card:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 153, 51, 0.4);
+}
+
+.contract-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.contract-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #fff;
+}
+
+.contract-icon.admin {
+    background: linear-gradient(135deg, #9c27b0, #ba68c8);
+}
+
+.contract-info h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+}
+
+.contract-address-short {
+    font-size: 0.8rem;
+    color: #999;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.contract-address-short:hover {
+    color: #ff9933;
+}
+
+.balance-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.balance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.balance-token {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #ccc;
+    font-weight: 500;
+}
+
+.balance-token i {
+    font-size: 16px;
+    color: #ff9933;
+}
+
+.balance-amount {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* Quick Actions */
+.admin-quick-actions {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.admin-quick-actions h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #ff9933;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.quick-action-btn {
+    background: rgba(255, 153, 51, 0.1);
+    border: 1px solid rgba(255, 153, 51, 0.3);
+    border-radius: 12px;
+    padding: 1rem;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.quick-action-btn:hover {
+    background: rgba(255, 153, 51, 0.2);
+    border-color: rgba(255, 153, 51, 0.5);
+    transform: translateY(-2px);
+}
+
+.quick-action-btn i {
+    font-size: 20px;
+    color: #ff9933;
+}
+
+/* Transfer Panels */
+.transfer-panels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.transfer-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 153, 51, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.transfer-panel-full {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 153, 51, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.panel-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.panel-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: #4caf50;
+}
+
+.panel-status i {
+    font-size: 8px;
+}
+
+.transfer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ccc;
+}
+
+.form-select,
+.form-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.form-select:focus,
+.form-input:focus {
+    outline: none;
+    border-color: #ff9933;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.form-input.invalid {
+    border-color: #f44336;
+    background: rgba(244, 67, 54, 0.1);
+}
+
+.form-input.valid {
+    border-color: #4caf50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.input-with-max {
+    position: relative;
+}
+
+.input-with-max input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 12px 60px 12px 12px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.input-with-max input:focus {
+    outline: none;
+    border-color: #ff9933;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.max-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ff9933;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.max-btn:hover {
+    background: #e68a2e;
+}
+
+.balance-info {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+/* Recent Transfers */
+.recent-transfers {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.recent-transfers h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ff9933;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.transfers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.no-transfers {
+    text-align: center;
+    padding: 2rem;
+    color: #999;
+}
+
+.no-transfers i {
+    font-size: 48px;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Token Details */
+.token-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.token-detail-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 153, 51, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.token-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.token-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.token-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.token-icon.usdt {
+    background: linear-gradient(135deg, #26a69a, #4db6ac);
+}
+
+.usdt-symbol {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.token-info h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+}
+
+.token-address {
+    font-size: 0.8rem;
+    color: #999;
+    font-family: 'Courier New', monospace;
+}
+
+.token-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.token-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.token-stat .stat-label {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.token-stat .stat-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* Contract Addresses */
+.contract-addresses {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.contract-addresses h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ff9933;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.addresses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.address-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.address-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #ccc;
+    min-width: 120px;
+}
+
+.address-value {
+    flex: 1;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: #fff;
+    word-break: break-all;
+}
+
+.copy-btn {
+    background: rgba(255, 153, 51, 0.2);
+    border: 1px solid rgba(255, 153, 51, 0.3);
+    border-radius: 6px;
+    padding: 6px 8px;
+    color: #ff9933;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: rgba(255, 153, 51, 0.3);
+    border-color: rgba(255, 153, 51, 0.5);
+}
+
+/* Transaction Filters */
+.transaction-filters {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 150px;
+}
+
+.filter-group label {
+    font-size: 0.8rem;
+    color: #ccc;
+    font-weight: 500;
+}
+
+/* Transactions Table */
+.transactions-table-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.transactions-table th {
+    background: rgba(255, 153, 51, 0.1);
+    color: #ff9933;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 153, 51, 0.2);
+}
+
+.transactions-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.no-transactions-row td {
+    text-align: center;
+    padding: 3rem;
+}
+
+.no-transactions {
+    color: #999;
+}
+
+.no-transactions i {
+    font-size: 48px;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Transaction Pagination */
+.transaction-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.pagination-btn {
+    background: rgba(255, 153, 51, 0.2);
+    border: 1px solid rgba(255, 153, 51, 0.3);
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: #ff9933;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: rgba(255, 153, 51, 0.3);
+    border-color: rgba(255, 153, 51, 0.5);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+/* Liquidity Management */
+.liquidity-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.liquidity-stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 153, 51, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.liquidity-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.liquidity-action-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 153, 51, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.liquidity-action-panel h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.liquidity-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Buttons */
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff9933, #e68a2e);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #e68a2e, #cc7a29);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #4caf50, #45a049);
+    color: #fff;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #45a049, #3d8b40);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #d32f2f, #c62828);
+}
+
+.btn-large {
+    padding: 16px 32px;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .admin-nav-container {
+        padding: 0 1rem;
+    }
+    
+    .admin-nav-menu {
+        display: none;
+    }
+    
+    .admin-container {
+        padding: 0 1rem;
+    }
+    
+    .admin-header h1 {
+        font-size: 2rem;
+    }
+    
+    .admin-header-content {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .admin-header-text {
+        text-align: center;
+    }
+    
+    .admin-header-actions {
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+    
+    .admin-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contract-balances-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .transfer-panels {
+        grid-template-columns: 1fr;
+    }
+    
+    .token-details-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .addresses-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .liquidity-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .transaction-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group {
+        min-width: auto;
+    }
+}
+
+/* Loading and Status Indicators */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-badge.confirmed {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4caf50;
+}
+
+.status-badge.pending {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.status-badge.failed {
+    background: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-section.active {
+    animation: fadeIn 0.5s ease;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 153, 51, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 153, 51, 0.7);
+}

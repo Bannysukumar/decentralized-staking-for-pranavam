@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DApp Integration Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e1a;
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #FF9933, #FFB366);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+        }
+        
+        h1 {
+            color: #FF9933;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+        
+        .test-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .test-title {
+            color: #FF9933;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, #FF9933, #FFB366);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .test-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .test-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .test-result {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            border-left: 4px solid #FF9933;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            white-space: pre-wrap;
+        }
+        
+        .result-success {
+            border-left-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        
+        .result-error {
+            border-left-color: #f44336;
+            background: rgba(244, 67, 54, 0.1);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 153, 51, 0.3);
+            border-radius: 50%;
+            border-top-color: #FF9933;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .environment-info {
+            background: rgba(33, 150, 243, 0.1);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .env-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .env-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .env-label {
+            opacity: 0.8;
+        }
+        
+        .env-value {
+            font-family: monospace;
+            color: #FF9933;
+        }
+        
+        .wallet-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #FF9933, #FFB366);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 153, 51, 0.3);
+            z-index: 1000;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .wallet-toggle-btn {
+                position: static;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="wallet-toggle-btn" id="wallet-btn">
+        <i class="fas fa-wallet"></i> Connect Wallet
+    </button>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">🌟</div>
+            <h1>PRANA DApp Test</h1>
+            <div class="subtitle">Test wallet integration with main DApp functions</div>
+        </div>
+        
+        <div class="environment-info">
+            <div class="env-item">
+                <span class="env-label">Device:</span>
+                <span class="env-value" id="deviceType">-</span>
+            </div>
+            <div class="env-item">
+                <span class="env-label">Browser:</span>
+                <span class="env-value" id="browserType">-</span>
+            </div>
+            <div class="env-item">
+                <span class="env-label">Wallet:</span>
+                <span class="env-value" id="walletType">-</span>
+            </div>
+            <div class="env-item">
+                <span class="env-label">Network:</span>
+                <span class="env-value" id="networkType">-</span>
+            </div>
+        </div>
+        
+        <div class="test-card">
+            <div class="test-title">🔗 Basic Connection Test</div>
+            <button class="test-btn" onclick="testWalletConnection()">Test Wallet Connection</button>
+            <div class="test-result" id="connectionResult">Click button to test wallet connection</div>
+        </div>
+        
+        <div class="test-card">
+            <div class="test-title">✍️ Message Signing Test</div>
+            <button class="test-btn" onclick="testMessageSigning()">Test Message Signing</button>
+            <div class="test-result" id="signingResult">Click button to test message signing</div>
+        </div>
+        
+        <div class="test-card">
+            <div class="test-title">🔄 Network Switch Test</div>
+            <button class="test-btn secondary" onclick="testNetworkSwitch('0x61')">Switch to BSC Testnet</button>
+            <button class="test-btn secondary" onclick="testNetworkSwitch('0x38')">Switch to BSC Mainnet</button>
+            <div class="test-result" id="networkResult">Click button to test network switching</div>
+        </div>
+        
+        <div class="test-card">
+            <div class="test-title">💰 Balance & Account Test</div>
+            <button class="test-btn" onclick="testAccountInfo()">Get Account Info</button>
+            <div class="test-result" id="accountResult">Click button to test account information</div>
+        </div>
+        
+        <div class="test-card">
+            <div class="test-title">📄 Contract Function Tests</div>
+            <button class="test-btn secondary" onclick="testContractCalls()">Test Contract Calls</button>
+            <div class="test-result" id="contractResult">Test contract function calls</div>
+        </div>
+        
+        <div class="test-card">
+            <div class="test-title">🔗 Go to Main DApp</div>
+            <button class="test-btn" onclick="window.location.href='../pages/staking.html'">Open Staking Page</button>
+            <button class="test-btn secondary" onclick="window.location.href='../pages/exchange.html'">Open Exchange Page</button>
+            <div style="font-size: 14px; opacity: 0.7; margin-top: 10px;">
+                Test wallet connection on actual DApp pages
+            </div>
+        </div>
+    </div>
+
+    <!-- Web3.js -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script type="module">
+        import { walletConnectService } from '../services/wallet-connect-service.js';
+        
+        let walletService = null;
+        let currentAccount = null;
+        let isConnected = false;
+        
+        // Initialize on page load
+        window.addEventListener('load', async () => {
+            try {
+                walletService = walletConnectService;
+                detectEnvironment();
+                setupWalletButton();
+                await checkExistingConnection();
+                
+                // Set up global functions
+                window.testWalletConnection = testWalletConnection;
+                window.testMessageSigning = testMessageSigning;
+                window.testNetworkSwitch = testNetworkSwitch;
+                window.testAccountInfo = testAccountInfo;
+                window.testContractCalls = testContractCalls;
+                
+            } catch (error) {
+                console.error('Initialization failed:', error);
+            }
+        });
+        
+        function detectEnvironment() {
+            const ua = navigator.userAgent;
+            
+            // Device type
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+            const isTablet = /iPad|Android.*tablet/i.test(ua);
+            document.getElementById('deviceType').textContent = isTablet ? 'Tablet' : isMobile ? 'Mobile' : 'Desktop';
+            
+            // Browser type
+            let browser = 'Unknown';
+            if (/Chrome/i.test(ua) && !/Edge/i.test(ua)) browser = 'Chrome';
+            else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+            else if (/Firefox/i.test(ua)) browser = 'Firefox';
+            else if (/Edge/i.test(ua)) browser = 'Edge';
+            document.getElementById('browserType').textContent = browser;
+            
+            // Wallet type
+            let wallet = 'None';
+            if (typeof window.ethereum !== 'undefined') {
+                if (window.ethereum.isMetaMask) wallet = 'MetaMask';
+                else if (window.ethereum.isTrust) wallet = 'Trust Wallet';
+                else if (window.ethereum.isCoinbaseWallet) wallet = 'Coinbase Wallet';
+                else wallet = 'Generic Wallet';
+                
+                // Mobile wallet detection
+                if (/MetaMaskMobile/i.test(ua)) wallet += ' Mobile';
+                else if (/TrustWallet/i.test(ua)) wallet = 'Trust Wallet Mobile';
+            }
+            document.getElementById('walletType').textContent = wallet;
+            
+            // Network (will be updated after connection)
+            document.getElementById('networkType').textContent = 'Not Connected';
+        }
+        
+        function setupWalletButton() {
+            const walletBtn = document.getElementById('wallet-btn');
+            if (typeof window.ethereum !== 'undefined') {
+                walletBtn.onclick = toggleWalletConnection;
+            } else {
+                walletBtn.textContent = '❌ No Wallet';
+                walletBtn.disabled = true;
+            }
+        }
+        
+        async function checkExistingConnection() {
+            if (walletService && walletService.isConnected) {
+                await updateConnectionStatus(true);
+            }
+        }
+        
+        async function toggleWalletConnection() {
+            if (isConnected) {
+                await disconnectWallet();
+            } else {
+                await requestWalletConnection();
+            }
+        }
+        
+        async function requestWalletConnection() {
+            try {
+                const connectionResult = await walletService.connect();
+                
+                if (connectionResult.success) {
+                    await updateConnectionStatus(true, connectionResult);
+                } else if (connectionResult.requiresWalletApp) {
+                    alert('Mobile browser detected. Please use a wallet app or open this page in your wallet app browser.');
+                }
+                
+            } catch (error) {
+                console.error('Connection failed:', error);
+                alert('Connection failed: ' + error.message);
+            }
+        }
+        
+        async function disconnectWallet() {
+            try {
+                await walletService.disconnect();
+                await updateConnectionStatus(false);
+            } catch (error) {
+                console.error('Disconnect failed:', error);
+            }
+        }
+        
+        async function updateConnectionStatus(connected, connectionDetails = null) {
+            isConnected = connected;
+            const walletBtn = document.getElementById('wallet-btn');
+            
+            if (connected) {
+                currentAccount = walletService.currentAccount;
+                
+                walletBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Disconnect';
+                walletBtn.style.background = 'linear-gradient(45deg, #dc3545, #c82333)';
+                
+                // Update network info
+                try {
+                    const networkNames = {
+                        1: 'Ethereum Mainnet',
+                        56: 'BSC Mainnet',
+                        97: 'BSC Testnet',
+                        137: 'Polygon'
+                    };
+                    document.getElementById('networkType').textContent = networkNames[walletService.networkId] || `Chain ${walletService.networkId}`;
+                } catch (error) {
+                    document.getElementById('networkType').textContent = 'Error';
+                }
+                
+            } else {
+                currentAccount = null;
+                walletBtn.innerHTML = '<i class="fas fa-wallet"></i> Connect Wallet';
+                walletBtn.style.background = 'linear-gradient(45deg, #FF9933, #FFB366)';
+                document.getElementById('networkType').textContent = 'Not Connected';
+            }
+        }
+        
+        async function testWalletConnection() {
+            const result = document.getElementById('connectionResult');
+            result.innerHTML = '<div class="loading"></div>Testing wallet connection...';
+            
+            try {
+                if (!walletService) {
+                    throw new Error('WalletConnect service not initialized');
+                }
+                
+                if (!walletService.isConnected) {
+                    throw new Error('Wallet not connected');
+                }
+                
+                const info = walletService.getConnectionInfo();
+                const balance = await walletService.getBalance();
+                
+                result.className = 'test-result result-success';
+                result.innerHTML = `✅ Connection Test Passed
+Account: ${info.account.slice(0, 6)}...${info.account.slice(-4)}
+Browser Type: ${info.browserType}
+Wallet Type: ${info.walletType}
+Network: Chain ${info.networkId}
+Balance: ${parseFloat(balance).toFixed(4)} ETH/BNB`;
+                
+            } catch (error) {
+                result.className = 'test-result result-error';
+                result.innerHTML = `❌ Connection Test Failed: ${error.message}`;
+            }
+        }
+        
+        async function testMessageSigning() {
+            const result = document.getElementById('signingResult');
+            result.innerHTML = '<div class="loading"></div>Testing message signing...';
+            
+            try {
+                if (!walletService || !walletService.isConnected) {
+                    throw new Error('Wallet not connected');
+                }
+                
+                const message = `PRANA DApp Test\nTimestamp: ${new Date().toISOString()}\nAccount: ${currentAccount}`;
+                
+                const signature = await window.ethereum.request({
+                    method: 'personal_sign',
+                    params: [message, currentAccount]
+                });
+                
+                result.className = 'test-result result-success';
+                result.innerHTML = `✅ Message signed successfully
+Message: PRANA DApp Test...  
+Signature: ${signature.slice(0, 20)}...${signature.slice(-10)}`;
+                
+            } catch (error) {
+                result.className = 'test-result result-error';
+                result.innerHTML = `❌ Signing failed: ${error.message}`;
+            }
+        }
+        
+        async function testNetworkSwitch(chainId) {
+            const result = document.getElementById('networkResult');
+            result.innerHTML = '<div class="loading"></div>Testing network switch...';
+            
+            try {
+                if (!walletService || !walletService.isConnected) {
+                    throw new Error('Wallet not connected');
+                }
+                
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: chainId }]
+                });
+                
+                const networkNames = {
+                    '0x38': 'BSC Mainnet',
+                    '0x61': 'BSC Testnet'
+                };
+                
+                result.className = 'test-result result-success';
+                result.innerHTML = `✅ Network switched successfully
+New Network: ${networkNames[chainId]}
+Chain ID: ${chainId}`;
+                
+                // Update network info
+                document.getElementById('networkType').textContent = networkNames[chainId];
+                
+            } catch (error) {
+                result.className = 'test-result result-error';
+                result.innerHTML = `❌ Network switch failed: ${error.message}`;
+            }
+        }
+        
+        async function testAccountInfo() {
+            const result = document.getElementById('accountResult');
+            result.innerHTML = '<div class="loading"></div>Getting account information...';
+            
+            try {
+                if (!walletService || !walletService.isConnected) {
+                    throw new Error('Wallet not connected');
+                }
+                
+                const balance = await walletService.getBalance();
+                const info = walletService.getConnectionInfo();
+                
+                // Get additional blockchain info
+                const web3 = new Web3(window.ethereum);
+                const blockNumber = await web3.eth.getBlockNumber();
+                const gasPrice = await web3.eth.getGasPrice();
+                
+                result.className = 'test-result result-success';
+                result.innerHTML = `✅ Account Information Retrieved
+Address: ${info.account.slice(0, 10)}...${info.account.slice(-8)}
+Balance: ${parseFloat(balance).toFixed(6)} ETH/BNB
+Network: Chain ${info.networkId}
+Block Number: ${blockNumber}
+Gas Price: ${web3.utils.fromWei(gasPrice, 'gwei')} Gwei`;
+                
+            } catch (error) {
+                result.className = 'test-result result-error';
+                result.innerHTML = `❌ Failed to get account info: ${error.message}`;
+            }
+        }
+        
+        async function testContractCalls() {
+            const result = document.getElementById('contractResult');
+            result.innerHTML = '<div class="loading"></div>Testing contract interactions...';
+            
+            try {
+                if (!walletService || !walletService.isConnected) {
+                    throw new Error('Wallet not connected');
+                }
+                
+                // Load contracts first
+                await walletService.loadContracts();
+                const info = walletService.getConnectionInfo();
+                
+                if (info.contracts.length === 0) {
+                    throw new Error('No contracts loaded');
+                }
+                
+                // Test a simple contract call
+                let contractResults = [];
+                
+                try {
+                    const totalSupply = await walletService.executeContractFunction('PRANA_TOKEN', 'totalSupply');
+                    contractResults.push(`✅ PRANA Token Total Supply: ${totalSupply}`);
+                } catch (error) {
+                    contractResults.push(`❌ PRANA Token call failed: ${error.message}`);
+                }
+                
+                result.className = 'test-result result-success';
+                result.innerHTML = `✅ Contract Test Complete
+Contracts Loaded: ${info.contracts.length}
+Available: ${info.contracts.join(', ')}
+
+Results:
+${contractResults.join('\n')}`;
+                
+            } catch (error) {
+                result.className = 'test-result result-error';
+                result.innerHTML = `❌ Contract test failed: ${error.message}`;
+            }
+        }
+        
+        // Handle account/network changes
+        if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length === 0) {
+                    updateConnectionStatus(false);
+                } else if (accounts[0] !== currentAccount) {
+                    updateConnectionStatus(true);
+                }
+            });
+            
+            window.ethereum.on('chainChanged', (chainId) => {
+                const networkNames = {
+                    '0x1': 'Ethereum Mainnet',
+                    '0x38': 'BSC Mainnet',
+                    '0x61': 'BSC Testnet',
+                    '0x89': 'Polygon'
+                };
+                document.getElementById('networkType').textContent = networkNames[chainId] || `Chain ${parseInt(chainId, 16)}`;
+            });
+        }
+    </script>
+</body>
+</html>

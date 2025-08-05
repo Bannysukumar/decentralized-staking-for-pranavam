@@ -1,0 +1,93 @@
+{
+  "name": "pranavam-contracts",
+  "version": "1.0.0",
+  "description": "Smart contracts for the Pranavam platform with zero token loss guarantees",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:testnet": "hardhat run scripts/deploy.js --network bscTestnet",
+    "deploy:mainnet": "hardhat run scripts/deploy.js --network bscMainnet",
+    "verify:testnet": "hardhat verify --network bscTestnet",
+    "verify:mainnet": "hardhat verify --network bscMainnet",
+    "coverage": "hardhat coverage",
+    "clean": "hardhat clean",
+    "size": "hardhat size-contracts",
+    "node": "hardhat node",
+    "console": "hardhat console",
+    "gas-report": "REPORT_GAS=true hardhat test",
+    "lint": "solhint 'contracts/**/*.sol'",
+    "lint:fix": "solhint 'contracts/**/*.sol' --fix",
+    "format": "prettier --write 'contracts/**/*.sol' 'test/**/*.js' 'scripts/**/*.js'",
+    "check": "npm run lint && npm run compile && npm run test",
+    "prepare": "npm run compile"
+  },
+  "keywords": [
+    "blockchain",
+    "smart-contracts",
+    "defi",
+    "staking",
+    "exchange",
+    "bsc",
+    "pranavam",
+    "zero-token-loss"
+  ],
+  "author": "Pranavam Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/preset-typescript": "^7.27.1",
+    "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-etherscan": "^3.1.7",
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@typechain/ethers-v5": "^10.2.1",
+    "@typechain/hardhat": "^6.1.6",
+    "@types/chai": "^4.3.5",
+    "@types/jest": "^30.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.19.120",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "babel-jest": "^30.0.5",
+    "chai": "^4.3.7",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.14.0",
+    "hardhat-contract-sizer": "^2.10.0",
+    "hardhat-gas-reporter": "^1.0.9",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
+    "prettier": "^2.8.8",
+    "prettier-plugin-solidity": "^1.1.3",
+    "solhint": "^3.4.1",
+    "solidity-coverage": "^0.8.2",
+    "ts-node": "^10.9.1",
+    "typechain": "^8.1.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.6",
+    "dotenv": "^16.3.1",
+    "next": "^15.4.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pranavam/unified-platform.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pranavam/unified-platform/issues"
+  },
+  "homepage": "https://pranavam.com"
+}

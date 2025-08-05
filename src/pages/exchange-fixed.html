@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, shrink-to-fit=no">
+    <meta name="theme-color" content="#FF9933">
+    <title>PRANA Exchange | Pranavam Platform</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="../assets/images/logo.jpeg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Web3 Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/layout-fix.css">
+    <link rel="stylesheet" href="../styles/theme.css">
+    <link rel="stylesheet" href="../styles/wallet-system.css">
+    <link rel="stylesheet" href="../styles/wallet-buttons.css">
+    <link rel="stylesheet" href="../styles/exchange-simplified.css">
+    <link rel="stylesheet" href="../styles/mobile-responsive.css">
+    
+    <style>
+        /* Ensure menu toggle is visible */
+        .menu-toggle {
+            display: flex !important;
+        }
+        
+        /* Add any page-specific styles here */
+        main {
+            padding-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+        
+        /* Wallet button states */
+        .wallet-toggle-btn.connected {
+            background: #10b981 !important;
+            position: relative;
+        }
+        
+        .wallet-toggle-btn.connected::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border: 2px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.3);
+        }
+        
+        .wallet-toggle-btn.connected:hover {
+            background: #059669 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar glass-nav" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="../assets/images/logo.jpeg" alt="Pranavam Logo" class="logo-image">
+                <span class="om-symbol">ॐ</span>
+                <span class="logo-text">
+                    <span class="sanskrit-text">प्राणवम्</span>
+                    <span class="english-text">Pranavam.ai</span>
+                </span>
+            </a>
+            
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/#overview" class="nav-link">Platform Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/exchange" class="nav-link active">Exchange</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/staking" class="nav-link">Staking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/whitepaper" class="nav-link">Whitepaper</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#architecture" class="nav-link">Architecture</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#economics" class="nav-link">Economics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#staking-tiers" class="nav-link">Staking Tiers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#governance" class="nav-link">Governance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#roadmap" class="nav-link">Roadmap</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin" class="nav-link" style="color: #dc2626; font-weight: 600;">Admin</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="btn btn-primary wallet-toggle-btn" id="wallet-btn" onclick="toggleWallet()" title="Connect Wallet">
+                    <i class="fas fa-wallet"></i>
+                </button>
+                <div class="menu-toggle" id="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main style="padding-top: 80px; min-height: calc(100vh - 80px);">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+            
+            <!-- Header -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1>PRANA Exchange</h1>
+                <p>Swap PRANA ↔ USDT with fixed rate</p>
+            </div>
+
+            <!-- Status Messages -->
+            <div id="error-message" style="display: none; background: #fee; color: #c00; padding: 1rem; margin: 1rem 0; border-radius: 8px;"></div>
+            <div id="success-message" style="display: none; background: #efe; color: #060; padding: 1rem; margin: 1rem 0; border-radius: 8px;"></div>
+
+            <!-- Exchange Interface -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                
+                <!-- Swap Form -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <h2 style="margin-bottom: 1.5rem;">Swap Tokens</h2>
+                    
+                    <!-- Swap Direction Toggle -->
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <div style="display: inline-flex; align-items: center; background: #f8f9fa; padding: 0.75rem; border-radius: 12px; border: 1px solid #e9ecef;">
+                            <span style="font-weight: 600; color: #495057;" id="from-token-label">USDT</span>
+                            <button onclick="swapTokens()" style="background: var(--saffron-primary, #FF9933); border: none; border-radius: 8px; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0 1rem; color: white; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 12px rgba(255, 153, 51, 0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <span style="font-weight: 600; color: #495057;" id="to-token-label">PRANA</span>
+                        </div>
+                    </div>
+
+                    <!-- From Amount -->
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">You Pay</label>
+                        <div style="display: flex; align-items: center; background: white; border: 2px solid #e9ecef; border-radius: 12px; padding: 1rem;">
+                            <input type="number" id="from-amount" placeholder="0.0" style="flex: 1; border: none; outline: none; font-size: 1.125rem; font-weight: 600;">
+                            <span style="font-weight: 600; color: #6c757d; margin-left: 1rem;" id="from-token-symbol">USDT</span>
+                        </div>
+                        <div style="margin-top: 0.5rem; font-size: 0.875rem; color: #666;">
+                            Balance: <span id="from-balance">--</span>
+                        </div>
+                    </div>
+
+                    <!-- To Amount -->
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">You Receive</label>
+                        <div style="display: flex; align-items: center; background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 12px; padding: 1rem;">
+                            <input type="number" id="to-amount" placeholder="0.0" readonly style="flex: 1; border: none; outline: none; font-size: 1.125rem; font-weight: 600; background: transparent;">
+                            <span style="font-weight: 600; color: #6c757d; margin-left: 1rem;" id="to-token-symbol">PRANA</span>
+                        </div>
+                        <div style="margin-top: 0.5rem; font-size: 0.875rem; color: #666;">
+                            Balance: <span id="to-balance">--</span>
+                        </div>
+                    </div>
+
+                    <!-- Hidden token selects for JavaScript compatibility -->
+                    <select id="from-token" style="display: none;">
+                        <option value="USDT" selected>USDT</option>
+                        <option value="PRANA">PRANA</option>
+                    </select>
+                    <select id="to-token" style="display: none;">
+                        <option value="PRANA" selected>PRANA</option>
+                        <option value="USDT">USDT</option>
+                    </select>
+
+                    <!-- Exchange Info -->
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Exchange Rate:</span>
+                            <span id="exchange-rate">1 USDT = 10 PRANA</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Fee:</span>
+                            <span id="fee-amount">1%</span>
+                        </div>
+                    </div>
+
+                    <!-- Swap Button -->
+                    <button id="swap-btn" onclick="executeSwap()" style="width: 100%; padding: 1rem; background: #ff9933; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                        Connect Wallet to Swap
+                    </button>
+                </div>
+
+                <!-- Stats -->
+                <div>
+                    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 1rem;">
+                        <h3>Exchange Stats</h3>
+                        <div style="margin-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                <span>PRANA Reserve:</span>
+                                <span id="prana-reserve">--</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                <span>USDT Reserve:</span>
+                                <span id="usdt-reserve">--</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Total Volume:</span>
+                                <span id="total-volume">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h3>Your Balances</h3>
+                        <div style="margin-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                <span>PRANA:</span>
+                                <span id="user-prana">--</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>USDT:</span>
+                                <span id="user-usdt">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        console.log('🔄 EXCHANGE-FIXED PAGE LOADED');
+        
+        // Handle menu toggle immediately
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📱 DOM loaded, setting up menu toggle');
+            const navToggle = document.getElementById('nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            console.log('📱 Menu elements found:', {navToggle: !!navToggle, navMenu: !!navMenu});
+            
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', function() {
+                    console.log('📱 Menu toggle clicked');
+                    navMenu.classList.toggle('active');
+                    navToggle.classList.toggle('active');
+                });
+                console.log('📱 Menu toggle event listener added');
+            } else {
+                console.error('❌ Menu elements not found!');
+            }
+        });
+    </script>
+    <script type="module">
+        console.log('💰 Loading exchange module script...');
+        
+        import { uiServices } from '../services/UIServiceIntegration.js';
+        
+        let isConnected = false;
+        let currentAccount = null;
+
+        // Initialize
+        async function init() {
+            try {
+                console.log('💰 Initializing exchange...');
+
+                // Clear any cached balance data first
+                clearBalanceCache();
+
+                // Initialize services
+                console.log('💰 Initializing uiServices...');
+                await uiServices.init();
+                console.log('💰 uiServices initialized successfully');
+                
+                // Check if already connected
+                const isConnected = uiServices.isWalletConnected();
+                console.log('💰 Wallet connected status:', isConnected);
+                if (isConnected) {
+                    await handleWalletConnected();
+                }
+                
+                // Load exchange stats
+                console.log('💰 Loading exchange stats...');
+                await loadExchangeStats();
+                console.log('💰 Exchange stats loaded');
+                
+                // Setup input listeners
+                const fromAmountElement = document.getElementById('from-amount');
+                if (fromAmountElement) {
+                    fromAmountElement.addEventListener('input', updateQuote);
+                    console.log('💰 Input listeners setup');
+                } else {
+                    console.error('💰 from-amount element not found');
+                }
+                
+                // Initialize visual token labels
+                initializeTokenLabels();
+                
+                console.log('💰 Exchange initialization complete');
+            } catch (error) {
+                console.error('💰 Exchange initialization error:', error);
+            }
+        }
+
+        // Wallet functions
+        window.toggleWallet = async function() {
+            try {
+                console.log('💰 Wallet toggle clicked, isConnected:', isConnected);
+                console.log('💰 uiServices available:', !!uiServices);
+                
+                if (isConnected) {
+                    console.log('💰 Disconnecting wallet...');
+                    await uiServices.disconnectWallet();
+                    handleWalletDisconnected();
+                } else {
+                    console.log('💰 Attempting to connect wallet...');
+                    const result = await uiServices.connectWallet('metamask');
+                    console.log('💰 Connect result:', result);
+                    if (result && result.success) {
+                        await handleWalletConnected();
+                    } else {
+                        console.error('💰 Connection failed or returned false');
+                        showError('Failed to connect wallet');
+                    }
+                }
+            } catch (error) {
+                console.error('💰 Wallet toggle error:', error);
+                showError('Wallet operation failed: ' + error.message);
+            }
+        };
+
+        async function handleWalletConnected() {
+            try {
+                console.log('💰 Handling wallet connected...');
+                isConnected = true;
+                currentAccount = uiServices.getCurrentAccount();
+                console.log('💰 Current account:', currentAccount);
+                
+                // Update UI - just change button title
+                const walletBtn = document.getElementById('wallet-btn');
+                const swapBtn = document.getElementById('swap-btn');
+                
+                if (walletBtn) {
+                    walletBtn.title = `Connected: ${currentAccount.slice(0,6)}...${currentAccount.slice(-4)}`;
+                    walletBtn.classList.add('connected');
+                    console.log('💰 Updated wallet button title and added connected class');
+                }
+                
+                if (swapBtn) {
+                    swapBtn.textContent = 'Enter Amount to Swap';
+                    console.log('💰 Updated swap button text');
+                }
+                
+                // Load balances
+                console.log('💰 Loading balances...');
+                await loadBalances();
+                console.log('💰 Balances loaded');
+                
+                hideError();
+                console.log('💰 Wallet connected successfully');
+            } catch (error) {
+                console.error('💰 Error handling wallet connected:', error);
+            }
+        }
+
+        function handleWalletDisconnected() {
+            console.log('💰 Handling wallet disconnected...');
+            isConnected = false;
+            currentAccount = null;
+            
+            // Update UI - reset button title and remove connected class
+            const walletBtn = document.getElementById('wallet-btn');
+            const swapBtn = document.getElementById('swap-btn');
+            
+            if (walletBtn) {
+                walletBtn.title = 'Connect Wallet';
+                walletBtn.classList.remove('connected');
+                console.log('💰 Removed connected class from wallet button');
+            }
+            
+            if (swapBtn) {
+                swapBtn.textContent = 'Connect Wallet to Swap';
+            }
+            
+            // Clear balances
+            document.getElementById('from-balance').textContent = '--';
+            document.getElementById('to-balance').textContent = '--';
+            document.getElementById('user-prana').textContent = '--';
+            document.getElementById('user-usdt').textContent = '--';
+            
+            console.log('💰 Wallet disconnected successfully');
+        }
+
+        // Clear any cached balance data
+        function clearBalanceCache() {
+            console.log('🗑️ Clearing balance cache...');
+            // Clear any localStorage items that might cache balances
+            const keysToRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && (key.includes('balance') || key.includes('prana') || key.includes('token'))) {
+                    keysToRemove.push(key);
+                }
+            }
+            keysToRemove.forEach(key => {
+                localStorage.removeItem(key);
+                console.log('🗑️ Removed cached item:', key);
+            });
+        }
+
+        // Load functions
+        async function loadBalances() {
+            if (!isConnected) return;
+            
+            try {
+                console.log('🔄 Loading user balances...');
+                const pranaBalance = await uiServices.getTokenBalance('pranaToken');
+                const usdtBalance = await uiServices.getTokenBalance('usdtToken');
+                
+                console.log('💰 Raw balances - PRANA:', pranaBalance, 'USDT:', usdtBalance);
+                
+                const pranaFormatted = formatNumber(pranaBalance);
+                const usdtFormatted = formatNumber(usdtBalance);
+                
+                console.log('💰 Formatted balances - PRANA:', pranaFormatted, 'USDT:', usdtFormatted);
+                
+                // Update balance displays
+                document.getElementById('user-prana').textContent = pranaFormatted + ' PRANA';
+                document.getElementById('user-usdt').textContent = usdtFormatted + ' USDT';
+                
+                // Update input balances
+                updateBalanceDisplay();
+            } catch (error) {
+                console.error('Failed to load balances:', error);
+                // Set zero values on error
+                document.getElementById('user-prana').textContent = '0.00 PRANA';
+                document.getElementById('user-usdt').textContent = '0.00 USDT';
+            }
+        }
+
+        async function loadExchangeStats() {
+            try {
+                // Use the proper exchange service method
+                const reserves = await uiServices.getExchangeReserves();
+                
+                document.getElementById('prana-reserve').textContent = formatNumber(reserves.pranaReserve) + ' PRANA';
+                document.getElementById('usdt-reserve').textContent = formatNumber(reserves.usdtReserve) + ' USDT';
+                
+                // Calculate total volume based on reserves (since totalUSDTVolume doesn't exist)
+                // This gives an estimate of total value locked instead of volume
+                const totalValue = parseFloat(reserves.usdtReserve) * 2; // Assume equal value in both tokens
+                document.getElementById('total-volume').textContent = '$' + formatNumber(totalValue);
+                
+            } catch (error) {
+                console.error('Failed to load exchange stats:', error);
+                document.getElementById('prana-reserve').textContent = '-- PRANA';
+                document.getElementById('usdt-reserve').textContent = '-- USDT';
+                document.getElementById('total-volume').textContent = '$--';
+            }
+        }
+
+        // Initialize token labels on page load
+        function initializeTokenLabels() {
+            const fromToken = document.getElementById('from-token').value;
+            const toToken = document.getElementById('to-token').value;
+            
+            document.getElementById('from-token-label').textContent = fromToken;
+            document.getElementById('to-token-label').textContent = toToken;
+            document.getElementById('from-token-symbol').textContent = fromToken;
+            document.getElementById('to-token-symbol').textContent = toToken;
+        }
+
+        // Token swap functions
+        window.swapTokens = function() {
+            const fromToken = document.getElementById('from-token');
+            const toToken = document.getElementById('to-token');
+            
+            // Swap the hidden select values
+            const temp = fromToken.value;
+            fromToken.value = toToken.value;
+            toToken.value = temp;
+            
+            // Update the visual labels
+            const fromLabel = document.getElementById('from-token-label');
+            const toLabel = document.getElementById('to-token-label');
+            const fromSymbol = document.getElementById('from-token-symbol');
+            const toSymbol = document.getElementById('to-token-symbol');
+            
+            const tempLabel = fromLabel.textContent;
+            fromLabel.textContent = toLabel.textContent;
+            toLabel.textContent = tempLabel;
+            
+            fromSymbol.textContent = fromToken.value;
+            toSymbol.textContent = toToken.value;
+            
+            // Clear amounts
+            document.getElementById('from-amount').value = '';
+            document.getElementById('to-amount').value = '';
+            
+            // Update balance display
+            updateBalanceDisplay();
+        };
+
+        function updateBalanceDisplay() {
+            if (!isConnected) return;
+            
+            const fromToken = document.getElementById('from-token').value;
+            const toToken = document.getElementById('to-token').value;
+            
+            const pranaBalance = document.getElementById('user-prana').textContent;
+            const usdtBalance = document.getElementById('user-usdt').textContent;
+            
+            document.getElementById('from-balance').textContent = fromToken === 'PRANA' ? pranaBalance : usdtBalance;
+            document.getElementById('to-balance').textContent = toToken === 'PRANA' ? pranaBalance : usdtBalance;
+        }
+
+        function updateQuote() {
+            const fromAmount = parseFloat(document.getElementById('from-amount').value) || 0;
+            const fromToken = document.getElementById('from-token').value;
+            
+            if (fromAmount <= 0) {
+                document.getElementById('to-amount').value = '';
+                document.getElementById('swap-btn').textContent = isConnected ? 'Enter Amount to Swap' : 'Connect Wallet to Swap';
+                return;
+            }
+            
+            // Calculate output (fixed rate: 1 USDT = 10 PRANA)
+            let toAmount;
+            if (fromToken === 'USDT') {
+                toAmount = fromAmount * 10 * 0.99; // 1% fee
+            } else {
+                toAmount = fromAmount / 10 * 0.99; // 1% fee
+            }
+            
+            document.getElementById('to-amount').value = toAmount.toFixed(6);
+            
+            if (isConnected) {
+                document.getElementById('swap-btn').textContent = 'Swap Now';
+            }
+        }
+
+        window.executeSwap = async function() {
+            if (!isConnected) {
+                await toggleWallet();
+                return;
+            }
+            
+            const fromAmount = document.getElementById('from-amount').value;
+            const fromToken = document.getElementById('from-token').value;
+            
+            if (!fromAmount || parseFloat(fromAmount) <= 0) {
+                showError('Please enter a valid amount');
+                return;
+            }
+            
+            try {
+                showLoading('Processing swap...');
+                
+                let result;
+                if (fromToken === 'USDT') {
+                    result = await uiServices.buyPRANA(fromAmount);
+                } else {
+                    result = await uiServices.sellPRANA(fromAmount);
+                }
+                
+                if (result.success) {
+                    hideLoading();
+                    showSuccess('Swap completed successfully!');
+                    
+                    // Clear form
+                    document.getElementById('from-amount').value = '';
+                    document.getElementById('to-amount').value = '';
+                    
+                    // Reload data
+                    await loadBalances();
+                    await loadExchangeStats();
+                } else {
+                    hideLoading();
+                    showError('Swap failed: ' + result.error);
+                }
+                
+            } catch (error) {
+                hideLoading();
+                showError('Swap failed: ' + error.message);
+            }
+        };
+
+        // Utility functions
+        function formatNumber(num) {
+            return parseFloat(num).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 6
+            });
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => errorDiv.style.display = 'none', 5000);
+        }
+
+        function hideError() {
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            setTimeout(() => successDiv.style.display = 'none', 5000);
+        }
+
+        function showLoading(message) {
+            document.getElementById('swap-btn').disabled = true;
+            document.getElementById('swap-btn').textContent = message;
+        }
+
+        function hideLoading() {
+            document.getElementById('swap-btn').disabled = false;
+            updateQuote();
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>

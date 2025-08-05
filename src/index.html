@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRANA - DeFi Platform</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/styles/main.css" as="style">
+    <link rel="preload" href="/config/network-config.js" as="script" type="module">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/theme.css">
+    <link rel="stylesheet" href="/styles/mobile-responsive.css">
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="PRANA - Decentralized Finance Platform with Staking and Exchange">
+    <meta name="keywords" content="DeFi, Staking, Exchange, Blockchain, Web3, BSC">
+    <meta property="og:title" content="PRANA - DeFi Platform">
+    <meta property="og:description" content="Stake, Exchange, and Earn with PRANA DeFi Platform">
+    
+    <!-- Security headers -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        connect-src 'self' wss: https: blob:;
+        script-src 'self' 'unsafe-inline' 'unsafe-eval';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data: https:;
+        font-src 'self' data:;
+    ">
+</head>
+<body>
+    <!-- Page content will be loaded here -->
+    <div id="app">
+        <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <p>Loading PRANA Platform...</p>
+        </div>
+    </div>
+
+    <!-- Critical inline styles -->
+    <style>
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff9933;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <!-- Router script to handle SPA navigation -->
+    <script type="module">
+        // Simple SPA router for the main entry point
+        function navigateToPage() {
+            const path = window.location.pathname;
+            const hash = window.location.hash;
+            
+            // Route to appropriate page
+            if (path === '/' || path === '/index.html') {
+                if (hash === '#staking' || path.includes('staking')) {
+                    window.location.replace('/staking');
+                } else if (hash === '#exchange' || path.includes('exchange')) {
+                    window.location.replace('/exchange');
+                } else if (hash === '#whitepaper' || path.includes('whitepaper')) {
+                    window.location.replace('/whitepaper');
+                } else if (hash === '#admin' || path.includes('admin')) {
+                    window.location.replace('/admin');
+                } else {
+                    // Default to staking page for main entry
+                    window.location.replace('/staking');
+                }
+            }
+        }
+        
+        // Navigate on load
+        navigateToPage();
+        
+        // Handle browser navigation
+        window.addEventListener('popstate', navigateToPage);
+    </script>
+
+    <!-- Environment detection -->
+    <script>
+        window.PRANA_ENV = {
+            isDevelopment: import.meta.env.DEV,
+            buildTime: '__BUILD_TIME__',
+            version: '__PRANA_VERSION__'
+        };
+    </script>
+</body>
+</html>

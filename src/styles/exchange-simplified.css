@@ -1,0 +1,266 @@
+/* Simplified Exchange Page Styles - Following Basic Theme */
+
+/* Remove all complex custom styling and use theme-consistent approach */
+
+/* Mobile-first responsive fixes */
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .swap-interface {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .swap-section {
+    margin: 12px 0;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .token-input {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .token-select {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  
+  .amount-input {
+    width: 100%;
+  }
+}
+
+/* Swap Interface Styling */
+.swap-interface {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.swap-section {
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    background: var(--bg-secondary);
+    border: var(--border-light);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.section-header label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.balance-info {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.balance-info span {
+    color: var(--saffron-primary);
+    font-weight: 600;
+}
+
+/* Token Input */
+.token-input {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    background: var(--bg-card);
+    border: var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+}
+
+.token-input input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    outline: none;
+}
+
+.token-input input::placeholder {
+    color: var(--text-muted);
+}
+
+.token-select {
+    min-width: 120px;
+}
+
+.token-select select {
+    border: none;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Swap Arrow */
+.swap-arrow-container {
+    display: flex;
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.swap-arrow {
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-white);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-md);
+}
+
+.swap-arrow:hover {
+    transform: rotate(180deg) scale(1.1);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Quote Section */
+.quote-section {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    border: var(--border-light);
+}
+
+.quote-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.quote-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-xs) 0;
+    font-size: 0.9rem;
+}
+
+.quote-row span:first-child {
+    color: var(--text-secondary);
+}
+
+.quote-row span:last-child {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Slippage Section */
+.slippage-section {
+    margin: var(--spacing-lg) 0;
+}
+
+.slippage-section label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.slippage-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.slippage-preset {
+    background: var(--bg-secondary);
+    border: var(--border-light);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.slippage-preset:hover,
+.slippage-preset.active {
+    background: var(--saffron-primary);
+    color: var(--text-white);
+    border-color: var(--saffron-primary);
+}
+
+.slippage-controls input {
+    border: var(--border-light);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    width: 80px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Wallet Status */
+.wallet-status {
+    text-align: center;
+    padding: var(--spacing-md);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    border: var(--border-light);
+    color: var(--text-secondary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .token-input {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        align-items: stretch;
+    }
+    
+    .token-select {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .token-select select {
+        width: 100%;
+    }
+    
+    .slippage-controls {
+        flex-wrap: wrap;
+    }
+    
+    .quote-section {
+        margin: var(--spacing-md) 0;
+    }
+}
+
+/* Remove all the overly complex styling */
+.exchange-container,
+.stats-panel,
+.transaction-history,
+.transaction-item,
+.stat-card,
+.network-display {
+    /* These will use the standard theme styling instead */
+}

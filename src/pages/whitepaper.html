@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Pranavam Whitepaper">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#FF9933">
+    <title>Whitepaper | Pranavam Research Paper</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Read the comprehensive Pranavam research paper outlining our revolutionary AI-powered DeFi ecosystem, tokenomics, and technological architecture.">
+    <meta name="keywords" content="Pranavam, whitepaper, research paper, DeFi, AI, blockchain, tokenomics, PRANA token">
+    <meta name="author" content="Pranavam.ai">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Pranavam Whitepaper - AI-Powered DeFi Research Paper">
+    <meta property="og:description" content="Comprehensive research paper on Pranavam's AI-powered DeFi ecosystem and PRANA token economics.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pranavam.ai/whitepaper">
+    <meta property="og:image" content="/assets/images/logo.jpeg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pranavam Whitepaper - AI-Powered DeFi Research Paper">
+    <meta name="twitter:description" content="Comprehensive research paper on Pranavam's AI-powered DeFi ecosystem and PRANA token economics.">
+    <meta name="twitter:image" content="/assets/images/logo.jpeg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Web3 Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/layout-fix.css">
+    <link rel="stylesheet" href="../styles/theme.css">
+    <link rel="stylesheet" href="../styles/wallet-buttons.css">
+    <link rel="stylesheet" href="../styles/mobile-responsive.css">
+    
+    <style>
+        .whitepaper-main {
+            padding: 120px 0 80px 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .whitepaper-hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .whitepaper-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF9933, #FF6B35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .whitepaper-hero .sanskrit-subtitle {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .whitepaper-hero .description {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            line-height: 1.6;
+        }
+
+        .download-section {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #FF9933, #FF6B35);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 153, 51, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 153, 51, 0.4);
+            color: white;
+        }
+
+        .download-btn i {
+            font-size: 1.2rem;
+        }
+
+        .whitepaper-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .paper-embed {
+            width: 100%;
+            height: 800px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .paper-summary {
+            background: #f8fafc;
+            border-left: 4px solid #FF9933;
+            padding: 30px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 40px;
+        }
+
+        .paper-summary h3 {
+            color: #FF9933;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .paper-summary ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .paper-summary li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .paper-summary li:before {
+            content: "✓";
+            color: #FF9933;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .paper-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-card h4 {
+            color: #FF9933;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .citation-info {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 40px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .citation-info h4 {
+            color: #334155;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .citation-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #475569;
+            border: 1px solid #d1d5db;
+        }
+
+        @media (max-width: 768px) {
+            .whitepaper-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .download-section {
+                flex-direction: column;
+            }
+            
+            .whitepaper-content {
+                padding: 20px;
+            }
+            
+            .paper-embed {
+                height: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar glass-nav" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="../assets/images/logo.jpeg" alt="Pranavam Logo" class="logo-image">
+                <span class="om-symbol">ॐ</span>
+                <span class="logo-text">
+                    <span class="sanskrit-text">प्राणवम्</span>
+                    <span class="english-text">Pranavam.ai</span>
+                </span>
+            </a>
+            
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/#overview" class="nav-link">Platform Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/exchange" class="nav-link">Exchange</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/staking" class="nav-link">Staking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/whitepaper" class="nav-link active">Whitepaper</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#architecture" class="nav-link">Architecture</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#economics" class="nav-link">Economics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#staking-tiers" class="nav-link">Staking Tiers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#governance" class="nav-link">Governance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#roadmap" class="nav-link">Roadmap</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="btn btn-primary wallet-toggle-btn" id="wallet-btn" title="Connect Wallet">
+                    <i class="fas fa-wallet"></i>
+                </button>
+                <div class="menu-toggle" id="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Whitepaper Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title">Pranavam Whitepaper</h1>
+                <div class="sanskrit-subtitle">प्राणवम् शोध पत्र</div>
+                <p class="page-subtitle">
+                    Comprehensive research paper detailing our revolutionary AI-powered DeFi ecosystem, 
+                    Sanskrit-grounded artificial intelligence, and the PRANA token economic model.
+                </p>
+                <div class="hero-actions" style="margin-top: var(--spacing-lg);">
+                    <a href="../assets/pranavam_research_paper.pdf" target="_blank" class="btn btn-primary btn-large">
+                        <i class="fas fa-download"></i>
+                        Download PDF
+                    </a>
+                    <button onclick="scrollToEmbed()" class="btn btn-secondary btn-large">
+                        <i class="fas fa-eye"></i>
+                        View Online
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Paper Summary Section -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Research Paper Highlights</h2>
+                </div>
+                <div class="content-card">
+                    <div class="card-content">
+                        <ul class="feature-list">
+                            <li>Sanskrit-grounded artificial intelligence framework</li>
+                            <li>Karaka Pravāha workflow system for verified reasoning</li>
+                            <li>Mānava Pañchāyat consensus mechanism</li>
+                            <li>PRANA token economics and utility model</li>
+                            <li>Decentralized AI governance architecture</li>
+                            <li>Implementation roadmap and technical specifications</li>
+                            <li>Spiritual and philosophical foundations</li>
+                            <li>Economic sustainability model</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PDF Embed Section -->
+        <section class="content-section">
+            <div class="container">
+                <div class="content-card">
+                    <div class="card-content">
+                        <div id="pdf-viewer-container" style="width: 100%; min-height: 800px; background: var(--bg-secondary); border-radius: var(--radius-md); position: relative;">
+                            <div id="pdf-placeholder" style="display: flex; align-items: center; justify-content: center; height: 800px;">
+                                <div style="text-align: center;">
+                                    <i class="fas fa-file-pdf" style="font-size: 4rem; color: var(--saffron-primary); margin-bottom: var(--spacing-md);"></i>
+                                    <h3 style="color: var(--text-primary); margin-bottom: var(--spacing-md);">Research Paper Ready to View</h3>
+                                    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">Click below to load the PDF viewer</p>
+                                    <button onclick="loadPDFViewer()" class="btn btn-primary">
+                                        <i class="fas fa-eye"></i>
+                                        Load PDF Viewer
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="pdf-controls" style="display: none; padding: 10px; background: var(--bg-card); border-bottom: 1px solid var(--border-light); text-align: center;">
+                                <button onclick="previousPage()" class="btn btn-secondary btn-sm" style="margin-right: 10px;">
+                                    <i class="fas fa-chevron-left"></i> Previous
+                                </button>
+                                <span id="page-info" style="margin: 0 20px; color: var(--text-primary); font-weight: 600;">
+                                    Page <span id="page-num">1</span> of <span id="page-count">-</span>
+                                </span>
+                                <button onclick="nextPage()" class="btn btn-secondary btn-sm" style="margin-left: 10px;">
+                                    Next <i class="fas fa-chevron-right"></i>
+                                </button>
+                                <button onclick="zoomIn()" class="btn btn-secondary btn-sm" style="margin-left: 20px;">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>
+                                <button onclick="zoomOut()" class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-search-minus"></i>
+                                </button>
+                            </div>
+                            <div id="pdf-canvas-container" style="display: none; overflow: auto; height: 750px; text-align: center; padding: 20px;">
+                                <canvas id="pdf-canvas" style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 8px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Paper Sections Overview -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Paper Sections Overview</h2>
+                </div>
+                <div class="card-grid grid-2">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3 class="card-title">Executive Summary</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>
+                                Overview of Pranavam's vision to create a Sanskrit-grounded decentralized AI platform 
+                                that bridges ancient wisdom with modern technology.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h3 class="card-title">Technical Architecture</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>
+                                Detailed explanation of the Karaka Pravāha workflow system, consensus mechanisms, 
+                                and integration with blockchain technology.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <h3 class="card-title">Token Economics</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>
+                                Comprehensive analysis of PRANA token utility, distribution model, staking rewards, 
+                                and economic sustainability mechanisms.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="card-title">Governance Model</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>
+                                Description of the Mānava Pañchāyat consensus system and community-driven 
+                                decision-making processes.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-road"></i>
+                            </div>
+                            <h3 class="card-title">Implementation Roadmap</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>
+                                Staged development plan from formal proofs to spiritual evolution, 
+                                including timeline and milestones.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
+                            <h3 class="card-title">Risk Analysis</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>
+                                Comprehensive assessment of technical, economic, and regulatory risks 
+                                with mitigation strategies.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Citation Information Section -->
+        <section class="content-section">
+            <div class="container">
+                <div class="content-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <h3 class="card-title">Citation Information</h3>
+                    </div>
+                    <div class="card-content">
+                        <p class="mb-md">To cite this research paper in academic work:</p>
+                        <div class="citation-text" style="background: var(--bg-secondary); padding: var(--spacing-md); border-radius: var(--radius-md); font-family: monospace; font-size: 0.9rem; color: var(--text-secondary); border: 1px solid var(--border-light);">
+                            Pranavam Team. (2024). "Pranavam 2.0: Sanskrit-Grounded Decentralized AI Platform - 
+                            A Comprehensive Framework for Verified Intelligence and Spiritual Computing." 
+                            Pranavam.ai Research Paper. Retrieved from https://pranavam.ai/whitepaper
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="om-symbol">ॐ</span>
+                        <span class="brand-text">
+                            <span class="sanskrit-text">प्राणवम्</span>
+                            <span class="english-text">Pranavam.ai</span>
+                        </span>
+                    </div>
+                    <p>Sanskrit-grounded decentralized AI platform for verified intelligence.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Platform</h4>
+                        <a href="/staking">Staking</a>
+                        <a href="/exchange">Exchange</a>
+                        <a href="/whitepaper">Whitepaper</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Community</h4>
+                        <a href="#" target="_blank">Discord</a>
+                        <a href="#" target="_blank">Telegram</a>
+                        <a href="#" target="_blank">Twitter</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Resources</h4>
+                        <a href="../assets/pranavam_research_paper.pdf" target="_blank">Research Paper</a>
+                        <a href="#" target="_blank">Documentation</a>
+                        <a href="#" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Pranavam.ai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Removed duplicate web3 scripts -->
+    
+    <script type="module">
+        // Import services
+        import { uiServices } from '../services/UIServiceIntegration.js';
+        import { SharedWalletUI } from '../services/SharedWalletUI.js';
+        
+        // Application-specific UI handlers for Whitepaper page
+        class WhitepaperUI {
+            constructor() {
+                this.uiServices = uiServices;
+                this.sharedWalletUI = null;
+                this.initialized = false;
+                
+                // Initialize after a short delay to ensure DOM is ready
+                setTimeout(() => {
+                    this.initialize();
+                }, 100);
+            }
+            
+            async initialize() {
+                try {
+                    console.log('📄 Initializing whitepaper UI...');
+                    
+                    // Check DOM elements
+                    const walletBtn = document.getElementById('wallet-btn');
+                    const navToggle = document.getElementById('nav-toggle');
+                    const navMenu = document.getElementById('nav-menu');
+                    
+                    console.log('📄 DOM elements found:', {
+                        walletBtn: !!walletBtn,
+                        navToggle: !!navToggle,
+                        navMenu: !!navMenu
+                    });
+                    
+                    if (!walletBtn) {
+                        console.error('❌ Wallet button not found!');
+                        return;
+                    }
+                    
+                    // Initialize SharedWalletUI
+                    this.sharedWalletUI = new SharedWalletUI(this.uiServices);
+                    this.sharedWalletUI.init();
+                    
+                    // Setup navigation toggle
+                    if (navToggle && navMenu) {
+                        navToggle.addEventListener('click', () => {
+                            navMenu.classList.toggle('active');
+                            navToggle.classList.toggle('active');
+                            console.log('📱 Menu toggled:', navMenu.classList.contains('active'));
+                        });
+                    }
+                    
+                    // Setup wallet event listeners
+                    document.addEventListener('prana:walletConnected', (event) => {
+                        console.log('💰 Wallet connected in whitepaper:', event.detail);
+                    });
+                    
+                    document.addEventListener('prana:walletDisconnected', (event) => {
+                        console.log('💰 Wallet disconnected in whitepaper:', event.detail);
+                    });
+                    
+                    // Check for existing wallet connection
+                    if (this.uiServices.isWalletConnected()) {
+                        console.log('💰 Found existing wallet connection');
+                    } else {
+                        console.log('💰 No existing wallet connection');
+                    }
+                    
+                    // Add manual test functionality for debugging
+                    window.testWalletConnect = async () => {
+                        console.log('🧪 Manual wallet connection test...');
+                        try {
+                            const result = await this.uiServices.connectWallet('metamask');
+                            console.log('🧪 Manual connect result:', result);
+                        } catch (error) {
+                            console.error('🧪 Manual connect error:', error);
+                        }
+                    };
+                    
+                    window.testWalletDisconnect = async () => {
+                        console.log('🧪 Manual wallet disconnection test...');
+                        try {
+                            await this.uiServices.disconnectWallet();
+                            console.log('🧪 Manual disconnect completed');
+                        } catch (error) {
+                            console.error('🧪 Manual disconnect error:', error);
+                        }
+                    };
+                    
+                    this.initialized = true;
+                    console.log('✅ Whitepaper UI initialized successfully');
+                    console.log('🧪 Debug functions available: testWalletConnect(), testWalletDisconnect()');
+                    
+                } catch (error) {
+                    console.error('❌ Failed to initialize whitepaper UI:', error);
+                }
+            }
+        }
+        
+        // Initialize the whitepaper UI when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                window.whitepaperUI = new WhitepaperUI();
+                console.log('✅ Whitepaper interface initialized successfully');
+            } catch (error) {
+                console.error('❌ Failed to initialize whitepaper interface:', error);
+            }
+        });
+
+        // PDF.js configuration
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+        let scale = 1.5;
+        let canvas = null;
+        let ctx = null;
+        
+        function scrollToEmbed() {
+            const pdfContainer = document.getElementById('pdf-viewer-container');
+            if (pdfContainer) {
+                pdfContainer.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+                // Auto-load PDF when scrolling to view
+                setTimeout(() => {
+                    if (document.getElementById('pdf-placeholder').style.display !== 'none') {
+                        loadPDFViewer();
+                    }
+                }, 500);
+            }
+        }
+        
+        // Make functions globally available
+        window.scrollToEmbed = scrollToEmbed;
+        
+        function renderPage(num) {
+            if (!pdfDoc) return;
+            
+            pageRendering = true;
+            
+            // Using promise to fetch the page
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({scale: scale});
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                // Render PDF page into canvas context
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                const renderTask = page.render(renderContext);
+                
+                // Wait for rendering to finish
+                renderTask.promise.then(function() {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        // New page rendering is pending
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+            
+            // Update page counters
+            document.getElementById('page-num').textContent = num;
+        }
+        
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+        
+        function previousPage() {
+            if (pageNum <= 1) {
+                return;
+            }
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+        
+        function nextPage() {
+            if (pageNum >= pdfDoc.numPages) {
+                return;
+            }
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
+        
+        function zoomIn() {
+            scale = scale * 1.2;
+            queueRenderPage(pageNum);
+        }
+        
+        function zoomOut() {
+            scale = scale / 1.2;
+            queueRenderPage(pageNum);
+        }
+        
+        function loadPDFViewer() {
+            // Hide placeholder, show controls and canvas
+            document.getElementById('pdf-placeholder').style.display = 'none';
+            document.getElementById('pdf-controls').style.display = 'block';
+            document.getElementById('pdf-canvas-container').style.display = 'block';
+            
+            // Show loading state
+            const canvasContainer = document.getElementById('pdf-canvas-container');
+            canvasContainer.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: var(--saffron-primary);"></i><p style="margin-top: 20px; color: var(--text-secondary);">Loading PDF...</p></div>';
+            
+            // Asynchronously download PDF
+            const loadingTask = pdfjsLib.getDocument('../assets/pranavam_research_paper.pdf');
+            loadingTask.promise.then(function(pdf) {
+                pdfDoc = pdf;
+                document.getElementById('page-count').textContent = pdf.numPages;
+                
+                // Reset canvas container
+                canvasContainer.innerHTML = '<canvas id="pdf-canvas" style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 8px;"></canvas>';
+                
+                // Get new canvas reference
+                canvas = document.getElementById('pdf-canvas');
+                ctx = canvas.getContext('2d');
+                
+                // Initial page rendering
+                renderPage(pageNum);
+            }, function (reason) {
+                // PDF loading error
+                console.error(reason);
+                canvasContainer.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--error-color);"></i><p style="margin-top: 20px; color: var(--text-secondary);">Error loading PDF. Please try downloading instead.</p></div>';
+            });
+        }
+        
+        // Make PDF functions globally available
+        window.loadPDFViewer = loadPDFViewer;
+        window.previousPage = previousPage;
+        window.nextPage = nextPage;
+        window.zoomIn = zoomIn;
+        window.zoomOut = zoomOut;
+        
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (pdfDoc) {
+                if (e.key === 'ArrowLeft') {
+                    previousPage();
+                } else if (e.key === 'ArrowRight') {
+                    nextPage();
+                } else if (e.key === '+' || e.key === '=') {
+                    zoomIn();
+                } else if (e.key === '-') {
+                    zoomOut();
+                }
+            }
+        });
+    </script>
+    
+    <!-- SharedWalletUI integrated into main script above -->
+</body>
+</html>

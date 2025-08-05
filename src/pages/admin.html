@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, shrink-to-fit=no">
+    <meta name="theme-color" content="#FF9933">
+    <title>PRANA Admin Panel | Pranavam Platform</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Web3 and Web3Modal Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../styles/mobile-responsive.css">
+
+    <style>
+        /* Optimized Admin Styles */
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #ff9933, #ff6b35);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff9933;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ff9933;
+            box-shadow: 0 0 0 3px rgba(255, 153, 51, 0.1);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #ff9933;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-success {
+            background: #059669;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .access-control {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .status-connected {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-disconnected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .loading {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .fee-display {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+        }
+
+        .fee-display div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .fee-display div:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-note {
+            font-size: 0.9em;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <h1><i class="fas fa-cogs"></i> PRANA Admin Panel</h1>
+            <p>Manage tokens, contracts, and platform operations</p>
+        </div>
+
+        <!-- Access Control -->
+        <div class="access-control" id="access-control">
+            <div class="status-indicator status-disconnected" id="admin-status">
+                <i class="fas fa-times-circle"></i>
+                <span>Admin wallet not connected</span>
+            </div>
+            <div style="margin-top: 1rem;">
+                <button class="btn btn-primary" onclick="connectWallet()">
+                    <i class="fas fa-wallet"></i> Connect Admin Wallet
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard (Hidden until connected) -->
+        <div id="admin-dashboard" style="display: none;">
+            
+            <!-- Token Overview -->
+            <div class="admin-section">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-pie"></i> Token Overview
+                </h2>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="prana-total-supply">--</span>
+                        <div class="stat-label">PRANA Total Supply</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="admin-prana-balance">--</span>
+                        <div class="stat-label">Admin PRANA Balance</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="admin-usdt-balance">--</span>
+                        <div class="stat-label">Admin <span id="usdt-label">USDT</span> Balance</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="exchange-rate">--</span>
+                        <div class="stat-label">Current Exchange Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contract Reserves -->
+            <div class="admin-section">
+                <h2 class="section-title">
+                    <i class="fas fa-warehouse"></i> Contract Reserves
+                </h2>
+                <div class="admin-grid">
+                    <div>
+                        <h3><i class="fas fa-exchange-alt"></i> Exchange Contract</h3>
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <span class="stat-value" id="exchange-prana">--</span>
+                                <div class="stat-label">PRANA Reserve</div>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="exchange-usdt">--</span>
+                                <div class="stat-label"><span id="usdt-label-2">USDT</span> Reserve</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3><i class="fas fa-piggy-bank"></i> Staking Contract</h3>
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <span class="stat-value" id="staking-total">--</span>
+                                <div class="stat-label">Total Staked</div>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="staking-users-count">--</span>
+                                <div class="stat-label">Total Stakers</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Token Operations -->
+            <div class="admin-grid">
+                <!-- PRANA Operations -->
+                <div class="admin-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-coins"></i> PRANA Operations
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Transfer PRANA</label>
+                        <input type="text" id="prana-transfer-to" class="form-input" placeholder="Recipient address">
+                        <input type="number" id="prana-transfer-amount" class="form-input" placeholder="Amount" style="margin-top: 0.5rem;">
+                        <button class="btn btn-primary" onclick="transferPRANA()" style="margin-top: 0.5rem; width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Transfer PRANA
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Burn PRANA</label>
+                        <input type="number" id="burn-amount" class="form-input" placeholder="Amount to burn">
+                        <button class="btn btn-danger" onclick="burnPRANA()" style="margin-top: 0.5rem; width: 100%;">
+                            <i class="fas fa-fire"></i> Burn PRANA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- USDT Operations -->
+                <div class="admin-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-dollar-sign"></i> <span id="usdt-label-3">USDT</span> Operations
+                    </h2>
+                    
+                    <div class="form-group" id="mint-section">
+                        <label class="form-label">Mint <span id="usdt-label-4">USDT</span> (Testnet Only)</label>
+                        <input type="text" id="mint-to" class="form-input" placeholder="Recipient address">
+                        <input type="number" id="mint-amount" class="form-input" placeholder="Amount" style="margin-top: 0.5rem;">
+                        <button class="btn btn-success" onclick="mintUSDT()" style="margin-top: 0.5rem; width: 100%;">
+                            <i class="fas fa-plus"></i> Mint <span id="usdt-label-5">USDT</span>
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Transfer <span id="usdt-label-6">USDT</span></label>
+                        <input type="text" id="usdt-transfer-to" class="form-input" placeholder="Recipient address">
+                        <input type="number" id="usdt-transfer-amount" class="form-input" placeholder="Amount" style="margin-top: 0.5rem;">
+                        <button class="btn btn-primary" onclick="transferUSDT()" style="margin-top: 0.5rem; width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Transfer <span id="usdt-label-7">USDT</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Contract Management -->
+                <div class="admin-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-cogs"></i> Contract Management
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Add Liquidity to Exchange</label>
+                        <input type="number" id="liquidity-prana" class="form-input" placeholder="PRANA amount">
+                        <input type="number" id="liquidity-usdt" class="form-input" placeholder="USDT amount" style="margin-top: 0.5rem;">
+                        <button class="btn btn-secondary" onclick="addLiquidity()" style="margin-top: 0.5rem; width: 100%;">
+                            <i class="fas fa-plus"></i> Add Liquidity
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Current Trading Fees</label>
+                        <div class="fee-display" style="margin-bottom: 1rem;">
+                            <div>Buy Fee: <span id="current-buy-fee">--</span>%</div>
+                            <div>Sell Fee: <span id="current-sell-fee">--</span>%</div>
+                        </div>
+                        <label class="form-label">Update Trading Fees</label>
+                        <input type="number" id="new-exchange-rate" class="form-input" placeholder="Fee percentage (e.g., 1.5 for 1.5%)" step="0.1" min="0" max="10">
+                        <button class="btn btn-secondary" onclick="updateTradingFees()" style="margin-top: 0.5rem; width: 100%;">
+                            <i class="fas fa-edit"></i> Update Trading Fees
+                        </button>
+                        <small class="form-note" style="margin-top: 0.5rem; display: block; color: #666;">
+                            Note: Exchange rate is fixed at 1000 PRANA = 1 USDT. Only trading fees can be adjusted.
+                        </small>
+                    </div>
+                </div>
+
+                <!-- System Operations -->
+                <div class="admin-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-tools"></i> System Operations
+                    </h2>
+                    
+                    <div class="btn-group" style="flex-direction: column;">
+                        <button class="btn btn-secondary" onclick="refreshData()">
+                            <i class="fas fa-sync-alt"></i> Refresh All Data
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportData()">
+                            <i class="fas fa-download"></i> Export Platform Data
+                        </button>
+                        <button class="btn btn-warning" onclick="emergencyWithdrawTokens()">
+                            <i class="fas fa-exclamation-triangle"></i> Emergency Withdraw Tokens
+                        </button>
+                        <button class="btn btn-danger" onclick="emergencyPause()" id="pause-button">
+                            <i class="fas fa-pause"></i> Emergency Pause
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div id="error-message" class="error-message"></div>
+        <div id="success-message" class="success-message"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { uiServices } from '../services/UIServiceIntegration.js';
+        
+        let isAdminConnected = false;
+
+        // Initialize
+        async function initializeAdmin() {
+            try {
+                // Use the global singleton instance
+                await uiServices.init();
+                
+                // Wait a moment for services to settle
+                setTimeout(async () => {
+                    // Check if already connected
+                    if (uiServices.isWalletConnected()) {
+                        console.log('Wallet already connected, updating UI...');
+                        await handleWalletConnected();
+                    } else {
+                        console.log('No wallet connected, showing connect button...');
+                    }
+                }, 1000);
+            } catch (error) {
+                console.error('Admin panel initialization error:', error);
+                showError('Failed to initialize admin panel: ' + error.message);
+            }
+        }
+
+        // Wallet Connection
+        window.connectWallet = async function() {
+            try {
+                const result = await uiServices.connectWallet('metamask');
+                if (result.success) {
+                    await handleWalletConnected();
+                }
+            } catch (error) {
+                showError('Failed to connect wallet: ' + error.message);
+            }
+        };
+
+        window.disconnectWallet = async function() {
+            try {
+                await uiServices.disconnectWallet();
+                
+                // Reset UI to initial state
+                const accessControl = document.getElementById('access-control');
+                accessControl.innerHTML = `
+                    <div class="status-indicator status-disconnected">
+                        <i class="fas fa-times-circle"></i>
+                        <span>Admin wallet not connected</span>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn btn-primary" onclick="connectWallet()">
+                            <i class="fas fa-wallet"></i> Connect Admin Wallet
+                        </button>
+                    </div>
+                `;
+                
+                // Hide dashboard
+                document.getElementById('admin-dashboard').style.display = 'none';
+                isAdminConnected = false;
+                
+                showSuccess('Wallet disconnected successfully');
+            } catch (error) {
+                showError('Failed to disconnect wallet: ' + error.message);
+            }
+        };
+
+        async function handleWalletConnected() {
+            const account = uiServices.getCurrentAccount();
+            const chainId = uiServices.serviceManager.walletService.chainId;
+            
+            // Update UI - replace entire access control section with connected status
+            const accessControl = document.getElementById('access-control');
+            accessControl.innerHTML = `
+                <div class="status-indicator status-connected">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Connected: ${account.slice(0,6)}...${account.slice(-4)} (Chain: ${chainId})</span>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <button class="btn btn-secondary" onclick="disconnectWallet()">
+                        <i class="fas fa-sign-out-alt"></i> Disconnect Wallet
+                    </button>
+                </div>
+            `;
+            
+            // Show dashboard
+            document.getElementById('admin-dashboard').style.display = 'block';
+            
+            // Update network-specific labels
+            const isTestnet = chainId === 97;
+            const usdtLabel = isTestnet ? 'mUSDT' : 'USDT';
+            document.querySelectorAll('[id^="usdt-label"]').forEach(el => {
+                el.textContent = usdtLabel;
+            });
+            
+            // Hide mint section on mainnet
+            if (!isTestnet) {
+                document.getElementById('mint-section').style.display = 'none';
+            }
+            
+            isAdminConnected = true;
+            await loadContractStats();
+        }
+
+        // Load Contract Statistics
+        async function loadContractStats() {
+            try {
+                const account = uiServices.getCurrentAccount();
+                const chainId = uiServices.serviceManager.walletService.chainId;
+                
+                // PRANA Token Stats
+                const pranaSupply = await uiServices.serviceManager.contractService.executeCall('pranaToken', 'totalSupply', []);
+                const pranaSupplyFormatted = uiServices.serviceManager.walletService.web3.utils.fromWei(pranaSupply, 'ether');
+                document.getElementById('prana-total-supply').textContent = formatNumber(pranaSupplyFormatted) + ' PRANA';
+
+                // Admin balances (direct contract calls for reliability)
+                console.log('🔍 Debug - Current account:', account);
+                console.log('🔍 Debug - PRANA contract address:', uiServices.serviceManager.contractService.getContractAddress('pranaToken'));
+                
+                const adminPranaBalance = await uiServices.serviceManager.contractService.executeCall('pranaToken', 'balanceOf', [account]);
+                console.log('🔍 Debug - Raw PRANA balance (Wei):', adminPranaBalance);
+                
+                const adminPranaFormatted = uiServices.serviceManager.walletService.web3.utils.fromWei(adminPranaBalance, 'ether');
+                console.log('🔍 Debug - Formatted PRANA balance:', adminPranaFormatted);
+                console.log('🔍 Debug - FormatNumber result:', formatNumber(adminPranaFormatted));
+                
+                document.getElementById('admin-prana-balance').textContent = formatNumber(adminPranaFormatted) + ' PRANA';
+
+                const adminUsdtBalance = await uiServices.serviceManager.contractService.executeCall('usdtToken', 'balanceOf', [account]);
+                // Both testnet and mainnet USDT/mUSDT use 6 decimals
+                const decimals = 6;
+                let adminUsdtFormatted;
+                
+                // Manual conversion for 6 decimals
+                const divisor = uiServices.serviceManager.walletService.web3.utils.toBN(10).pow(uiServices.serviceManager.walletService.web3.utils.toBN(decimals));
+                adminUsdtFormatted = uiServices.serviceManager.walletService.web3.utils.toBN(adminUsdtBalance).div(divisor).toString();
+                
+                const usdtLabel = chainId === 97 ? 'mUSDT' : 'USDT';
+                document.getElementById('admin-usdt-balance').textContent = formatNumber(adminUsdtFormatted) + ' ' + usdtLabel;
+                
+                // Debug logging removed - balance display is now working correctly
+                // 1000000000000000 raw = 1,000,000,000 (1B) with 6 decimals
+
+                // Exchange stats - use direct contract calls
+                try {
+                    const pranaReserveRaw = await uiServices.serviceManager.contractService.executeCall('pranaExchange', 'pranaReserve', []);
+                    const usdtReserveRaw = await uiServices.serviceManager.contractService.executeCall('pranaExchange', 'usdtReserve', []);
+                    
+                    const pranaReserveFormatted = uiServices.serviceManager.walletService.web3.utils.fromWei(pranaReserveRaw, 'ether');
+                    const usdtReserveFormatted = uiServices.serviceManager.walletService.web3.utils.toBN(usdtReserveRaw).div(
+                        uiServices.serviceManager.walletService.web3.utils.toBN(10).pow(uiServices.serviceManager.walletService.web3.utils.toBN(6))
+                    ).toString();
+                    
+                    document.getElementById('exchange-prana').textContent = formatNumber(pranaReserveFormatted) + ' PRANA';
+                    document.getElementById('exchange-usdt').textContent = formatNumber(usdtReserveFormatted) + ' ' + usdtLabel;
+                } catch (error) {
+                    console.warn('Exchange reserves not available:', error.message);
+                    document.getElementById('exchange-prana').textContent = 'N/A';
+                    document.getElementById('exchange-usdt').textContent = 'N/A';
+                }
+
+                // Exchange rate (hardcoded to 1000:1 = 0.001 USDT per PRANA)
+                try {
+                    const rate = await uiServices.serviceManager.contractService.executeCall('pranaExchange', 'getExchangeRate', []);
+                    // getExchangeRate() returns EXCHANGE_RATE_BASE (1000) which represents 0.1 USDT per PRANA
+                    const rateFormatted = parseFloat(rate) / 10000; // rate/RATE_PRECISION = 1000/10000 = 0.1 USDT per PRANA
+                    document.getElementById('exchange-rate').textContent = rateFormatted.toFixed(4) + ' ' + usdtLabel + '/PRANA (FIXED)';
+                } catch (error) {
+                    console.warn('Exchange rate not available:', error.message);
+                    document.getElementById('exchange-rate').textContent = '0.1000 ' + usdtLabel + '/PRANA (FIXED)';
+                }
+
+                // Current trading fees
+                try {
+                    const buyFee = await uiServices.serviceManager.contractService.executeCall('pranaExchange', 'buyFee', []);
+                    const sellFee = await uiServices.serviceManager.contractService.executeCall('pranaExchange', 'sellFee', []);
+                    
+                    // Fees are in basis points (100 = 1%)
+                    const buyFeePercent = (parseFloat(buyFee) / 100).toFixed(2);
+                    const sellFeePercent = (parseFloat(sellFee) / 100).toFixed(2);
+                    
+                    document.getElementById('current-buy-fee').textContent = buyFeePercent;
+                    document.getElementById('current-sell-fee').textContent = sellFeePercent;
+                } catch (error) {
+                    console.warn('Trading fees not available:', error.message);
+                    document.getElementById('current-buy-fee').textContent = '1.00';
+                    document.getElementById('current-sell-fee').textContent = '1.00';
+                }
+
+                // Staking stats
+                const stakingInfo = await uiServices.getStakingInfo();
+                document.getElementById('staking-total').textContent = formatNumber(stakingInfo.totalStaked) + ' PRANA';
+                document.getElementById('staking-users-count').textContent = stakingInfo.totalStakers + ' users';
+
+                // Update pause button status
+                await updatePauseButtonStatus();
+
+            } catch (error) {
+                console.error('Error loading contract stats:', error);
+                showError('Failed to load contract statistics');
+            }
+        }
+
+        // Token Operations
+        window.transferPRANA = async function() {
+            const to = document.getElementById('prana-transfer-to').value;
+            const amount = document.getElementById('prana-transfer-amount').value;
+            
+            if (!to || !amount) {
+                showError('Please enter recipient address and amount');
+                return;
+            }
+
+            try {
+                const amountWei = uiServices.serviceManager.walletService.web3.utils.toWei(amount, 'ether');
+                await uiServices.serviceManager.contractService.executeTransaction('pranaToken', 'transfer', [to, amountWei]);
+                showSuccess('PRANA transfer successful');
+                await loadContractStats();
+            } catch (error) {
+                console.error('Transfer error details:', error);
+                showError('Transfer failed: ' + error.message);
+            }
+        };
+
+        window.transferUSDT = async function() {
+            const to = document.getElementById('usdt-transfer-to').value;
+            const amount = document.getElementById('usdt-transfer-amount').value;
+            
+            if (!to || !amount) {
+                showError('Please enter recipient address and amount');
+                return;
+            }
+
+            try {
+                // Both testnet and mainnet USDT/mUSDT use 6 decimals
+                const decimals = 6;
+                const amountWei = uiServices.serviceManager.walletService.web3.utils.toBN(amount).mul(
+                    uiServices.serviceManager.walletService.web3.utils.toBN(10).pow(uiServices.serviceManager.walletService.web3.utils.toBN(decimals))
+                );
+
+                await uiServices.serviceManager.contractService.executeTransaction('usdtToken', 'transfer', [to, amountWei]);
+                showSuccess('USDT transfer successful');
+                await loadContractStats();
+            } catch (error) {
+                showError('Transfer failed: ' + error.message);
+            }
+        };
+
+        window.mintUSDT = async function() {
+            const to = document.getElementById('mint-to').value;
+            const amount = document.getElementById('mint-amount').value;
+            
+            if (!to || !amount) {
+                showError('Please enter recipient address and amount');
+                return;
+            }
+
+            try {
+                // mUSDT uses 6 decimals, not 18
+                const decimals = 6;
+                const amountWei = uiServices.serviceManager.walletService.web3.utils.toBN(amount).mul(
+                    uiServices.serviceManager.walletService.web3.utils.toBN(10).pow(uiServices.serviceManager.walletService.web3.utils.toBN(decimals))
+                );
+                await uiServices.serviceManager.contractService.executeTransaction('usdtToken', 'mint', [to, amountWei]);
+                showSuccess('USDT minted successfully');
+                await loadContractStats();
+            } catch (error) {
+                showError('Mint failed: ' + error.message);
+            }
+        };
+
+        window.burnPRANA = async function() {
+            const amount = document.getElementById('burn-amount').value;
+            
+            if (!amount) {
+                showError('Please enter amount to burn');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to burn ${amount} PRANA? This cannot be undone.`)) {
+                return;
+            }
+
+            try {
+                const amountWei = uiServices.serviceManager.walletService.web3.utils.toWei(amount, 'ether');
+                await uiServices.serviceManager.contractService.executeTransaction('pranaToken', 'burn', [amountWei]);
+                showSuccess('PRANA burned successfully');
+                await loadContractStats();
+            } catch (error) {
+                showError('Burn failed: ' + error.message);
+            }
+        };
+
+        // Contract Management
+        window.addLiquidity = async function() {
+            const pranaAmount = document.getElementById('liquidity-prana').value;
+            const usdtAmount = document.getElementById('liquidity-usdt').value;
+            
+            if (!pranaAmount || !usdtAmount) {
+                showError('Please enter both PRANA and USDT amounts');
+                return;
+            }
+
+            try {
+                const chainId = uiServices.serviceManager.walletService.chainId;
+                
+                // Convert amounts to wei
+                const pranaWei = uiServices.serviceManager.walletService.web3.utils.toWei(pranaAmount, 'ether');
+                
+                // USDT uses 6 decimals
+                const usdtWei = uiServices.serviceManager.walletService.web3.utils.toBN(usdtAmount).mul(
+                    uiServices.serviceManager.walletService.web3.utils.toBN(10).pow(uiServices.serviceManager.walletService.web3.utils.toBN(6))
+                );
+
+                // First approve tokens if needed
+                const account = uiServices.getCurrentAccount();
+                const exchangeAddress = uiServices.serviceManager.contractService.getContractAddress('pranaExchange');
+                
+                // Check and approve PRANA tokens
+                const pranaAllowance = await uiServices.serviceManager.contractService.executeCall('pranaToken', 'allowance', [account, exchangeAddress]);
+                if (uiServices.serviceManager.walletService.web3.utils.toBN(pranaAllowance).lt(uiServices.serviceManager.walletService.web3.utils.toBN(pranaWei))) {
+                    await uiServices.serviceManager.contractService.executeTransaction('pranaToken', 'approve', [exchangeAddress, pranaWei]);
+                }
+                
+                // Check and approve USDT tokens
+                const usdtAllowance = await uiServices.serviceManager.contractService.executeCall('usdtToken', 'allowance', [account, exchangeAddress]);
+                if (uiServices.serviceManager.walletService.web3.utils.toBN(usdtAllowance).lt(uiServices.serviceManager.walletService.web3.utils.toBN(usdtWei))) {
+                    await uiServices.serviceManager.contractService.executeTransaction('usdtToken', 'approve', [exchangeAddress, usdtWei]);
+                }
+
+                // Add liquidity
+                await uiServices.serviceManager.contractService.executeTransaction('pranaExchange', 'addLiquidity', [pranaWei, usdtWei]);
+                
+                showSuccess('Liquidity added successfully');
+                await loadContractStats();
+                
+                // Clear inputs
+                document.getElementById('liquidity-prana').value = '';
+                document.getElementById('liquidity-usdt').value = '';
+            } catch (error) {
+                console.error('Add liquidity error:', error);
+                showError('Add liquidity failed: ' + error.message);
+            }
+        };
+
+        window.updateTradingFees = async function() {
+            const newRate = document.getElementById('new-exchange-rate').value;
+            
+            if (!newRate) {
+                showError('Please enter new fee percentage (0-1000 = 0-10%)');
+                return;
+            }
+
+            try {
+                // Convert percentage to basis points (e.g., 1% = 100 basis points)
+                const feeInBasisPoints = Math.floor(parseFloat(newRate) * 100);
+                
+                if (feeInBasisPoints < 0 || feeInBasisPoints > 1000) {
+                    showError('Fee must be between 0% and 10%');
+                    return;
+                }
+
+                // Set both buy and sell fees to the same value
+                await uiServices.serviceManager.contractService.executeTransaction('pranaExchange', 'setFees', [feeInBasisPoints, feeInBasisPoints]);
+                
+                showSuccess('Trading fees updated successfully');
+                await loadContractStats();
+                
+                // Clear input
+                document.getElementById('new-exchange-rate').value = '';
+            } catch (error) {
+                console.error('Update fees error:', error);
+                showError('Update fees failed: ' + error.message);
+            }
+        };
+
+        // Utility functions
+        function showLoading(message = 'Loading...') {
+            // Create loading overlay if it doesn't exist
+            let overlay = document.getElementById('loading-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'loading-overlay';
+                overlay.innerHTML = `
+                    <div class="loading-content">
+                        <div class="spinner"></div>
+                        <div class="loading-text">${message}</div>
+                    </div>
+                `;
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.7);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10000;
+                `;
+                overlay.querySelector('.loading-content').style.cssText = `
+                    background: white;
+                    padding: 2rem;
+                    border-radius: 12px;
+                    text-align: center;
+                    min-width: 200px;
+                `;
+                overlay.querySelector('.spinner').style.cssText = `
+                    width: 40px;
+                    height: 40px;
+                    border: 4px solid #f3f3f3;
+                    border-top: 4px solid #ff9933;
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                    margin: 0 auto 1rem;
+                `;
+                // Add spinner animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                `;
+                document.head.appendChild(style);
+                document.body.appendChild(overlay);
+            } else {
+                overlay.querySelector('.loading-text').textContent = message;
+                overlay.style.display = 'flex';
+            }
+        }
+
+        function hideLoading() {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+        }
+
+        // System Operations
+        window.refreshData = async function() {
+            try {
+                showLoading('Refreshing all data...');
+                
+                // Reload all contract statistics
+                await loadContractStats();
+                
+                // Refresh wallet connection status
+                if (uiServices && uiServices.serviceManager && uiServices.serviceManager.walletService) {
+                    await uiServices.serviceManager.walletService.updateUI();
+                }
+                
+                hideLoading();
+                showSuccess('All data refreshed successfully');
+            } catch (error) {
+                hideLoading();
+                console.error('Refresh data error:', error);
+                showError('Failed to refresh data: ' + error.message);
+            }
+        };
+
+        window.exportData = async function() {
+            try {
+                showLoading('Generating platform data export...');
+                
+                // Collect all platform data
+                const platformData = {
+                    timestamp: new Date().toISOString(),
+                    network: {
+                        name: 'BSC Testnet',
+                        chainId: 97
+                    },
+                    contracts: {
+                        pranaToken: uiServices.serviceManager.contractService.getContractAddress('pranaToken'),
+                        usdtToken: uiServices.serviceManager.contractService.getContractAddress('usdtToken'),
+                        pranaExchange: uiServices.serviceManager.contractService.getContractAddress('pranaExchange'),
+                        pranaStaking: uiServices.serviceManager.contractService.getContractAddress('pranaStaking')
+                    },
+                    balances: {},
+                    reserves: {},
+                    stats: {},
+                    fees: {}
+                };
+
+                // Get contract balances
+                try {
+                    const adminAddress = await uiServices.serviceManager.walletService.getSelectedAccount();
+                    platformData.adminAddress = adminAddress;
+                    
+                    // Admin balances
+                    const pranaBalance = await uiServices.serviceManager.contractService.executeCall('pranaToken', 'balanceOf', [adminAddress]);
+                    const usdtBalance = await uiServices.serviceManager.contractService.executeCall('usdtToken', 'balanceOf', [adminAddress]);
+                    
+                    platformData.balances.admin = {
+                        prana: uiServices.serviceManager.walletService.web3.utils.fromWei(pranaBalance, 'ether'),
+                        usdt: uiServices.serviceManager.walletService.web3.utils.toBN(usdtBalance).div(
+                            uiServices.serviceManager.walletService.web3.utils.toBN(10).pow(uiServices.serviceManager.walletService.web3.utils.toBN(6))
+                        ).toString()
+                    };
+
+                    // Exchange reserves
+                    const exchangeAddress = uiServices.serviceManager.contractService.getContractAddress('pranaExchange');
+                    const exchangePranaBalance = await uiServices.serviceManager.contractService.executeCall('pranaToken', 'balanceOf', [exchangeAddress]);
+                    const exchangeUsdtBalance = await uiServices.serviceManager.contractService.executeCall('usdtToken', 'balanceOf', [exchangeAddress]);
+                    
+                    platformData.reserves.exchange = {
+                        prana: uiServices.serviceManager.walletService.web3.utils.fromWei(exchangePranaBalance, 'ether'),
+                        usdt: uiServices.serviceManager.walletService.web3.utils.toBN(exchangeUsdtBalance).div(
+                            uiServices.serviceManager.walletService.web3.utils.toBN(10).pow(uiServices.serviceManager.walletService.web3.utils.toBN(6))
+                        ).toString()
+                    };
+
+                    // Exchange stats
+                    const exchangeRate = await uiServices.serviceManager.contractService.executeCall('pranaExchange', 'getExchangeRate', []);
+                    const buyFee = await uiServices.serviceManager.contractService.executeCall('pranaExchange', 'buyFee', []);
+                    const sellFee = await uiServices.serviceManager.contractService.executeCall('pranaExchange', 'sellFee', []);
+                    
+                    platformData.stats.exchange = {
+                        rate: exchangeRate,
+                        rateFormatted: (parseFloat(exchangeRate) / 10000).toFixed(4) + ' USDT/PRANA'
+                    };
+
+                    platformData.fees = {
+                        buyFee: buyFee,
+                        sellFee: sellFee,
+                        buyFeePercent: (parseFloat(buyFee) / 100).toFixed(2) + '%',
+                        sellFeePercent: (parseFloat(sellFee) / 100).toFixed(2) + '%'
+                    };
+
+                    // Staking info
+                    try {
+                        const stakingInfo = await uiServices.getStakingInfo();
+                        platformData.stats.staking = stakingInfo;
+                    } catch (error) {
+                        platformData.stats.staking = { error: error.message };
+                    }
+
+                } catch (error) {
+                    platformData.dataError = error.message;
+                }
+
+                // Create and download JSON file
+                const dataStr = JSON.stringify(platformData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `prana-platform-export-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+
+                hideLoading();
+                showSuccess('Platform data exported successfully');
+            } catch (error) {
+                hideLoading();
+                console.error('Export data error:', error);
+                showError('Failed to export data: ' + error.message);
+            }
+        };
+
+        window.emergencyWithdrawTokens = async function() {
+            try {
+                const pranaTokenAddress = uiServices.serviceManager.contractService.getContractAddress('pranaToken');
+                const usdtTokenAddress = uiServices.serviceManager.contractService.getContractAddress('usdtToken');
+                
+                // Get current exchange contract balances
+                const pranaBalance = await uiServices.serviceManager.contractService.executeCall('pranaToken', 'balanceOf', [uiServices.serviceManager.contractService.getContractAddress('pranaExchange')]);
+                const usdtBalance = await uiServices.serviceManager.contractService.executeCall('usdtToken', 'balanceOf', [uiServices.serviceManager.contractService.getContractAddress('pranaExchange')]);
+                
+                const pranaFormatted = uiServices.serviceManager.walletService.web3.utils.fromWei(pranaBalance, 'ether');
+                const usdtFormatted = uiServices.serviceManager.walletService.web3.utils.toBN(usdtBalance).div(
+                    uiServices.serviceManager.walletService.web3.utils.toBN(10).pow(uiServices.serviceManager.walletService.web3.utils.toBN(6))
+                ).toString();
+                
+                const message = `⚠️ EMERGENCY WITHDRAW ⚠️\n\nFound stuck tokens in exchange contract:\n• ${pranaFormatted} PRANA\n• ${usdtFormatted} USDT\n\nThis will withdraw ALL tokens from the exchange contract to your wallet.\nThis action cannot be undone.\n\nProceed?`;
+                
+                if (!confirm(message)) {
+                    return;
+                }
+                
+                let withdrawnTokens = [];
+                
+                // Withdraw PRANA if any
+                if (parseFloat(pranaFormatted) > 0) {
+                    await uiServices.serviceManager.contractService.executeTransaction('pranaExchange', 'emergencyWithdraw', [pranaTokenAddress, pranaBalance]);
+                    withdrawnTokens.push(`${pranaFormatted} PRANA`);
+                }
+                
+                // Withdraw USDT if any  
+                if (parseFloat(usdtFormatted) > 0) {
+                    await uiServices.serviceManager.contractService.executeTransaction('pranaExchange', 'emergencyWithdraw', [usdtTokenAddress, usdtBalance]);
+                    withdrawnTokens.push(`${usdtFormatted} USDT`);
+                }
+                
+                if (withdrawnTokens.length > 0) {
+                    showSuccess(`Emergency withdrawal successful! Recovered: ${withdrawnTokens.join(', ')}`);
+                } else {
+                    showSuccess('No tokens found to withdraw');
+                }
+                
+                await loadContractStats();
+                
+            } catch (error) {
+                console.error('Emergency withdraw error:', error);
+                showError('Emergency withdraw failed: ' + error.message);
+            }
+        };
+
+        window.emergencyPause = async function() {
+            try {
+                // Check current pause status
+                const isPaused = await uiServices.serviceManager.contractService.executeCall('pranaExchange', 'paused', []);
+                
+                if (isPaused) {
+                    // If paused, ask to unpause
+                    if (!confirm('The exchange is currently PAUSED. Do you want to UNPAUSE it?')) {
+                        return;
+                    }
+                    
+                    await uiServices.serviceManager.contractService.executeTransaction('pranaExchange', 'unpause', []);
+                    showSuccess('Exchange unpaused successfully');
+                } else {
+                    // If not paused, ask to pause
+                    if (!confirm('Are you sure you want to PAUSE the exchange? This will prevent all trading until unpaused.')) {
+                        return;
+                    }
+                    
+                    await uiServices.serviceManager.contractService.executeTransaction('pranaExchange', 'pause', []);
+                    showSuccess('Exchange paused successfully');
+                }
+                
+                await loadContractStats();
+            } catch (error) {
+                console.error('Emergency pause/unpause error:', error);
+                showError('Emergency pause/unpause failed: ' + error.message);
+            }
+        };
+
+        // Update pause button status
+        async function updatePauseButtonStatus() {
+            try {
+                const isPaused = await uiServices.serviceManager.contractService.executeCall('pranaExchange', 'paused', []);
+                const pauseButton = document.getElementById('pause-button');
+                
+                if (isPaused) {
+                    pauseButton.innerHTML = '<i class="fas fa-play"></i> Unpause Exchange';
+                    pauseButton.className = 'btn btn-success';
+                } else {
+                    pauseButton.innerHTML = '<i class="fas fa-pause"></i> Emergency Pause';
+                    pauseButton.className = 'btn btn-danger';
+                }
+            } catch (error) {
+                console.warn('Could not check pause status:', error.message);
+            }
+        }
+
+        // Utility Functions
+        function formatNumber(num) {
+            const number = parseFloat(num);
+            if (isNaN(number)) return '0.00';
+            
+            // Handle very small numbers with appropriate precision
+            if (number === 0) return '0.00';
+            if (number < 0.001) return number.toFixed(6);
+            if (number < 1) return number.toFixed(4);
+            
+            // Handle large numbers with K/M/B notation
+            if (number >= 1000000000) return (number / 1000000000).toFixed(2) + 'B';
+            if (number >= 1000000) return (number / 1000000).toFixed(2) + 'M';
+            if (number >= 1000) return (number / 1000).toFixed(2) + 'K';
+            
+            // Regular numbers
+            return number.toFixed(2);
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('error-message');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+            setTimeout(() => errorEl.style.display = 'none', 5000);
+        }
+
+        function showSuccess(message) {
+            const successEl = document.getElementById('success-message');
+            successEl.textContent = message;
+            successEl.style.display = 'block';
+            setTimeout(() => successEl.style.display = 'none', 3000);
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initializeAdmin);
+    </script>
+</body>
+</html>

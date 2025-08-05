@@ -1,0 +1,132 @@
+{
+  "name": "prana-platform",
+  "version": "1.0.0",
+  "description": "PRANA DeFi Platform - Production-ready staking and exchange platform",
+  "main": "src/App.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:legacy": "node start-dev.js",
+    "start": "vite",
+    "build": "vite build",
+    "build:amplify": "sh build-amplify.sh",
+    "build:amplify:windows": "build-amplify.bat",
+    "build:legacy": "node deploy.js build production",
+    "build:staging": "node deploy.js build staging",
+    "build:dev": "node deploy.js build development",
+    "preview": "vite preview",
+    "clean": "rimraf dist dist-staging",
+    "validate": "node deploy.js validate dist",
+    "deploy:production": "npm run clean && npm run build && npm run validate",
+    "deploy:staging": "npm run clean && npm run build:staging",
+    "serve:prod": "node -e \"const http=require('http'),fs=require('fs'),path=require('path'); const server=http.createServer((req,res)=>{const file=path.join('./dist',req.url==='/'?'staking.html':req.url); if(fs.existsSync(file)&&!fs.statSync(file).isDirectory()){const mimeType=req.url.endsWith('.js')?'application/javascript':req.url.endsWith('.css')?'text/css':req.url.endsWith('.html')?'text/html':'text/plain'; res.writeHead(200,{'Content-Type':mimeType}); res.end(fs.readFileSync(file));}else{res.writeHead(404); res.end('Not Found');}}); server.listen(8080,()=>console.log('🚀 Production server: http://localhost:8080'));\"",
+    "serve:staging": "node -e \"const http=require('http'),fs=require('fs'),path=require('path'); const server=http.createServer((req,res)=>{const file=path.join('./dist-staging',req.url==='/'?'staking.html':req.url); if(fs.existsSync(file)&&!fs.statSync(file).isDirectory()){const mimeType=req.url.endsWith('.js')?'application/javascript':req.url.endsWith('.css')?'text/css':req.url.endsWith('.html')?'text/html':'text/plain'; res.writeHead(200,{'Content-Type':mimeType}); res.end(fs.readFileSync(file));}else{res.writeHead(404); res.end('Not Found');}}); server.listen(8080,()=>console.log('🚀 Staging server: http://localhost:8080'));\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --watchAll=false",
+    "test:integration": "jest --testPathPatterns=integration --runInBand",
+    "compile": "hardhat compile",
+    "deploy:testnet": "hardhat run scripts/deploy.cjs --network bscTestnet",
+    "deploy:mainnet": "hardhat run scripts/deploy.cjs --network bscMainnet",
+    "generate-abis": "node scripts/generate-abis.cjs",
+    "full-deploy": "npm run compile && npm run generate-abis && npm run deploy:testnet",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "type-check": "tsc --noEmit",
+    "setup": "echo '⚙️ Setting up PRANA platform...' && npm install && echo '✅ Ready! Run: npm run dev'"
+  },
+  "keywords": [
+    "defi",
+    "staking",
+    "blockchain",
+    "ethereum",
+    "bsc",
+    "web3",
+    "dapp"
+  ],
+  "author": {
+    "name": "PRANA Team",
+    "email": "contact@pranavam.ai",
+    "url": "https://pranavam.ai"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pranavam/unified-platform.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pranavam/unified-platform/issues"
+  },
+  "homepage": "https://pranavam.ai",
+  "dependencies": {
+    "@coinbase/wallet-sdk": "^3.7.0",
+    "@metamask/detect-provider": "^2.0.0",
+    "@walletconnect/web3-provider": "^1.8.0",
+    "eventemitter3": "^4.0.7",
+    "web3": "^1.8.0",
+    "web3modal": "^1.9.12"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/preset-typescript": "^7.27.1",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-etherscan": "^3.1.8",
+    "@openzeppelin/contracts": "^5.4.0",
+    "@testing-library/jest-dom": "^6.6.4",
+    "@types/jest": "^30.0.0",
+    "babel-jest": "^30.0.5",
+    "dotenv": "^17.2.1",
+    "eslint": "^8.0.0",
+    "ethers": "^5.8.0",
+    "hardhat": "^2.26.1",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
+    "mime-types": "^2.1.35",
+    "prettier": "^2.8.0",
+    "rimraf": "^5.0.10",
+    "ts-jest": "^29.4.0",
+    "vite": "^5.4.19",
+    "ws": "^8.18.3"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2021,
+      "sourceType": "module"
+    },
+    "globals": {
+      "Web3": "readonly",
+      "ethereum": "readonly"
+    },
+    "rules": {
+      "no-unused-vars": "warn",
+      "no-console": "off",
+      "prefer-const": "error"
+    }
+  },
+  "prettier": {
+    "semi": true,
+    "trailingComma": "es5",
+    "singleQuote": true,
+    "printWidth": 100,
+    "tabWidth": 4
+  }
+}

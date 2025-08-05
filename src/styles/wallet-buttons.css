@@ -1,0 +1,160 @@
+/* Wallet Button Styles - Single Toggle Button */
+
+/* Base button styling for wallet toggle */
+.wallet-toggle-btn,
+#wallet-btn,
+.connect-wallet-btn {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 8px !important;
+    border: none !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Primary state - ready to connect */
+.wallet-toggle-btn.btn-primary,
+#wallet-btn.btn-primary {
+    background: var(--saffron-primary, #FF9933) !important;
+    color: white !important;
+}
+
+.wallet-toggle-btn.btn-primary:hover,
+#wallet-btn.btn-primary:hover {
+    background: var(--saffron-deep, #E67300) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(255, 153, 51, 0.3) !important;
+}
+
+/* Secondary state - connected, ready to disconnect */
+.wallet-toggle-btn.btn-secondary,
+#wallet-btn.btn-secondary {
+    background: var(--text-secondary, #4A4A4A) !important;
+    color: white !important;
+}
+
+.wallet-toggle-btn.btn-secondary:hover,
+#wallet-btn.btn-secondary:hover {
+    background: var(--text-primary, #2E2E2E) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(74, 74, 74, 0.3) !important;
+}
+
+/* Warning state - connecting */
+.wallet-toggle-btn.btn-warning,
+#wallet-btn.btn-warning {
+    background: #FFA500 !important;
+    color: white !important;
+}
+
+.wallet-toggle-btn:active,
+#wallet-btn:active {
+    transform: translateY(0) !important;
+}
+
+.wallet-toggle-btn:disabled,
+#wallet-btn:disabled {
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.7 !important;
+}
+
+/* Icon styling within buttons */
+.wallet-toggle-btn i,
+#wallet-btn i,
+.connect-wallet-btn i {
+    font-size: 16px !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Spinner animation for connecting state */
+.wallet-toggle-btn .fa-spinner,
+#wallet-btn .fa-spinner {
+    animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .wallet-toggle-btn,
+    #wallet-btn {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 14px !important;
+    }
+    
+    .wallet-toggle-btn i,
+    #wallet-btn i {
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .wallet-toggle-btn,
+    #wallet-btn {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 13px !important;
+    }
+    
+    .wallet-toggle-btn i,
+    #wallet-btn i {
+        font-size: 13px !important;
+    }
+}
+
+/* Connected state - green with indicator */
+.wallet-toggle-btn.connected,
+#wallet-btn.connected {
+    background: var(--success-color, #10b981) !important;
+    color: white !important;
+}
+
+.wallet-toggle-btn.connected:hover,
+#wallet-btn.connected:hover {
+    background: var(--green-deep, #059669) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Focus states for accessibility */
+.wallet-toggle-btn:focus,
+#wallet-btn:focus {
+    outline: 2px solid var(--saffron-primary, #FF9933) !important;
+    outline-offset: 2px !important;
+}
+
+/* Navigation specific adjustments */
+.nav-actions .wallet-toggle-btn,
+.nav-actions #wallet-btn {
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+}
+
+/* Ensure icons are visible and properly sized */
+.wallet-toggle-btn .fas,
+#wallet-btn .fas {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Loading state visual feedback */
+.wallet-toggle-btn:disabled .fa-spinner,
+#wallet-btn:disabled .fa-spinner {
+    color: rgba(255, 255, 255, 0.8) !important;
+}

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Pranavam">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#FF9933">
+    <title>प्राणवम् Pranavam 2.0 - Sanskrit-Grounded Decentralized AI Platform | Verified Intelligence</title>
+    <meta name="description" content="Pranavam 2.0: Revolutionary decentralized AI platform grounded in Sanskrit philosophy. Karaka Pravāha workflow, Mānava Pañchāyat consensus, and staged implementation from formal proofs to spiritual evolution.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="../assets/images/logo.jpeg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/layout-fix.css">
+    <link rel="stylesheet" href="../styles/theme.css">
+    <link rel="stylesheet" href="../styles/wallet-system.css">
+    <link rel="stylesheet" href="../styles/wallet-buttons.css">
+    <link rel="stylesheet" href="../styles/mobile-responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar glass-nav" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="../assets/images/logo.jpeg" alt="Pranavam Logo" class="logo-image">
+                <span class="om-symbol">ॐ</span>
+                <span class="logo-text">
+                    <span class="sanskrit-text">प्राणवम्</span>
+                    <span class="english-text">Pranavam.ai</span>
+                </span>
+            </a>
+            
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/#overview" class="nav-link active">Platform Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/exchange" class="nav-link">Exchange</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/staking" class="nav-link">Staking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/whitepaper" class="nav-link">Whitepaper</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#architecture" class="nav-link">Architecture</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#economics" class="nav-link">Economics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#staking-tiers" class="nav-link">Staking Tiers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#governance" class="nav-link">Governance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#roadmap" class="nav-link">Roadmap</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin" class="nav-link" style="color: #dc2626; font-weight: 600;">Admin</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="btn btn-primary wallet-toggle-btn" id="wallet-btn" title="Connect Wallet">
+                    <i class="fas fa-wallet"></i>
+                </button>
+                <div class="menu-toggle" id="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">
+                            <span class="sanskrit-title">प्राणवम्</span>
+                            <span class="english-title">Pranavam 2.0</span>
+                        </h1>
+                        <p class="hero-subtitle">Sanskrit-Grounded Decentralized AI Platform</p>
+                        <p class="hero-description">
+                            Revolutionary decentralized AI platform grounded in Sanskrit philosophy. 
+                            Karaka Pravāha workflow, Mānava Pañchāyat consensus, and staged implementation 
+                            from formal proofs to spiritual evolution.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="/staking" class="btn btn-primary btn-large">
+                                <i class="fas fa-coins"></i>
+                                Start Staking
+                            </a>
+                            <a href="/exchange" class="btn btn-secondary btn-large">
+                                <i class="fas fa-exchange-alt"></i>
+                                Trade PRANA
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-staked">Loading...</div>
+                            <div class="stat-label">Total Staked</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-users">Loading...</div>
+                            <div class="stat-label">Active Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="annual-apy">Loading...</div>
+                            <div class="stat-label">Annual APY</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Platform Overview -->
+        <section class="platform-overview" id="overview" style="padding: 80px 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); position: relative; overflow: hidden;">
+            <!-- Background Pattern -->
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 20% 20%, rgba(255, 107, 53, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%); pointer-events: none;"></div>
+            
+            <div class="container" style="position: relative; z-index: 1;">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 style="font-size: clamp(28px, 5vw, 42px); font-weight: 700; color: #1e293b; margin-bottom: 16px; line-height: 1.2;">Platform Overview</h2>
+                    <p style="font-size: 18px; color: #64748b; max-width: 600px; margin: 0 auto; line-height: 1.6;">Discover the power of Sanskrit-grounded decentralized AI with modern blockchain technology</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto;">
+                    <div style="background: white; border-radius: 16px; padding: 32px 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid rgba(226, 232, 240, 0.5); transition: all 0.3s ease; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'">
+                        <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #ff6b35 0%, #f59e0b 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                            <i class="fas fa-brain" style="font-size: 24px; color: white;"></i>
+                        </div>
+                        <h3 style="font-size: 20px; font-weight: 600; color: #1e293b; margin-bottom: 12px; line-height: 1.3;">Decentralized AI</h3>
+                        <p style="color: #64748b; line-height: 1.6; margin: 0; font-size: 15px;">Sanskrit-grounded artificial intelligence with verified reasoning and philosophical foundations for transparent decision-making.</p>
+                        <div style="position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, transparent 70%); pointer-events: none;"></div>
+                    </div>
+                    
+                    <div style="background: white; border-radius: 16px; padding: 32px 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid rgba(226, 232, 240, 0.5); transition: all 0.3s ease; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'">
+                        <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                            <i class="fas fa-coins" style="font-size: 24px; color: white;"></i>
+                        </div>
+                        <h3 style="font-size: 20px; font-weight: 600; color: #1e293b; margin-bottom: 12px; line-height: 1.3;">PRANA Staking</h3>
+                        <p style="color: #64748b; line-height: 1.6; margin: 0; font-size: 15px;">Earn rewards by staking PRANA tokens and participating in platform governance with competitive APY returns.</p>
+                        <div style="position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%); pointer-events: none;"></div>
+                    </div>
+                    
+                    <div style="background: white; border-radius: 16px; padding: 32px 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid rgba(226, 232, 240, 0.5); transition: all 0.3s ease; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'">
+                        <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                            <i class="fas fa-exchange-alt" style="font-size: 24px; color: white;"></i>
+                        </div>
+                        <h3 style="font-size: 20px; font-weight: 600; color: #1e293b; margin-bottom: 12px; line-height: 1.3;">Token Exchange</h3>
+                        <p style="color: #64748b; line-height: 1.6; margin: 0; font-size: 15px;">Trade PRANA tokens with USDT on our secure decentralized exchange with low fees and instant execution.</p>
+                        <div style="position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%); pointer-events: none;"></div>
+                    </div>
+                    
+                    <div style="background: white; border-radius: 16px; padding: 32px 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid rgba(226, 232, 240, 0.5); transition: all 0.3s ease; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'">
+                        <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                            <i class="fas fa-users" style="font-size: 24px; color: white;"></i>
+                        </div>
+                        <h3 style="font-size: 20px; font-weight: 600; color: #1e293b; margin-bottom: 12px; line-height: 1.3;">Community Governance</h3>
+                        <p style="color: #64748b; line-height: 1.6; margin: 0; font-size: 15px;">Participate in Mānava Pañchāyat consensus for platform decisions and shape the future of decentralized AI.</p>
+                        <div style="position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 70%); pointer-events: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture -->
+        <section class="architecture" id="architecture" style="padding: 100px 0; background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%); position: relative; overflow: hidden;">
+            <!-- Animated Background Elements -->
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 10% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 70%); pointer-events: none;"></div>
+            
+            <div class="container" style="position: relative; z-index: 1;">
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <h2 style="font-size: clamp(32px, 6vw, 48px); font-weight: 700; color: white; margin-bottom: 20px; line-height: 1.2;">System Architecture</h2>
+                    <p style="font-size: 20px; color: #cbd5e1; max-width: 700px; margin: 0 auto; line-height: 1.6;">Experience the revolutionary Karaka Pravāha workflow powered by Sanskrit grammatical principles</p>
+                </div>
+                
+                <!-- Architecture Overview -->
+                <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 24px; padding: 40px; margin-bottom: 60px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                        <div style="grid-column: 1 / -1;" media="(max-width: 768px)">
+                            <h3 style="font-size: 28px; font-weight: 600; color: white; margin-bottom: 20px; line-height: 1.3;">Karaka Pravāha Workflow</h3>
+                            <p style="font-size: 16px; color: #e2e8f0; line-height: 1.7; margin-bottom: 30px;">Our revolutionary workflow system based on Sanskrit grammatical principles ensures verified and transparent AI reasoning through structured semantic analysis.</p>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #ff6b35 0%, #f59e0b 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="fas fa-shield-alt" style="color: white; font-size: 16px;"></i>
+                                    </div>
+                                    <span style="color: #f1f5f9; font-weight: 500;">Formal verification at each step</span>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="fas fa-language" style="color: white; font-size: 16px;"></i>
+                                    </div>
+                                    <span style="color: #f1f5f9; font-weight: 500;">Sanskrit-grounded semantic reasoning</span>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="fas fa-network-wired" style="color: white; font-size: 16px;"></i>
+                                    </div>
+                                    <span style="color: #f1f5f9; font-weight: 500;">Decentralized consensus mechanisms</span>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="fas fa-eye" style="color: white; font-size: 16px;"></i>
+                                    </div>
+                                    <span style="color: #f1f5f9; font-weight: 500;">Transparent decision pathways</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Workflow Diagram -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; position: relative;">
+                    <!-- Step 1 -->
+                    <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 32px 24px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2); position: relative; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.1)'">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #ff6b35 0%, #f59e0b 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);">
+                            <span style="color: white; font-size: 24px; font-weight: 700;">1</span>
+                        </div>
+                        <h4 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 12px;">Input Processing</h4>
+                        <p style="color: #cbd5e1; font-size: 14px; line-height: 1.5; margin: 0;">Raw data intake and initial validation through secure channels</p>
+                    </div>
+                    
+                    <!-- Arrow 1 -->
+                    <div style="display: flex; align-items: center; justify-content: center; position: relative; display: none;" media="(min-width: 768px)">
+                        <div style="width: 100%; height: 2px; background: linear-gradient(90deg, #ff6b35, #10b981); position: relative;">
+                            <div style="position: absolute; right: -8px; top: -4px; width: 0; height: 0; border-left: 8px solid #10b981; border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 32px 24px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2); position: relative; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.1)'">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);">
+                            <span style="color: white; font-size: 24px; font-weight: 700;">2</span>
+                        </div>
+                        <h4 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 12px;">Sanskrit Analysis</h4>
+                        <p style="color: #cbd5e1; font-size: 14px; line-height: 1.5; margin: 0;">Deep semantic processing using Sanskrit grammatical structures</p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 32px 24px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2); position: relative; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.1)'">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);">
+                            <span style="color: white; font-size: 24px; font-weight: 700;">3</span>
+                        </div>
+                        <h4 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 12px;">Consensus</h4>
+                        <p style="color: #cbd5e1; font-size: 14px; line-height: 1.5; margin: 0;">Mānava Pañchāyat consensus validation and verification</p>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 32px 24px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2); position: relative; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.1)'">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3);">
+                            <span style="color: white; font-size: 24px; font-weight: 700;">4</span>
+                        </div>
+                        <h4 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 12px;">Verified Output</h4>
+                        <p style="color: #cbd5e1; font-size: 14px; line-height: 1.5; margin: 0;">Cryptographically signed results with full audit trails</p>
+                    </div>
+                </div>
+                
+                <!-- Mobile Flow Arrows -->
+                <div style="display: flex; justify-content: center; margin: 30px 0; display: block;" media="(max-width: 767px)">
+                    <div style="text-align: center;">
+                        <i class="fas fa-arrow-down" style="color: #64748b; font-size: 24px;"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Economics -->
+        <section class="economics" id="economics">
+            <div class="container">
+                <h2 class="section-title">Token Economics</h2>
+                <div class="economics-grid">
+                    <div class="econ-card">
+                        <h3>PRANA Token</h3>
+                        <div class="token-info">
+                            <div class="info-row">
+                                <span>Total Supply</span>
+                                <span>21,000,000,000 PRANA</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Staking Tiers</span>
+                                <span>4-Tier System (12-35% APY)</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Network</span>
+                                <span>BSC (BEP-20)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="econ-card">
+                        <h3>Utility & Benefits</h3>
+                        <ul>
+                            <li>Multi-tier staking rewards (12-35% APY)</li>
+                            <li>8-level referral commissions</li>
+                            <li>AI literacy certification access</li>
+                            <li>Business intelligence services</li>
+                            <li>Karaka Pravāha workflow validation</li>
+                            <li>Enterprise API licensing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Staking Tiers -->
+        <section class="staking-tiers" id="staking-tiers" style="padding: 80px 0; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white;">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 style="font-size: clamp(28px, 5vw, 42px); font-weight: 700; margin-bottom: 16px; color: white;">Multi-Tier Staking System</h2>
+                    <p style="font-size: 18px; color: #cbd5e1; max-width: 600px; margin: 0 auto; line-height: 1.6;">Choose your tier and unlock exclusive platform benefits, AI literacy courses, and business tools</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto;">
+                    <!-- Tier 1: AI Seeker -->
+                    <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 32px 24px; border: 1px solid rgba(255, 255, 255, 0.1); position: relative; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.background='rgba(255, 255, 255, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.05)'">
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);">
+                                <i class="fas fa-seedling" style="font-size: 24px; color: white;"></i>
+                            </div>
+                            <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 8px;">AI Seeker</h3>
+                            <div style="font-size: 14px; color: #10b981; font-weight: 500;">Minimum: 1,000 PRANA</div>
+                        </div>
+                        
+                        <div style="margin-bottom: 24px;">
+                            <div style="font-size: 32px; font-weight: 700; color: #10b981; text-align: center; margin-bottom: 8px;">12% APY</div>
+                            <div style="font-size: 14px; color: #cbd5e1; text-align: center;">1.2% Daily ROI</div>
+                        </div>
+                        
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #10b981; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">4% Level 1 referral bonus</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #10b981; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">Basic Karaka Pravāha workflows</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #10b981; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">AI literacy course access</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px;">
+                                <i class="fas fa-check" style="color: #10b981; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">Technical domain validation</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Tier 2: AI Practitioner -->
+                    <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 32px 24px; border: 1px solid rgba(255, 255, 255, 0.1); position: relative; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.background='rgba(255, 255, 255, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.05)'">
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);">
+                                <i class="fas fa-cogs" style="font-size: 24px; color: white;"></i>
+                            </div>
+                            <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 8px;">AI Practitioner</h3>
+                            <div style="font-size: 14px; color: #3b82f6; font-weight: 500;">Minimum: 10,000 PRANA</div>
+                        </div>
+                        
+                        <div style="margin-bottom: 24px;">
+                            <div style="font-size: 32px; font-weight: 700; color: #3b82f6; text-align: center; margin-bottom: 8px;">18% APY</div>
+                            <div style="font-size: 14px; color: #cbd5e1; text-align: center;">1.5% Daily ROI</div>
+                        </div>
+                        
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #3b82f6; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">4% L1, 2% L2 referral bonus</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #3b82f6; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">Advanced multi-agent workflows</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #3b82f6; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">Business implementation tools</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px;">
+                                <i class="fas fa-check" style="color: #3b82f6; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">Custom agent training</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Tier 3: AI Innovator -->
+                    <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 32px 24px; border: 2px solid #ff6b35; position: relative; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.background='rgba(255, 255, 255, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.05)'">
+                        <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #ff6b35; color: white; padding: 4px 16px; border-radius: 12px; font-size: 12px; font-weight: 600;">POPULAR</div>
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #ff6b35 0%, #f59e0b 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);">
+                                <i class="fas fa-rocket" style="font-size: 24px; color: white;"></i>
+                            </div>
+                            <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 8px;">AI Innovator</h3>
+                            <div style="font-size: 14px; color: #ff6b35; font-weight: 500;">Minimum: 50,000 PRANA</div>
+                        </div>
+                        
+                        <div style="margin-bottom: 24px;">
+                            <div style="font-size: 32px; font-weight: 700; color: #ff6b35; text-align: center; margin-bottom: 8px;">25% APY</div>
+                            <div style="font-size: 14px; color: #cbd5e1; text-align: center;">2.0% Daily ROI</div>
+                        </div>
+                        
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #ff6b35; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">8-level referral structure</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #ff6b35; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">Enterprise-grade platform access</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #ff6b35; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">API access & white-label solutions</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px;">
+                                <i class="fas fa-check" style="color: #ff6b35; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">0.1% transaction fee sharing</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Tier 4: AI Visionary -->
+                    <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 32px 24px; border: 1px solid rgba(255, 255, 255, 0.1); position: relative; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-8px)'; this.style.background='rgba(255, 255, 255, 0.08)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255, 255, 255, 0.05)'">
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3);">
+                                <i class="fas fa-crown" style="font-size: 24px; color: white;"></i>
+                            </div>
+                            <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 8px;">AI Visionary</h3>
+                            <div style="font-size: 14px; color: #8b5cf6; font-weight: 500;">Minimum: 100,000 PRANA</div>
+                        </div>
+                        
+                        <div style="margin-bottom: 24px;">
+                            <div style="font-size: 32px; font-weight: 700; color: #8b5cf6; text-align: center; margin-bottom: 8px;">35% APY</div>
+                            <div style="font-size: 14px; color: #cbd5e1; text-align: center;">2.5% Daily ROI</div>
+                        </div>
+                        
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #8b5cf6; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">Full 8-level commission structure</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #8b5cf6; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">Complete ecosystem + custom dev</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-check" style="color: #8b5cf6; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">0.25% platform revenue sharing</span>
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 12px;">
+                                <i class="fas fa-check" style="color: #8b5cf6; font-size: 14px;"></i>
+                                <span style="font-size: 14px; color: #e2e8f0;">10x governance voting weight</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 48px;">
+                    <a href="/staking" style="display: inline-block; background: linear-gradient(135deg, #ff6b35 0%, #f59e0b 100%); color: white; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(255, 107, 53, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(255, 107, 53, 0.3)'">
+                        Start Staking Now
+                        <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section class="roadmap" id="roadmap">
+            <div class="container">
+                <h2 class="section-title">Development Roadmap</h2>
+                <div class="roadmap-timeline">
+                    <div class="timeline-item completed">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Q4 2024 - Foundation</h3>
+                            <p>Token launch, staking platform, and basic exchange functionality.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item active">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Q1 2025 - AI Integration</h3>
+                            <p>Sanskrit-grounded AI reasoning and Karaka Pravāha workflow implementation.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Q2 2025 - Governance</h3>
+                            <p>Mānava Pañchāyat consensus mechanism and community governance launch.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Q3 2025 - Expansion</h3>
+                            <p>Mobile app, advanced AI services, and ecosystem partnerships.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="om-symbol">ॐ</span>
+                        <span class="brand-text">
+                            <span class="sanskrit-text">प्राणवम्</span>
+                            <span class="english-text">Pranavam.ai</span>
+                        </span>
+                    </div>
+                    <p>Sanskrit-grounded decentralized AI platform for verified intelligence.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Platform</h4>
+                        <a href="/staking">Staking</a>
+                        <a href="/exchange">Exchange</a>
+                        <a href="/whitepaper">Whitepaper</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Community</h4>
+                        <a href="#" target="_blank">Discord</a>
+                        <a href="#" target="_blank">Telegram</a>
+                        <a href="#" target="_blank">Twitter</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Resources</h4>
+                        <a href="../assets/pranavam_research_paper.pdf" target="_blank">Research Paper</a>
+                        <a href="#" target="_blank">Documentation</a>
+                        <a href="#" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Pranavam.ai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div id="app-loading" class="app-loading" style="display: none;">
+        <div>
+            <div class="loading-spinner"></div>
+            <p style="color: white; margin-top: 16px;">Loading PRANA Platform...</p>
+        </div>
+    </div>
+
+    <!-- Error Banner -->
+    <div id="error-banner" class="error-banner">
+        <span id="error-message"></span>
+        <button onclick="dismissError()" style="margin-left: 16px; background: none; border: none; color: white; cursor: pointer;">×</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
+    
+    <!-- New Service Architecture (ES6 Modules) -->
+    <script type="module">
+        import { uiServices } from '../services/UIServiceIntegration.js';
+        import { SharedWalletUI } from '../services/SharedWalletUI.js';
+        
+        // Application-specific UI handlers for Index page with WalletConnect service
+        class IndexUI {
+            constructor() {
+                this.uiServices = uiServices;
+                this.sharedWalletUI = new SharedWalletUI(uiServices);
+                this.platformData = {
+                    totalStaked: '0',
+                    totalUsers: '0',
+                    pranaPrice: '0',
+                    marketCap: '0'
+                };
+                this.setupEventListeners();
+                this.initializeUI();
+            }
+            
+            setupEventListeners() {
+                // Initialize shared wallet UI (handles all wallet events and button clicks)
+                this.sharedWalletUI.init();
+                
+                // Listen for wallet events to update platform data
+                document.addEventListener('prana:walletConnected', () => this.loadPlatformData());
+                document.addEventListener('prana:walletDisconnected', () => this.loadFallbackData());
+                
+                // UI interactions (excluding wallet button - handled by SharedWalletUI)
+                this.setupUIInteractions();
+            }
+            
+            setupUIInteractions() {
+                // Navigation toggle
+                const navToggle = document.getElementById('nav-toggle');
+                const navMenu = document.getElementById('nav-menu');
+                if (navToggle && navMenu) {
+                    navToggle.addEventListener('click', () => {
+                        navMenu.classList.toggle('active');
+                        navToggle.classList.toggle('active');
+                    });
+                }
+                
+                // Smooth scroll for anchor links
+                this.setupSmoothScroll();
+            }
+            
+            setupSmoothScroll() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+            }
+            
+            async initializeUI() {
+                try {
+                    // Check for existing wallet connection and load appropriate data
+                    if (this.uiServices.isWalletConnected()) {
+                        await this.loadPlatformData();
+                    } else {
+                        // Load fallback data
+                        await this.loadFallbackData();
+                    }
+                    
+                } catch (error) {
+                    console.error('UI initialization failed:', error);
+                    this.showError('Failed to initialize platform');
+                    await this.loadFallbackData();
+                }
+            }
+            
+            
+            // Platform data methods
+            async loadPlatformData() {
+                try {
+                    // Always try to load contract stats (whether wallet connected or not)
+                    await this.loadContractStats();
+                    
+                } catch (error) {
+                    console.error('Failed to load platform data:', error);
+                    // Show fallback values instead of zeros
+                    this.updatePlatformStatsUI({
+                        totalStaked: '0',
+                        totalUsers: '0',
+                        apy: '12.0'
+                    });
+                }
+            }
+            
+            async loadContractStats() {
+                try {
+                    console.log('📊 [INDEX] Loading contract stats...');
+                    
+                    // Get staking contract stats
+                    const stakingInfo = await this.uiServices.getStakingInfo();
+                    
+                    // Debug logging
+                    console.log('📊 [INDEX] Raw staking info:', stakingInfo);
+                    console.log('📊 [INDEX] isRealData:', stakingInfo.isRealData);
+                    
+                    const totalStaked = stakingInfo.totalStaked;
+                    console.log('📊 [INDEX] Total staked from service:', totalStaked, 'type:', typeof totalStaked);
+                    const totalRewardsPaid = '0'; // Fallback value
+                    
+                    // Parse values (already in Ether format from service)
+                    const stakedAmount = this.safeFromWei(totalStaked);
+                    const rewardsPaid = this.safeFromWei(totalRewardsPaid);
+                    
+                    // Calculate APY based on rewards paid vs total staked
+                    // APY = (Total Rewards Paid / Total Staked) * 100
+                    // This is a simplified calculation - in reality you'd want to factor in time period
+                    let apy = 0;
+                    if (stakedAmount > 0 && rewardsPaid > 0) {
+                        apy = (rewardsPaid / stakedAmount) * 100;
+                        // Cap APY at reasonable maximum for display
+                        apy = Math.min(apy, 1000);
+                    } else {
+                        // Default APY if no rewards have been paid yet
+                        apy = 12; // 12% as estimated APY
+                    }
+                    
+                    // Get real user count from staking service
+                    const totalUsers = stakingInfo.totalStakers || '0';
+                    console.log('📊 [INDEX] Total users from service:', totalUsers, 'type:', typeof totalUsers);
+                    
+                    const formattedStats = {
+                        totalStaked: this.formatNumber(stakedAmount),
+                        totalUsers: totalUsers.toString(),
+                        apy: apy.toFixed(1)
+                    };
+                    console.log('📊 [INDEX] Formatted stats to display:', formattedStats);
+                    
+                    this.updatePlatformStatsUI(formattedStats);
+                    
+                } catch (error) {
+                    console.error('Failed to load contract stats:', error);
+                    // Show fallback values instead of error messages
+                    this.updatePlatformStatsUI({
+                        totalStaked: '0',
+                        totalUsers: '0',
+                        apy: '12.0'
+                    });
+                    // Don't throw error - allow UI to show fallback values
+                }
+            }
+            
+            async loadFallbackData() {
+                // No fallback data - show error state instead
+                console.warn('Contract data unavailable. Displaying error state instead of fallback data.');
+                this.updatePlatformStatsUI({
+                    totalStaked: 'N/A',
+                    totalUsers: 'N/A',
+                    apy: 'N/A'
+                });
+            }
+            
+            updatePlatformStatsUI(stats) {
+                const totalStakedElement = document.getElementById('total-staked');
+                const totalUsersElement = document.getElementById('total-users');
+                const annualApyElement = document.getElementById('annual-apy');
+                const featureApyElement = document.getElementById('feature-apy');
+                
+                if (totalStakedElement) {
+                    totalStakedElement.innerHTML = `${stats.totalStaked} <small>PRANA</small>`;
+                }
+                
+                if (totalUsersElement) {
+                    totalUsersElement.innerHTML = `${stats.totalUsers}`;
+                }
+                
+                if (annualApyElement && stats.apy) {
+                    annualApyElement.innerHTML = `${stats.apy}%`;
+                }
+                
+                if (featureApyElement && stats.apy) {
+                    featureApyElement.innerHTML = `${stats.apy}% APY`;
+                }
+            }
+            
+            // Utility methods
+            formatNumber(num) {
+                if (num >= 1000000) {
+                    return (num / 1000000).toFixed(1) + 'M';
+                }
+                if (num >= 1000) {
+                    return (num / 1000).toFixed(0) + 'K';
+                }
+                return num.toString();
+            }
+            
+            showMobileWalletInstructions(result) {
+                const message = `Mobile browser detected. Please:\\n1. Open your wallet app\\n2. Navigate to DApp browser\\n3. Enter this URL: ${window.location.href}\\n4. Try connecting again`;
+                alert(message);
+            }
+            
+            showError(message) {
+                const errorBanner = document.getElementById('error-banner');
+                const errorMessage = document.getElementById('error-message');
+                
+                if (errorBanner && errorMessage) {
+                    errorMessage.textContent = message;
+                    errorBanner.classList.add('show');
+                }
+                
+                console.error('UI Error:', message);
+            }
+            
+            hideError() {
+                const errorBanner = document.getElementById('error-banner');
+                if (errorBanner) {
+                    errorBanner.classList.remove('show');
+                }
+            }
+            
+            /**
+             * Safely parse numeric value with fallback
+             * @param {string} value - Numeric value as string (already in Ether)
+             * @returns {number} Parsed numeric value
+             */
+            safeFromWei(value) {
+                try {
+                    // The staking service already returns values in Ether format, not Wei
+                    // So we just need to parse the number, not convert from Wei
+                    if (!value || value === '0') return 0;
+                    
+                    // Debug logging
+                    console.log('safeFromWei input:', value, 'type:', typeof value);
+                    
+                    // Simply parse the value as it's already in Ether
+                    const result = parseFloat(value);
+                    console.log('safeFromWei final result (no conversion needed):', result);
+                    return result;
+                } catch (error) {
+                    console.warn('safeFromWei conversion failed:', error.message, 'Value:', value);
+                    return 0;
+                }
+            }
+        }
+        
+        // Global functions for backward compatibility
+        window.dismissError = function() {
+            const errorBanner = document.getElementById('error-banner');
+            if (errorBanner) errorBanner.classList.remove('show');
+        };
+        
+        // Initialize the index UI when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                window.indexUI = new IndexUI();
+                console.log('PRANA Platform interface initialized successfully');
+            } catch (error) {
+                console.error('Failed to initialize platform interface:', error);
+            }
+        });
+    </script>
+</body>
+</html>
