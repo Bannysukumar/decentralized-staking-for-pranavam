@@ -1,76 +1,97 @@
 # 🚀 Pranavam Platform
-## Complete DeFi Ecosystem with Zero Token Loss Guarantees
 
-[![BSC Testnet](https://img.shields.io/badge/BSC-Testnet-green)](https://testnet.bscscan.com/)
-[![Status](https://img.shields.io/badge/Status-Live%20&%20Functional-brightgreen)](https://testnet.bscscan.com/address/0x5dF3366e7b93bEA4e7d5ED8Ff6dE648Cb9Cd676F)
-[![PRANA Token](https://img.shields.io/badge/PRANA-21B%20Supply-blue)](https://testnet.bscscan.com/address/0xd7266f1D382B656107ECc9D226428ce2c25dF05a)
+✅ Smart contracts deployed on BSC Testnet ✅ 50,000 PRANA + 1,010,000 USDT ready for testing ✅ Network auto-detection implemented ✅ Zero token loss architecture active ✅ Complete documentation available
 
----
+[![License](https://img.shields.io/github/license/Bannysukumar/decentralized-staking-for-pranavam)](https://github.com/Bannysukumar/decentralized-staking-for-pranavam/blob/main/LICENSE) [![Stars](https://img.shields.io/github/stars/Bannysukumar/decentralized-staking-for-pranavam)](https://github.com/Bannysukumar/decentralized-staking-for-pranavam/stargazers) [![Last commit](https://img.shields.io/github/last-commit/Bannysukumar/decentralized-staking-for-pranavam)](https://github.com/Bannysukumar/decentralized-staking-for-pranavam/commits/main)
 
-## 🎯 Quick Start for Claude AI
+## Overview
 
-### 📋 Current Status: FULLY DEPLOYED & FUNCTIONAL
+✅ Smart contracts deployed on BSC Testnet ✅ 50,000 PRANA + 1,010,000 USDT ready for testing ✅ Network auto-detection implemented ✅ Zero token loss architecture active ✅ Complete documentation available
+
+
+What is actually in the repository: `contracts/MockUSDT.sol`, `contracts/PRANAExchange.sol`, `contracts/PRANAStaking.sol`, `contracts/PRANAToken.sol`, `contracts/`, `public/`, `scripts/`, `src/`. GitHub reports the primary language as JavaScript.
+
+Published site recorded on the repository: https://pranavamai.vercel.app
+
+## Features
+
+
+- MockUSDT contract with decimals, mint, for, faucet
+- PRANAExchange Solidity contract
+- PRANAStaking Solidity contract
+- PRANAToken Solidity contract
+- IPriceOracle Solidity contract
+
+## Tech Stack
+
+| Technology | Where it shows up |
+|---|---|
+| Vite | Frontend build tool |
+| Solidity | Smart contracts |
+| Hardhat | Solidity compile and deploy scripts |
+| ethers.js or web3.js | Wallet and contract calls from the browser or app |
+| OpenZeppelin | Smart-contract base contracts |
+
+## Project Architecture
+
+Browser page → Solidity contract. The frontend loads ethers or web3.
+
+## Project Structure
+
+```text
+decentralized-staking-for-pranavam/
+├── contracts/
+├── public/
+├── scripts/
+├── src/
+├── .amplifyignore
+├── .env.example
+├── AMPLIFY_DEBUGGING.md
+├── AMPLIFY_DEPLOYMENT_FIXED.md
+├── AMPLIFY_DEPLOYMENT_GUIDE.md
+├── AMPLIFY_QUICK_FIX.md
+├── AMPLIFY_ROUTING_FINAL.md
+├── ARCHITECTURE.md
+├── AUDIT_SUMMARY.md
+├── CLAUDE.md
+├── CONTRACT_ANALYSIS_GUIDE.md
+├── CONTRACT_AUDIT_REPORT.md
 ```
-✅ Smart contracts deployed on BSC Testnet
-✅ 50,000 PRANA + 1,010,000 USDT ready for testing
-✅ Network auto-detection implemented
-✅ Zero token loss architecture active
-✅ Complete documentation available
+
+## Getting Started
+
+```bash
+git clone https://github.com/Bannysukumar/decentralized-staking-for-pranavam.git
+cd decentralized-staking-for-pranavam
+npm install
+npm run dev
+# Copy .env.example to .env and fill in the values that file lists.
 ```
 
-### 🔑 Essential Files for Claude
-1. **`MASTER_DOCUMENTATION.md`** - Complete project overview & current state
-2. **`CONTEXT_CONTINUITY_STATE.md`** - Session state for context preservation
-3. **`contracts/deployments/bscTestnet.json`** - Live contract addresses
-4. **`public/js/contract-config.js`** - Network configuration
+Scripts defined in package.json:
 
-### 🎯 Immediate Next Steps
-- Manual testing of exchange and staking functionality
-- Bug identification and fixes
-- UI/UX improvements
-- Mainnet preparation
+- `npm run dev` — `vite`
+- `npm run start` — `vite`
+- `npm run build` — `vite build`
+- `npm run deploy:production` — `npm run clean && npm run build && npm run validate`
+- `npm run deploy:staging` — `npm run clean && npm run build:staging`
 
----
+## Deployment
 
-## 📋 Project Overview
+- The repository homepage is https://pranavamai.vercel.app.
 
-**Pranavam Platform** is a comprehensive DeFi ecosystem featuring:
+## Contributing
 
-- 🪙 **PRANA Token** - ERC-20 with 21 billion supply and anti-whale protection
-- 💱 **Fixed-Rate Exchange** - 1 PRANA = 0.10 USDT (no trading fees)  
-- 🎁 **Staking System** - 1.2% daily ROI with 8-level referral program
-- 🔒 **Zero Token Loss** - Advanced state management and rollback capabilities
-- 🌐 **Multi-Network** - Automatic network detection and switching
-
----
-
-## 🌐 Live Deployment (BSC Testnet)
-
-### 📋 Contract Addresses
-```
-PRANA Token:    0xd7266f1D382B656107ECc9D226428ce2c25dF05a
-PRANA Exchange: 0x8C4ecB4f7f804F32c2500Fa0A8Bec1b72bB7e460
-PRANA Staking:  0x6F7Fd38b4414D3cd33629C57be42ac943cEeE2ba
-Test USDT:      0x01Ae8390F6D4bCFeda504EDB6EB90704857A6744
-```
-
-### 🔗 Quick Links
-- **BSC Testnet Explorer**: https://testnet.bscscan.com/
-- **Test Wallet**: https://testnet.bscscan.com/address/0x5dF3366e7b93bEA4e7d5ED8Ff6dE648Cb9Cd676F
-- **PRANA Contract**: https://testnet.bscscan.com/address/0xd7266f1D382B656107ECc9D226428ce2c25dF05a
-
----
-
-**🔑 For complete documentation, read `MASTER_DOCUMENTATION.md` first**
-
-**🎉 Status: LIVE & FUNCTIONAL - Ready for Testing Phase**
-
-<!-- readme-seo: bannysukumar -->
-
-## Open source
-
-This repository is open source and maintained by [Banny Sukumar](https://github.com/Bannysukumar). Decentralized Staking For Pranavam is published so other developers can study the code and contribute.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 ## License
 
-Released under the [MIT License](LICENSE). Copyright (c) 2026 Banny Sukumar. See [CONTRIBUTING.md](CONTRIBUTING.md) if you want to help.
+Licensed under MIT. See [LICENSE](LICENSE).
+
+## Author
+
+[Banny Sukumar](https://github.com/Bannysukumar)
+
+- GitHub: [@Bannysukumar](https://github.com/Bannysukumar)
+- Portfolio: [adepu-sukumar.vercel.app](https://adepu-sukumar.vercel.app/)
+- LinkedIn: [Adepu Sukumar](https://www.linkedin.com/in/adepu-sukumar-59b423351)
